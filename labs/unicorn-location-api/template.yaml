@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  unicorn-location-api
+
+  This API allows you to store the location of your favorite Unicorns
+
+Globals:
+  Function:
+    Timeout: 20
+
+Resources:
+  UnicornLocationFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: UnicornLocationFunction
+      FunctionName: unicorn-location-api-post
+      Handler: com.unicorn.location.UnicornPostLocationHandler::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 1024
+      Environment:
+        Variables:
+          PARAM1: VALUE
+      Events:
+        UnicornLocationEvent:
+          Type: Api
+          Properties:
+            Path: /locations
+            Method: post
+
+Outputs:
+  UnicornLocationApi:
+    Description: "API Gateway endpoint URL for Prod stage for Unicorn Location function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/locations"
+  UnicornLocationFunction:
+    Description: "Unicorn Location Lambda Function ARN"
+    Value: !GetAtt UnicornLocationFunction.Arn
+  UnicornLocationFunctionIamRole:
+    Description: "Implicit IAM Role created for Unicorn Location function"
+    Value: !GetAtt UnicornLocationFunctionRole.Arn
+
