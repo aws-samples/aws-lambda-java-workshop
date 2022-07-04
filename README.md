@@ -9,8 +9,7 @@ You will learn how to build cloud-native Java applications, best practices and p
 
 ## [Migrate Spring Boot applications to AWS Lambda](labs/unicorn-store)
 
-In this module you will learn how to migrate an existing Spring Boot application to AWS Lambda.
-You will understand the implications, tools and optimizations techniques to adapt your application to the new requirements.
+In this module you will learn how to bring your traditional Java Spring application to AWS Lambda with minimal effort and iteratively apply optimizations to get the best out of your Serverless Java experience. You will get an overview of best practices, performance trade-offs and the design considerations for each step to be able to make well-informed decisions when bringing enterprise Java applications to AWS Lambda.
 
 ![Unicorn Store](resources/unicorn-store-overview.png)
 
@@ -18,6 +17,7 @@ You will understand the implications, tools and optimizations techniques to adap
 
 In this module you will create an application in plain Java and apply AWS Lambda Java best practises.
 The goal is to understand how you can optimize your Java applications and run it more efficiently.
+In addition, we’ll introduce GraalVM native images and modify the existing application to gain up to 80% performance improvement during cold-starts.
 
 ![Unicorn Location API](resources/unicorn-location-api-overview.png)
 
