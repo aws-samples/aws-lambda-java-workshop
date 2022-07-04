@@ -1,4 +1,4 @@
-# Lab 2 - Optimize your Serverless Java application
+# Accelerate Serverless Java with GraalVM
 
 # Pre-Requisites
 

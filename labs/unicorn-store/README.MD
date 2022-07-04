@@ -1,4 +1,4 @@
-# Lab 1 - Migrate your Spring Boot application to AWS Lambda
+# Migrate your Spring Boot application to AWS Lambda
 
 # Pre-Requisites
 
