@@ -7,7 +7,7 @@ You will learn how to build cloud-native Java applications, best practices and p
 
 # Architecture & Lab Overview
 
-## [Migrate Spring Boot application to AWS Lambda](labs/unicorn-store)
+## [Migrate Spring Boot applications to AWS Lambda](labs/unicorn-store)
 
 In this module you will learn how to migrate an existing Spring Boot application to AWS Lambda.
 You will understand the implications, tools and optimizations techniques to adapt your application to the new requirements.
