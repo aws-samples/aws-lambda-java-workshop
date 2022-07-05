@@ -1,0 +1,13 @@
+# Install newer version of AWS SAM CLI
+wget https://github.com/aws/aws-sam-cli/releases/download/v1.53.0/aws-sam-cli-linux-x86_64.zip
+unzip -q aws-sam-cli-linux-x86_64.zip -d sam-installation
+sudo ./sam-installation/install --update
+rm -rf ./sam-installation/
+rm ./aws-sam-cli-linux-x86_64.zip
+
+## Install additional dependencies
+sudo yum install -y jq
+npm install -g aws-cdk --force
+npm install -g artillery
+
+./resize-cloud9.sh 30
