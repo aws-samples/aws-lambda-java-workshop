@@ -12,7 +12,7 @@
 cd infrastructure/cdk
 
 cdk bootstrap
-cdk deploy UnicornStoreInfrastructure --outputs-file target/output.json
+cdk deploy UnicornStoreInfrastructure --outputs-file target/output.json --require-approval never
 
 # Execute the DB Setup function to create the table
 aws lambda invoke --function-name $(cat target/output.json | jq -r '.UnicornStoreInfrastructure.DbSetupArn') /dev/stdout | cat;
