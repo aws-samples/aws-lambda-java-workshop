@@ -24,29 +24,30 @@ jobs:
       - uses: actions/checkout@v3
       - name: mvn db-setup
         run: ./mvnw package -f infrastructure/db-setup/pom.xml
+        working-directory: ./labs/unicorn-store
       - name: mvn cdk
         run: ./mvnw package -f infrastructure/cdk/pom.xml
+        working-directory: ./labs/unicorn-store
       - name: mvn unicorn-store-basic
         run: ./mvnw package -f software/unicorn-store-basic/pom.xml
+        working-directory: ./labs/unicorn-store
       - name: mvn unicorn-store-spring
         run: ./mvnw package -f software/unicorn-store-spring/pom.xml
+        working-directory: ./labs/unicorn-store
       - name: mvn unicorn-store-spring-final
         run: ./mvnw package -f software/unicorn-store-spring-final/pom.xml
+        working-directory: ./labs/unicorn-store
       - name: mvn unicorn-store-micronaut
         run: ./mvnw package -f software/unicorn-store-micronaut/pom.xml
+        working-directory: ./labs/unicorn-store
 
   build-unicorn-location-api:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: mvn build
+    - name: mvn initial
       run: mvn package
       working-directory: ./labs/unicorn-location-api/UnicornLocationFunction
-
-  build-unicorn-location-api-final:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: mvn build
-        run: mvn package
-        working-directory: ./labs/unicorn-location-api/final/unicorn-location-api-final
+    - name: mvn final
+      run: mvn package
+      working-directory: ./labs/unicorn-location-api/final/unicorn-location-api-final/UnicornLocationFunction
