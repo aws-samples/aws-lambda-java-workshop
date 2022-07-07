@@ -59,7 +59,6 @@ public class UnicornStoreStack extends Stack {
                 .functionName("unicorn-store-spring")
                 .memorySize(1024)
                 .timeout(Duration.seconds(29))
-                .logRetention(RetentionDays.FIVE_DAYS)
                 .code(Code.fromAsset("../../software/unicorn-store-spring/target/store-spring-1.0.0.jar"))
                 .handler("com.unicorn.store.StreamLambdaHandler::handleRequest")
                 .vpc(infrastructureStack.getVpc())

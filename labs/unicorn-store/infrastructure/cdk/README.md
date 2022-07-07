@@ -1,6 +1,7 @@
-# Welcome to your CDK Java project!
+# Welcome to the Unicorn Store CDK Java project!
 
-This is a blank project for Java development with CDK.
+This project is used to deploy the needed infrastructure resources to run the Unicorn Store.
+Please follow the workshop instructions on how to properly configure the environment.
 
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
