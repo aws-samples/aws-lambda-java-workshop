@@ -40,6 +40,11 @@ jobs:
       - name: mvn unicorn-store-micronaut
         run: ./mvnw package -f software/unicorn-store-micronaut/pom.xml
         working-directory: ./labs/unicorn-store
+      - name: install cdk
+        run: npm install -g aws-cdk
+      - name: synth
+        run: cdk synth
+        working-directory: ./labs/unicorn-store/infrastructure/cdk
 
   build-unicorn-location-api:
     runs-on: ubuntu-latest
