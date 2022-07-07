@@ -31,3 +31,11 @@ This service will receive coordinates from Unicorns all over the world. In the f
 4. Tiered compilation
 5. Common Runtime Client
 6. Accelerate - Use GraalVM to reduce your cold-starts by up to 80%
+
+
+## Security
+Both the final project and the initial setup have been checked with [CFN-Nag](https://github.com/stelligent/cfn_nag). Please refer to the Github repository to install the cfn_nag tool and run a scan on the project by providing:
+```shell
+cfn_nag_scan --input-path template.yaml
+cfn_nag_scan --input-path final/unicorn-location-api-final/template.yaml
+```

@@ -58,4 +58,7 @@ To run a load test for the Spring-App use the following script:
 ```bash
 ./benchmark.sh spring #(or basic, micronaut)
 ```
-
+## Security
+The project uses [CDK-Nag](https://github.com/cdklabs/cdk-nag) to identify issues with the environment configuration. Since this is workshop environment we are
+not using all the capabilities that you might need in production (E.g. Multi-AZ setup). Please refer to the CDK-Nag suppressions in the [CDK-App](infrastructure/cdk/src/main/java/com/unicorn/UnicornStoreApp.java) to identify certain choices
+we have made for this setup.

@@ -6,6 +6,7 @@ import software.amazon.awscdk.services.events.EventBus;
 import software.amazon.awscdk.services.lambda.Code;
 import software.amazon.awscdk.services.lambda.Function;
 import software.amazon.awscdk.services.lambda.Runtime;
+import software.amazon.awscdk.services.logs.LogRetention;
 import software.amazon.awscdk.services.logs.RetentionDays;
 import software.amazon.awscdk.services.rds.*;
 import software.constructs.Construct;
@@ -56,7 +57,6 @@ public class InfrastructureStack extends Stack {
                 .runtime(Runtime.JAVA_11)
                 .memorySize(512)
                 .timeout(Duration.seconds(29))
-                .logRetention(RetentionDays.FIVE_DAYS)
                 .code(Code.fromAsset("../db-setup/target/db-setup.jar"))
                 .handler("com.amazon.aws.DBSetupHandler::handleRequest")
                 .vpc(vpc)

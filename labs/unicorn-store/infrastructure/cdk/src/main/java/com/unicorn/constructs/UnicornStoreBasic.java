@@ -77,7 +77,6 @@ public class UnicornStoreBasic extends Construct {
                 .memorySize(2048)
                 .functionName(name)
                 .timeout(Duration.seconds(29))
-                .logRetention(RetentionDays.FIVE_DAYS)
                 .code(Code.fromAsset("../..//software/unicorn-store-basic/target/store-basic-1.0.0.jar"))
                 .handler(handler)
                 .vpc(infrastructureStack.getVpc())
