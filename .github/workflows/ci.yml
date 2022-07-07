@@ -1,0 +1,31 @@
+name: Continuous integration
+
+on:
+  push:
+  pull_request:
+  
+  workflow_dispatch:
+
+jobs:
+  cfn-nag:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: stelligent/cfn_nag@master
+      with:
+        input_path: template.yaml
+    - uses: stelligent/cfn_nag@master
+      with:
+        input_path: final/unicorn-location-api-final/template.yaml
+  
+  build-unicorn-location-api:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build starting point
+      run: mvn -q package
+      working-directory: ./labs/unicorn-location-api/UnicornLocationFunction
+    - name: Build final
+      run: mvn -q package
+      working-directory: ./labs/unicorn-location-api/final/unicorn-location-api-final 
+      
