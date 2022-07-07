@@ -13,10 +13,10 @@ jobs:
     - uses: actions/checkout@v3
     - uses: stelligent/cfn_nag@master
       with:
-        input_path: template.yaml
+        input_path: aws-lambda-java-workshop/labs/unicorn-location-api/template.yaml
     - uses: stelligent/cfn_nag@master
       with:
-        input_path: final/unicorn-location-api-final/template.yaml
+        input_path: aws-lambda-java-workshop/labs/unicorn-location-api/final/unicorn-location-api-final/template.yaml
   
   build-unicorn-location-api:
     runs-on: ubuntu-latest
@@ -24,8 +24,8 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build starting point
       run: mvn -q package
-      working-directory: ./labs/unicorn-location-api/UnicornLocationFunction
+      working-directory: ./aws-lambda-java-workshop/labs/unicorn-location-api/UnicornLocationFunction
     - name: Build final
       run: mvn -q package
-      working-directory: ./labs/unicorn-location-api/final/unicorn-location-api-final 
+      working-directory: ./aws-lambda-java-workshop/labs/unicorn-location-api/final/unicorn-location-api-final
       
