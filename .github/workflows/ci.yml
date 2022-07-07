@@ -17,15 +17,36 @@ jobs:
     - uses: stelligent/cfn_nag@master
       with:
         input_path: labs/unicorn-location-api/final/unicorn-location-api-final/template.yaml
-  
+
+  build-unicorn-store:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: mvn db-setup
+        run: ./mvnw package -f infrastructure/db-setup/pom.xml
+      - name: mvn cdk
+        run: ./mvnw package -f infrastructure/cdk/pom.xml
+      - name: mvn unicorn-store-basic
+        run: ./mvnw package -f software/unicorn-store-basic/pom.xml
+      - name: mvn unicorn-store-spring
+        run: ./mvnw package -f software/unicorn-store-spring/pom.xml
+      - name: mvn unicorn-store-spring-final
+        run: ./mvnw package -f software/unicorn-store-spring-final/pom.xml
+      - name: mvn unicorn-store-micronaut
+        run: ./mvnw package -f software/unicorn-store-micronaut/pom.xml
+
   build-unicorn-location-api:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Build starting point
+    - name: mvn build
       run: mvn package
       working-directory: ./labs/unicorn-location-api/UnicornLocationFunction
-    - name: Build final
-      run: mvn package
-      working-directory: ./labs/unicorn-location-api/final/unicorn-location-api-final
-      
+
+  build-unicorn-location-api-final:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: mvn build
+        run: mvn package
+        working-directory: ./labs/unicorn-location-api/final/unicorn-location-api-final
