@@ -4,6 +4,7 @@ sudo sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo
 sudo yum install -y apache-maven
 
 # Install newer version of AWS SAM CLI
+cd /tmp
 wget https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
 unzip -q aws-sam-cli-linux-x86_64.zip -d sam-installation
 sudo ./sam-installation/install --update
