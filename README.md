@@ -1,7 +1,7 @@
 # Java on AWS Lambda Workshop
 
 This project contains the code for the Java on AWS Lambda workshop.
-You can find the content and instructions for the workshop here: TODO: Update Link
+You can find the content and instructions for the workshop here.
 
 You will learn how to build cloud-native Java applications, best practices and performance optimizations techniques and how to migrate your existing Java application to AWS Lambda.
 
