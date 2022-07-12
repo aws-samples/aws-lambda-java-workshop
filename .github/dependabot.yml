@@ -6,10 +6,42 @@
 version: 2
 updates:
   - package-ecosystem: maven
-    directory: "/" # Location of package manifests
+    directory: "/labs/unicorn-store/software/unicorn-store-basic" 
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: maven
+    directory: "/labs/unicorn-store/software/unicorn-store-basic" 
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: maven
+    directory: "/labs/unicorn-store/software/unicorn-store-spring" 
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: maven
+    directory: "/labs/unicorn-store/software/unicorn-store-spring-final" 
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: maven
+    directory: "/labs/unicorn-store/infrastructure/cdk" 
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: maven
+    directory: "/labs/unicorn-store/infrastructure/db-setup" 
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: maven
+    directory: "/labs/unicorn-location-api/UnicornLocationFunction" 
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: maven
+    directory: "/labs/unicorn-location-api/final/unicorn-location-api-final/UnicornLocationFunction" 
     schedule:
       interval: "weekly"
   - package-ecosystem: docker
-    directory: "/" # Location of package manifests
+    directory: "/labs/unicorn-location-api/graal"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: docker
+    directory: "/labs/unicorn-location-api/final/unicorn-location-api-final/graal"
     schedule:
       interval: "weekly"
