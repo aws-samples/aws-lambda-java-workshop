@@ -27,6 +27,8 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- There is no built-in GraalVM support for the CRT client yet. -->
+        <!-- Do not update this dependency without checking if the GraalVM config files match the version. -->
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>aws-crt-client</artifactId>
