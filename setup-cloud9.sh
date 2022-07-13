@@ -16,5 +16,11 @@ sudo yum install -y jq
 npm install -g aws-cdk --force
 npm install -g artillery
 
+## Resize disk
 cd -
 ./resize-cloud9.sh 30
+
+## Set JDK 11 as default
+sudo update-alternatives --set java /usr/lib/jvm/java-11-amazon-corretto.x86_64/bin/java
+sudo update-alternatives --set javac /usr/lib/jvm/java-11-amazon-corretto.x86_64/bin/javac
+export JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto.x86_64
