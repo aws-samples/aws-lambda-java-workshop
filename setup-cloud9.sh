@@ -17,8 +17,7 @@ npm install -g aws-cdk --force
 npm install -g artillery
 
 ## Resize disk
-cd -
-./resize-cloud9.sh 30
+/home/ec2-user/environment/aws-lambda-java-workshop/resize-cloud9.sh 30
 
 ## Set JDK 11 as default
 sudo update-alternatives --set java /usr/lib/jvm/java-11-amazon-corretto.x86_64/bin/java
