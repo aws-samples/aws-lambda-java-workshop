@@ -16,4 +16,5 @@ sudo yum install -y jq
 npm install -g aws-cdk --force
 npm install -g artillery
 
+cd -
 ./resize-cloud9.sh 30
