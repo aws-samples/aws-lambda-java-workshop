@@ -50,6 +50,6 @@ updates:
     schedule:
       interval: "weekly"
   - package-ecosystem: docker
-    directory: "/labs/unicorn-location-api/final/unicorn-location-api-final/graal"
+    directory: "/labs/unicorn-location-api/final/unicorn-location-api-final"
     schedule:
       interval: "weekly"
