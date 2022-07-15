@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.unicorn</groupId>
-	<artifactId>store-spring</artifactId>
+	<artifactId>store-spring-final</artifactId>
 	<version>1.0.0</version>
 	<name>store</name>
 	<description>Unicorn storage service</description>
