@@ -34,7 +34,7 @@ updates:
     schedule:
       interval: "weekly"
     ignore: # needs manual GraalVM config updates
-      - dependency-name: "software.amazon.awssdk"
+      - dependency-name: "software.amazon.awssdk:*"
         versions:
           - "> 2.17.214"
   - package-ecosystem: maven
@@ -42,7 +42,7 @@ updates:
     schedule:
       interval: "weekly"
     ignore: # needs manual GraalVM config updates
-      - dependency-name: "software.amazon.awssdk"
+      - dependency-name: "software.amazon.awssdk:*"
         versions:
           - "> 2.17.214"
   - package-ecosystem: docker
