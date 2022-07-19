@@ -1,10 +1,23 @@
+## go to tmp directory
+cd /tmp
+
+## Ensure AWS CLI v2 is installed
+sudo yum -y remove aws-cli
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
 ## Install Maven
-sudo wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
-sudo sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo
-sudo yum install -y apache-maven
+export MVN_VERSION=3.8.6
+export MVN_FOLDERNAME=apache-maven-${MVN_VERSION}
+export MVN_FILENAME=apache-maven-${MVN_VERSION}-bin.tar.gz
+curl -4 -L https://dlcdn.apache.org/maven/maven-3/${MVN_VERSION}/binaries/${MVN_FILENAME} | tar -xvz
+sudo mv $MVN_FOLDERNAME /usr/lib/maven
+rm -rf $MVN_FOLDERNAME
+export M2_HOME=/usr/lib/maven
+export PATH=${PATH}:${M2_HOME}/bin
 
 # Install newer version of AWS SAM CLI
-cd /tmp
 wget -q https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
 unzip -q aws-sam-cli-linux-x86_64.zip -d sam-installation
 sudo ./sam-installation/install --update
