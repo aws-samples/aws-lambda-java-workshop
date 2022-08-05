@@ -24,36 +24,6 @@
     "allDeclaredConstructors": true
   },
   {
-    "name": "com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent$RequestContext",
-    "allDeclaredFields": true,
-    "allDeclaredMethods": true,
-    "allDeclaredConstructors": true
-  },
-  {
-    "name": "com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent$RequestContext$Authorizer",
-    "allDeclaredFields": true,
-    "allDeclaredMethods": true,
-    "allDeclaredConstructors": true
-  },
-  {
-    "name": "com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent$RequestContext$Authorizer$JWT",
-    "allDeclaredFields": true,
-    "allDeclaredMethods": true,
-    "allDeclaredConstructors": true
-  },
-  {
-    "name": "com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent$RequestContext$CognitoIdentity",
-    "allDeclaredFields": true,
-    "allDeclaredMethods": true,
-    "allDeclaredConstructors": true
-  },
-  {
-    "name": "com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent$RequestContext$Http",
-    "allDeclaredFields": true,
-    "allDeclaredMethods": true,
-    "allDeclaredConstructors": true
-  },
-  {
     "name": "com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent",
     "allDeclaredConstructors": true,
     "allPublicConstructors": true,
