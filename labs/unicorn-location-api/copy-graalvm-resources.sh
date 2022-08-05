@@ -10,3 +10,4 @@ cp graal/bootstrap UnicornLocationFunctionGraalVM
 
 #Dockerfile for building the native image
 cp graal/Dockerfile .
+cp graal/build-native-image.sh .
