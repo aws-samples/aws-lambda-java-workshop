@@ -8,6 +8,6 @@ mkdir UnicornLocationFunctionGraalVM
 cp graal/Makefile UnicornLocationFunctionGraalVM
 cp graal/bootstrap UnicornLocationFunctionGraalVM
 
-#Dockerfile for building the native image
+#Copy the Dockerfile & build script for building the native image
 cp graal/Dockerfile .
 cp graal/build-native-image.sh .
