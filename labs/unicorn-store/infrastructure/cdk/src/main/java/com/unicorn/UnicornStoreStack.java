@@ -34,6 +34,8 @@ public class UnicornStoreStack extends Stack {
         eventBridge.grantPutEventsTo(unicornStoreLambdaContainer);
 
         var restApi = setupRestApi(unicornStoreLambdaContainer);
+
+        //Alternative Solutions with No-Framework (Basic) & Micronaut
         new UnicornStoreMicronaut(this, "UnicornStoreMicronaut", infrastructureStack);
         new UnicornStoreBasic(this, "UnicornStoreBasic", infrastructureStack);
 

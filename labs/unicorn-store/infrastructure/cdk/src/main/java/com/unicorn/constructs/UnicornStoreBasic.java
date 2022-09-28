@@ -77,7 +77,7 @@ public class UnicornStoreBasic extends Construct {
                 .memorySize(2048)
                 .functionName(name)
                 .timeout(Duration.seconds(29))
-                .code(Code.fromAsset("../..//software/unicorn-store-basic/target/store-basic-1.0.0.jar"))
+                .code(Code.fromAsset("../..//software/alternatives/unicorn-store-basic/target/store-basic-1.0.0.jar"))
                 .handler(handler)
                 .vpc(infrastructureStack.getVpc())
                 .securityGroups(List.of(infrastructureStack.getApplicationSecurityGroup()))
