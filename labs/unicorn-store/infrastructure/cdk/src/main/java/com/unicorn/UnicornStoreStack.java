@@ -26,13 +26,13 @@ public class UnicornStoreStack extends Stack {
         var database = infrastructureStack.getDatabase();
         var eventBridge = infrastructureStack.getEventBridge();
 
-
         //SpringBoot app
         var unicornStoreLambdaContainer = createUnicornLambdaFunction();
 
-        //Permission for Lambda Function
+        //Permission for Spring Boot Lambda Function
         eventBridge.grantPutEventsTo(unicornStoreLambdaContainer);
 
+        //Setup a Proxy-Rest API to access the Spring Lambda function
         var restApi = setupRestApi(unicornStoreLambdaContainer);
 
         //Alternative Solutions with No-Framework (Basic) & Micronaut
