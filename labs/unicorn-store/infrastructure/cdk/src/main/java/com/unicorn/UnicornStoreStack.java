@@ -2,6 +2,7 @@ package com.unicorn;
 
 import com.unicorn.constructs.UnicornStoreBasic;
 import com.unicorn.constructs.UnicornStoreMicronaut;
+import com.unicorn.constructs.UnicornStoreSpringNative;
 import software.amazon.awscdk.*;
 import software.amazon.awscdk.services.apigateway.LambdaRestApi;
 import software.amazon.awscdk.services.apigateway.RestApi;
@@ -22,25 +23,28 @@ public class UnicornStoreStack extends Stack {
     public UnicornStoreStack(final Construct scope, final String id, final StackProps props,
                              final InfrastructureStack infrastructureStack) {
         super(scope, id, props);
+
+        //Get previously created infrastructure stack
         this.infrastructureStack = infrastructureStack;
-        var database = infrastructureStack.getDatabase();
         var eventBridge = infrastructureStack.getEventBridge();
 
-        //SpringBoot app
-        var unicornStoreLambdaContainer = createUnicornLambdaFunction();
+        //Create Spring Lambda function
+        var unicornStoreSpringLambda = createUnicornLambdaFunction();
 
         //Permission for Spring Boot Lambda Function
-        eventBridge.grantPutEventsTo(unicornStoreLambdaContainer);
+        eventBridge.grantPutEventsTo(unicornStoreSpringLambda);
 
         //Setup a Proxy-Rest API to access the Spring Lambda function
-        var restApi = setupRestApi(unicornStoreLambdaContainer);
+        var restApi = setupRestApi(unicornStoreSpringLambda);
 
         //Alternative Solutions with No-Framework (Basic) & Micronaut
         new UnicornStoreMicronaut(this, "UnicornStoreMicronaut", infrastructureStack);
         new UnicornStoreBasic(this, "UnicornStoreBasic", infrastructureStack);
+        new UnicornStoreSpringNative(this, "UnicornStoreSpringNative", infrastructureStack);
 
+        //Create output values for later reference
         new CfnOutput(this, "unicorn-store-spring-function-arn", CfnOutputProps.builder()
-                .value(unicornStoreLambdaContainer.getFunctionArn())
+                .value(unicornStoreSpringLambda.getFunctionArn())
                 .build());
 
         new CfnOutput(this, "ApiEndpointSpring", CfnOutputProps.builder()
@@ -48,10 +52,10 @@ public class UnicornStoreStack extends Stack {
                 .build());
     }
 
-    private RestApi setupRestApi(Function unicornStoreLambdaContainer) {
+    private RestApi setupRestApi(Function unicornStoreSpringLambda) {
         return LambdaRestApi.Builder.create(this, "UnicornStoreSpringApi")
                 .restApiName("UnicornStoreSpringApi")
-                .handler(unicornStoreLambdaContainer)
+                .handler(unicornStoreSpringLambda)
                 .build();
     }
 
