@@ -34,7 +34,7 @@ jobs:
       - name: mvn unicorn-store-spring
         run: ./mvnw package -f software/unicorn-store-spring/pom.xml
         working-directory: ./labs/unicorn-store
-      - name: mvn unicorn-store-spring-final
+      - name: mvn unicorn-store-spring-native-graalvm
         run: ./mvnw package -f software/alternatives/unicorn-store-spring-native-graalvm/pom.xml
         working-directory: ./labs/unicorn-store
       - name: mvn unicorn-store-micronaut

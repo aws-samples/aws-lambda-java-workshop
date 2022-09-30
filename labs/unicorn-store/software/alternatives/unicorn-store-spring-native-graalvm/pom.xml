@@ -5,11 +5,11 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.2</version>
+		<version>2.7.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.unicorn</groupId>
-	<artifactId>uncicorn-store-spring-native</artifactId>
+	<artifactId>unicorn-store-spring-native</artifactId>
 	<version>1.0.0</version>
 	<name>store</name>
 	<description>Unicorn storage service</description>

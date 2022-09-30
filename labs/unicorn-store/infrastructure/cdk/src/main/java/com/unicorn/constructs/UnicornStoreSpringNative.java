@@ -4,6 +4,7 @@ import com.unicorn.InfrastructureStack;
 import software.amazon.awscdk.CfnOutput;
 import software.amazon.awscdk.CfnOutputProps;
 import software.amazon.awscdk.Duration;
+import software.amazon.awscdk.services.apigateway.LambdaIntegration;
 import software.amazon.awscdk.services.apigateway.LambdaRestApi;
 import software.amazon.awscdk.services.apigateway.RestApi;
 import software.amazon.awscdk.services.lambda.Code;
@@ -23,7 +24,7 @@ public class UnicornStoreSpringNative extends Construct {
         super(scope, id);
         this.infrastructureStack = infrastructureStack;
 
-        //Micronaut app
+        //Spring Native GraalVM function app
         var unicornStoreSpringNative = createUnicornLambdaFunction();
         infrastructureStack.getEventBridge().grantPutEventsTo(unicornStoreSpringNative);
 
@@ -34,11 +35,13 @@ public class UnicornStoreSpringNative extends Construct {
                 .build());
     }
 
-    private RestApi setupRestApi(Function unicornStoreLambdaContainer) {
-        return LambdaRestApi.Builder.create(this, "UnicornStoreSpringNativeApi")
+    private RestApi setupRestApi(Function unicornStoreSpringNative) {
+        var api = LambdaRestApi.Builder.create(this, "UnicornStoreSpringNativeApi")
                 .restApiName("UnicornStoreSpringNativeApi")
-                .handler(unicornStoreLambdaContainer)
+                .handler(unicornStoreSpringNative)
                 .build();
+
+        return api;
     }
 
     private Function createUnicornLambdaFunction() {
@@ -47,7 +50,7 @@ public class UnicornStoreSpringNative extends Construct {
                 .functionName("unicorn-store-spring-native-graalvm")
                 .memorySize(2048)
                 .timeout(Duration.seconds(29))
-                .code(Code.fromAsset("../..//software/alternatives/unicorn-store-spring-final/lambda-spring-native.zip"))
+                .code(Code.fromAsset("../..//software/alternatives/unicorn-store-spring-native-graalvm/lambda-spring-native.zip"))
                 .handler("org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest")
                 .vpc(infrastructureStack.getVpc())
                 .securityGroups(List.of(infrastructureStack.getApplicationSecurityGroup()))

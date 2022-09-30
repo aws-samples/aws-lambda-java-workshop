@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
 
-./store-spring-graal $_HANDLER
+./unicorn-store-spring-native $_HANDLER
