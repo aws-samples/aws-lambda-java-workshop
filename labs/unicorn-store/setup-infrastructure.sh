@@ -5,7 +5,7 @@
 
 # Build the unicorn application
 ./mvnw clean package -f software/alternatives/unicorn-store-basic/pom.xml
-./mvnw clean package -f software/alternatives/unicorn-store-spring/pom.xml
+./mvnw clean package -f software/unicorn-store-spring/pom.xml
 ./mvnw clean package -f software/alternatives/unicorn-store-micronaut/pom.xml
 
 # Deploy the infrastructure
