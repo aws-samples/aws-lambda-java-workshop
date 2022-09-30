@@ -1,4 +1,4 @@
-package com.unicorn;
+package com.unicorn.core;
 
 import software.amazon.awscdk.*;
 import software.amazon.awscdk.services.ec2.*;
@@ -37,35 +37,12 @@ public class InfrastructureStack extends Stack {
                         .vpc(vpc)
                         .allowAllOutbound(true)
                         .build());
-
-        var dbSetupLambdaFunction = createDbSetupLambdaFunction();
-
-        new CfnOutput(this, "DbSetupArn", CfnOutputProps.builder()
-                .value(dbSetupLambdaFunction.getFunctionArn())
-                .build());
     }
 
 
     private EventBus createEventBus() {
         return EventBus.Builder.create(this, "UnicornEventBus")
                 .eventBusName("unicorns")
-                .build();
-    }
-
-    private Function createDbSetupLambdaFunction() {
-        return Function.Builder.create(this, "DBSetupLambdaFunction")
-                .runtime(Runtime.JAVA_11)
-                .memorySize(512)
-                .timeout(Duration.seconds(29))
-                .code(Code.fromAsset("../db-setup/target/db-setup.jar"))
-                .handler("com.amazon.aws.DBSetupHandler::handleRequest")
-                .vpc(vpc)
-                .securityGroups(List.of(applicationSecurityGroup))
-                .environment(new HashMap<>() {{
-                    put("DB_PASSWORD", databaseSecret.secretValueFromJson("password").toString());
-                    put("DB_CONNECTION_URL", "jdbc:postgresql://" + database.getDbInstanceEndpointAddress() + ":5432/unicorns");
-                    put("DB_USER", "postgres");
-                }})
                 .build();
     }
 
@@ -97,7 +74,7 @@ public class InfrastructureStack extends Stack {
                 .instanceIdentifier("UnicornInstance")
                 .instanceType(InstanceType.of(InstanceClass.BURSTABLE3, InstanceSize.MEDIUM))
                 .vpcSubnets(SubnetSelection.builder()
-                        .subnetType(SubnetType.PRIVATE_WITH_NAT)
+                        .subnetType(SubnetType.PRIVATE_WITH_EGRESS)
                         .build())
                 .securityGroups(List.of(databaseSecurityGroup))
                 .credentials(Credentials.fromSecret(databaseSecret))
@@ -117,20 +94,12 @@ public class InfrastructureStack extends Stack {
                 .build();
     }
 
-    public DatabaseSecret getDatabaseSecret() {
-        return databaseSecret;
-    }
-
     public EventBus getEventBridge() {
         return eventBridge;
     }
 
     public IVpc getVpc() {
         return vpc;
-    }
-
-    public DatabaseInstance getDatabase() {
-        return database;
     }
 
     public ISecurityGroup getApplicationSecurityGroup() {
