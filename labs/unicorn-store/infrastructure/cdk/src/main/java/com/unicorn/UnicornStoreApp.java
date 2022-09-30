@@ -1,5 +1,7 @@
 package com.unicorn;
 
+import com.unicorn.core.DatabaseSetupStack;
+import com.unicorn.core.InfrastructureStack;
 import io.github.cdklabs.cdknag.AwsSolutionsChecks;
 import io.github.cdklabs.cdknag.NagPackSuppression;
 import io.github.cdklabs.cdknag.NagSuppressions;
@@ -16,6 +18,8 @@ public class UnicornStoreApp {
 
         var infrastructureStack = new InfrastructureStack(app, "UnicornStoreInfrastructure", StackProps.builder()
                 .build());
+
+        var dbSetupStack = new DatabaseSetupStack(app, "UnicornDatabaseSetupStack", StackProps.builder().build(), infrastructureStack);
 
         var unicornStoreSpring = new UnicornStoreStack(app, "UnicornStoreSpringApp", StackProps.builder()
                 .build(), infrastructureStack);
@@ -42,6 +46,7 @@ public class UnicornStoreApp {
 
         NagSuppressions.addStackSuppressions(infrastructureStack, suppression);
         NagSuppressions.addStackSuppressions(unicornStoreSpring, suppression);
+        NagSuppressions.addStackSuppressions(dbSetupStack, suppression);
 
         app.synth();
     }

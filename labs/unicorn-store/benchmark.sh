@@ -21,4 +21,10 @@ then
 fi
 
 
+if [ $app == "spring-native-graalvm" ]
+then
+  artillery run -t $(cat infrastructure/cdk/target/output.json | jq -r '.UnicornStoreSpringApp.ApiEndpointSpringNative') -v '{ "url": "/unicorns" }' infrastructure/loadtest.yaml
+  exit 0
+fi
+
 

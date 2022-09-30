@@ -6,26 +6,41 @@
   {
     "name":"java.lang.Long",
     "methods":[
-      {"name":"longValue","parameterTypes":[] },
-      {"name":"<init>","parameterTypes":["long"] }]
+      {"name":"<init>","parameterTypes":["long"] },
+      {"name":"longValue","parameterTypes":[] }
+    ]
+  },
+  {
+    "name":"java.lang.String",
+    "methods":[
+      {"name":"lastIndexOf","parameterTypes":["int"] },
+      {"name":"substring","parameterTypes":["int"] }
+    ]
+  },
+  {
+    "name":"java.lang.System",
+    "methods":[
+      {"name":"getProperty","parameterTypes":["java.lang.String"] },
+      {"name":"setProperty","parameterTypes":["java.lang.String","java.lang.String"] }
+    ]
   },
   {
     "name":"java.nio.Buffer",
-    "allDeclaredConstructors" : true,
-    "allPublicConstructors" : true,
-    "allDeclaredMethods" : true,
-    "allPublicMethods" : true,
-    "allDeclaredClasses" : true,
-    "allPublicClasses" : true
+    "allDeclaredMethods":true,
+    "allPublicMethods":true,
+    "allDeclaredConstructors":true,
+    "allPublicConstructors":true,
+    "allDeclaredClasses":true,
+    "allPublicClasses":true
   },
   {
     "name":"java.nio.ByteBuffer",
-    "allDeclaredConstructors" : true,
-    "allPublicConstructors" : true,
-    "allDeclaredMethods" : true,
-    "allPublicMethods" : true,
-    "allDeclaredClasses" : true,
-    "allPublicClasses" : true
+    "allDeclaredMethods":true,
+    "allPublicMethods":true,
+    "allDeclaredConstructors":true,
+    "allPublicConstructors":true,
+    "allDeclaredClasses":true,
+    "allPublicClasses":true
   },
   {
     "name":"java.util.concurrent.CompletableFuture",
@@ -37,6 +52,10 @@
   {
     "name":"java.util.function.Predicate",
     "methods":[{"name":"test","parameterTypes":["java.lang.Object"] }]
+  },
+  {
+    "name":"software.amazon.awssdk.crt.App",
+    "methods":[{"name":"main","parameterTypes":["java.lang.String[]"] }]
   },
   {
     "name":"software.amazon.awssdk.crt.AsyncCallback",
@@ -172,6 +191,14 @@
     ]
   },
   {
+    "name":"software.amazon.awssdk.crt.http.Http2Stream",
+    "methods":[{"name":"<init>","parameterTypes":["long"] }]
+  },
+  {
+    "name":"software.amazon.awssdk.crt.http.Http2StreamManager",
+    "methods":[{"name":"onShutdownComplete","parameterTypes":[] }]
+  },
+  {
     "name":"software.amazon.awssdk.crt.http.HttpClientConnection",
     "methods":[{"name":"onConnectionAcquired","parameterTypes":["java.util.concurrent.CompletableFuture","long","int"] }]
   },
@@ -190,10 +217,6 @@
   {
     "name":"software.amazon.awssdk.crt.http.HttpRequestBase",
     "fields":[{"name":"bodyStream"}]
-  },
-  {
-    "name":"software.amazon.awssdk.crt.http.Http2Stream",
-    "methods":[{"name":"<init>","parameterTypes":["long"] }]
   },
   {
     "name":"software.amazon.awssdk.crt.http.HttpRequestBodyStream",
@@ -267,6 +290,14 @@
     "methods":[{"name":"<init>","parameterTypes":[] }]
   },
   {
+    "name":"software.amazon.awssdk.crt.io.TlsContextCustomKeyOperationOptions",
+    "fields":[
+      {"name":"certificateFileContents"},
+      {"name":"certificateFilePath"},
+      {"name":"operationHandler"}
+    ]
+  },
+  {
     "name":"software.amazon.awssdk.crt.io.TlsContextPkcs11Options",
     "fields":[
       {"name":"certificateFileContents"},
@@ -277,6 +308,17 @@
       {"name":"tokenLabel"},
       {"name":"userPin"}
     ]
+  },
+  {
+    "name":"software.amazon.awssdk.crt.io.TlsKeyOperation",
+    "methods":[
+      {"name":"<init>","parameterTypes":["long","byte[]","int","int","int"] },
+      {"name":"invokePerformOperation","parameterTypes":["software.amazon.awssdk.crt.io.TlsKeyOperationHandler","software.amazon.awssdk.crt.io.TlsKeyOperation"] }
+    ]
+  },
+  {
+    "name":"software.amazon.awssdk.crt.io.TlsKeyOperationHandler",
+    "methods":[{"name":"performOperation","parameterTypes":["software.amazon.awssdk.crt.io.TlsKeyOperation"] }]
   },
   {
     "name":"software.amazon.awssdk.crt.mqtt.MqttClientConnection",
@@ -315,6 +357,7 @@
     "name":"software.amazon.awssdk.crt.s3.S3MetaRequestResponseHandlerNativeAdapter",
     "methods":[
       {"name":"onFinished","parameterTypes":["int","int","byte[]"] },
+      {"name":"onFinished","parameterTypes":["int","int","byte[]","int","boolean"] },
       {"name":"onProgress","parameterTypes":["software.amazon.awssdk.crt.s3.S3MetaRequestProgress"] },
       {"name":"onResponseBody","parameterTypes":["byte[]","long","long"] },
       {"name":"onResponseHeaders","parameterTypes":["int","java.nio.ByteBuffer"] }

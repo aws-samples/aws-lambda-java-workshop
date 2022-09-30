@@ -1,4 +1,4 @@
-# Migrate your Spring Boot application to AWS Lambda
+# From Serverful to Serverless Java with AWS Lambda
 
 # Pre-Requisites
 

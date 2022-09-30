@@ -7,7 +7,7 @@ You will learn how to build cloud-native Java applications, best practices and p
 
 # Architecture & Lab Overview
 
-## [Migrate Spring Boot applications to AWS Lambda](labs/unicorn-store)
+## [From Serverful to Serverless Java with AWS Lambda](labs/unicorn-store)
 
 In this module you will learn how to bring your traditional Java Spring application to AWS Lambda with minimal effort and iteratively apply optimizations to get the best out of your Serverless Java experience. You will get an overview of best practices, performance trade-offs and the design considerations for each step to be able to make well-informed decisions when bringing enterprise Java applications to AWS Lambda.
 
