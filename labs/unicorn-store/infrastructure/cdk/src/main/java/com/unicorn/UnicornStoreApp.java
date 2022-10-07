@@ -1,6 +1,5 @@
 package com.unicorn;
 
-import com.unicorn.core.DatabaseSetupStack;
 import com.unicorn.core.InfrastructureStack;
 import io.github.cdklabs.cdknag.AwsSolutionsChecks;
 import io.github.cdklabs.cdknag.NagPackSuppression;
@@ -18,8 +17,6 @@ public class UnicornStoreApp {
 
         var infrastructureStack = new InfrastructureStack(app, "UnicornStoreInfrastructure", StackProps.builder()
                 .build());
-
-        var dbSetupStack = new DatabaseSetupStack(app, "UnicornDatabaseSetupStack", StackProps.builder().build(), infrastructureStack);
 
         var unicornStoreSpring = new UnicornStoreStack(app, "UnicornStoreSpringApp", StackProps.builder()
                 .build(), infrastructureStack);
@@ -41,12 +38,12 @@ public class UnicornStoreApp {
             new NagPackSuppression.Builder().id("AwsSolutions-VPC7").reason("Workshop environment does not need VPC flow logs").build(),
             new NagPackSuppression.Builder().id("AwsSolutions-SMG4").reason("Ephemeral workshop environment does not need to rotate secrets").build(),
             new NagPackSuppression.Builder().id("AwsSolutions-RDS2").reason("Workshop non-sensitive test database does not need encryption at rest").build(),
-            new NagPackSuppression.Builder().id("AwsSolutions-APIG3").reason("Workshop API Gateways do not need AWS WAF assigned" ).build()
+            new NagPackSuppression.Builder().id("AwsSolutions-APIG3").reason("Workshop API Gateways do not need AWS WAF assigned" ).build(),
+            new NagPackSuppression.Builder().id("AwsSolutions-RDS13").reason("Workshop Database does not need backups" ).build()
         );
 
         NagSuppressions.addStackSuppressions(infrastructureStack, suppression);
         NagSuppressions.addStackSuppressions(unicornStoreSpring, suppression);
-        NagSuppressions.addStackSuppressions(dbSetupStack, suppression);
 
         app.synth();
     }

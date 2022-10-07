@@ -37,3 +37,11 @@ npm install -g artillery
 sudo update-alternatives --set java /usr/lib/jvm/java-11-amazon-corretto.x86_64/bin/java
 sudo update-alternatives --set javac /usr/lib/jvm/java-11-amazon-corretto.x86_64/bin/javac
 export JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto.x86_64
+
+
+## Pre-Download Maven dependencies for Unicorn Store
+cd ~/environment/aws-lambda-java-workshop/labs/unicorn-store
+./mvnw dependency:go-offline -f infrastructure/db-setup/pom.xml
+./mvnw dependency:go-offline -f software/alternatives/unicorn-store-basic/pom.xml
+./mvnw dependency:go-offline -f software/unicorn-store-spring/pom.xml
+./mvnw dependency:go-offline -f software/alternatives/unicorn-store-micronaut/pom.xml
