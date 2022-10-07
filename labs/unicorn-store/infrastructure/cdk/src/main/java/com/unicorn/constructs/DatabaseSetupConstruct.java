@@ -1,29 +1,29 @@
-package com.unicorn.core;
+package com.unicorn.constructs;
 
-import software.amazon.awscdk.*;
-import software.amazon.awscdk.services.ec2.*;
-import software.amazon.awscdk.services.events.EventBus;
+import com.unicorn.core.InfrastructureStack;
+import software.amazon.awscdk.CfnOutput;
+import software.amazon.awscdk.CfnOutputProps;
+import software.amazon.awscdk.Duration;
 import software.amazon.awscdk.services.lambda.Code;
 import software.amazon.awscdk.services.lambda.Function;
 import software.amazon.awscdk.services.lambda.Runtime;
-import software.amazon.awscdk.services.rds.*;
 import software.constructs.Construct;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class DatabaseSetupStack extends Stack {
+public class DatabaseSetupConstruct extends Construct{
 
     private final InfrastructureStack infrastructureStack;
 
-    public DatabaseSetupStack(final Construct scope, final String id, final StackProps props,
-                              final InfrastructureStack infrastructureStack) {
-        super(scope, id, props);
-        this.infrastructureStack = infrastructureStack;
+    public DatabaseSetupConstruct(final Construct scope, final String id) {
+        super(scope, id);
+
+        this.infrastructureStack = (InfrastructureStack) scope;
 
         var dbSetupLambdaFunction = createDbSetupLambdaFunction();
 
-        new CfnOutput(this, "DbSetupArn", CfnOutputProps.builder()
+        new CfnOutput(scope, "DbSetupArn", CfnOutputProps.builder()
                 .value(dbSetupLambdaFunction.getFunctionArn())
                 .build());
     }

@@ -1,17 +1,12 @@
 package com.unicorn.core;
 
+import com.unicorn.constructs.DatabaseSetupConstruct;
 import software.amazon.awscdk.*;
 import software.amazon.awscdk.services.ec2.*;
 import software.amazon.awscdk.services.events.EventBus;
-import software.amazon.awscdk.services.lambda.Code;
-import software.amazon.awscdk.services.lambda.Function;
-import software.amazon.awscdk.services.lambda.Runtime;
-import software.amazon.awscdk.services.logs.LogRetention;
-import software.amazon.awscdk.services.logs.RetentionDays;
 import software.amazon.awscdk.services.rds.*;
 import software.constructs.Construct;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class InfrastructureStack extends Stack {
@@ -37,6 +32,8 @@ public class InfrastructureStack extends Stack {
                         .vpc(vpc)
                         .allowAllOutbound(true)
                         .build());
+
+        new DatabaseSetupConstruct(this, "UnicornDatabaseConstruct");
     }
 
 
@@ -70,6 +67,7 @@ public class InfrastructureStack extends Stack {
                 .engine(engine)
                 .vpc(vpc)
                 .allowMajorVersionUpgrade(true)
+                .backupRetention(Duration.days(0))
                 .databaseName("unicorns")
                 .instanceIdentifier("UnicornInstance")
                 .instanceType(InstanceType.of(InstanceClass.BURSTABLE3, InstanceSize.MEDIUM))

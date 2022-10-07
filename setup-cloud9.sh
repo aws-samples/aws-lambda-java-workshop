@@ -37,3 +37,6 @@ npm install -g artillery
 sudo update-alternatives --set java /usr/lib/jvm/java-11-amazon-corretto.x86_64/bin/java
 sudo update-alternatives --set javac /usr/lib/jvm/java-11-amazon-corretto.x86_64/bin/javac
 export JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto.x86_64
+
+## Initialize CDK
+cdk bootstrap
