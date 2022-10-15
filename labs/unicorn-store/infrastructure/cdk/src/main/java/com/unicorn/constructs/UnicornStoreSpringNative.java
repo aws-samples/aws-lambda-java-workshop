@@ -48,7 +48,7 @@ public class UnicornStoreSpringNative extends Construct {
                 .functionName("unicorn-store-spring-native-graalvm")
                 .memorySize(2048)
                 .timeout(Duration.seconds(29))
-                .code(Code.fromAsset("../..//software/alternatives/unicorn-store-spring-native-graalvm/lambda-spring-native.zip"))
+                .code(Code.fromAsset("../../software/alternatives/unicorn-store-spring-native-graalvm/lambda-spring-native.zip"))
                 .handler("org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest")
                 .vpc(infrastructureStack.getVpc())
                 .securityGroups(List.of(infrastructureStack.getApplicationSecurityGroup()))
