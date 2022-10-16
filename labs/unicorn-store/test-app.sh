@@ -45,9 +45,9 @@ then
 fi
 
 
-if [ $app == "quarkus" ]
+if [ $app == "quarkus-jdbc" ]
 then
-    curl --location --request POST $(cat infrastructure/cdk/target/output.json | jq -r '.UnicornStoreSpringApp.ApiEndpointQuarkus')'/unicorns' \
+    curl --location --request POST $(cat infrastructure/cdk/target/output.json | jq -r '.UnicornStoreSpringApp.ApiEndpointQuarkusJDBC')'/unicorns' \
   --header 'Content-Type: application/json' \
   --data-raw '{
     "name": "Something",

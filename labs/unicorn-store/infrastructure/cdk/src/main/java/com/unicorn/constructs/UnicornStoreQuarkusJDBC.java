@@ -14,11 +14,11 @@ import software.constructs.Construct;
 import java.util.HashMap;
 import java.util.List;
 
-public class UnicornStoreQuarkus extends Construct {
+public class UnicornStoreQuarkusJDBC extends Construct {
 
     private final InfrastructureStack infrastructureStack;
 
-    public UnicornStoreQuarkus(final Construct scope, final String id, final InfrastructureStack infrastructureStack) {
+    public UnicornStoreQuarkusJDBC(final Construct scope, final String id, final InfrastructureStack infrastructureStack) {
         super(scope, id);
         this.infrastructureStack = infrastructureStack;
 
@@ -28,25 +28,25 @@ public class UnicornStoreQuarkus extends Construct {
 
         var restApi = setupRestApi(unicornStoreQuarkus);
 
-        new CfnOutput(scope, "ApiEndpointQuarkus", CfnOutputProps.builder()
+        new CfnOutput(scope, "ApiEndpointQuarkusJDBC", CfnOutputProps.builder()
                 .value(restApi.getUrl())
                 .build());
     }
 
     private RestApi setupRestApi(Function unicornStoreLambdaContainer) {
-        return LambdaRestApi.Builder.create(this, "UnicornStoreQuarkusApi")
-                .restApiName("UnicornStoreQuarkusApi")
+        return LambdaRestApi.Builder.create(this, "UnicornStoreQuarkusJDBCApi")
+                .restApiName("UnicornStoreQuarkusJDBCApi")
                 .handler(unicornStoreLambdaContainer)
                 .build();
     }
 
     private Function createUnicornLambdaFunction() {
-        return Function.Builder.create(this, "UnicornStoreQuarkusFunction")
+        return Function.Builder.create(this, "UnicornStoreQuarkusJDBCFunction")
                 .runtime(Runtime.JAVA_11)
-                .functionName("unicorn-store-quarkus")
+                .functionName("unicorn-store-quarkus-jdbc")
                 .memorySize(2048)
                 .timeout(Duration.seconds(29))
-                .code(Code.fromAsset("../../software/alternatives/unicorn-store-quarkus/target/function.zip"))
+                .code(Code.fromAsset("../../software/alternatives/unicorn-store-quarkus-jdbc/target/function.zip"))
                 .handler("io.quarkus.amazon.lambda.runtime.QuarkusStreamHandler::handleRequest")
                 .vpc(infrastructureStack.getVpc())
                 .securityGroups(List.of(infrastructureStack.getApplicationSecurityGroup()))

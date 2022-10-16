@@ -18,9 +18,9 @@ then
   exit 0
 fi
 
-if [ $app == "quarkus" ]
+if [ $app == "quarkus-jdbc" ]
 then
-  ./mvnw clean package -f software/alternatives/unicorn-store-quarkus/pom.xml
+  ./mvnw clean package -f software/alternatives/unicorn-store-quarkus-jdbc/pom.xml
   cd infrastructure/cdk
   cdk deploy UnicornStoreSpringApp --outputs-file target/output.json --require-approval never
   exit 0

@@ -21,9 +21,9 @@ then
 fi
 
 
-if [ $app == "quarkus" ]
+if [ $app == "quarkus-jdbc" ]
 then
-  artillery run -t $(cat infrastructure/cdk/target/output.json | jq -r '.UnicornStoreSpringApp.ApiEndpointQuarkus') -v '{ "url": "/unicorns" }' infrastructure/loadtest.yaml
+  artillery run -t $(cat infrastructure/cdk/target/output.json | jq -r '.UnicornStoreSpringApp.ApiEndpointQuarkusJDBC') -v '{ "url": "/unicorns" }' infrastructure/loadtest.yaml
   exit 0
 fi
 

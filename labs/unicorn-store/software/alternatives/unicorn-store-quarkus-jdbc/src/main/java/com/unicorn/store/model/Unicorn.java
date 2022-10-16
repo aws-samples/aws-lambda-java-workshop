@@ -1,18 +1,7 @@
 package com.unicorn.store.model;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import org.hibernate.annotations.GenericGenerator;
+public class Unicorn {
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-@Entity(name = "unicorns")
-public class Unicorn extends PanacheEntityBase {
-
-    @Id
-    @GeneratedValue(generator="uuid2")
-    @GenericGenerator(name="uuid2", strategy = "uuid2")
     String id;
     String name;
     String age;

@@ -7,7 +7,7 @@
 ./mvnw clean package -f software/alternatives/unicorn-store-basic/pom.xml
 ./mvnw clean package -f software/unicorn-store-spring/pom.xml
 ./mvnw clean package -f software/alternatives/unicorn-store-micronaut/pom.xml
-./mvnw clean package -f software/alternatives/unicorn-store-quarkus/pom.xml
+./mvnw clean package -f software/alternatives/unicorn-store-quarkus-jdbc/pom.xml
 
 # Deploy the infrastructure
 cd infrastructure/cdk

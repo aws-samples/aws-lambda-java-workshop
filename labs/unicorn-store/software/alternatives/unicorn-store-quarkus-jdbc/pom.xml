@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.unicorn.store</groupId>
-  <artifactId>store-quarkus</artifactId>
+  <artifactId>store-quarkus-jdbc</artifactId>
   <version>1.0.0</version>
 
   <properties>
@@ -38,7 +38,7 @@
   <dependencies>
     <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-hibernate-orm-panache</artifactId>
+      <artifactId>quarkus-agroal</artifactId>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>

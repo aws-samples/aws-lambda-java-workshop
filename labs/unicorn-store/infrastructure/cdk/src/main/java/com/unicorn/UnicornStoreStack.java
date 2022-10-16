@@ -2,7 +2,7 @@ package com.unicorn;
 
 import com.unicorn.constructs.UnicornStoreBasic;
 import com.unicorn.constructs.UnicornStoreMicronaut;
-import com.unicorn.constructs.UnicornStoreQuarkus;
+import com.unicorn.constructs.UnicornStoreQuarkusJDBC;
 import com.unicorn.constructs.UnicornStoreSpringNative;
 import com.unicorn.core.InfrastructureStack;
 import software.amazon.awscdk.*;
@@ -41,7 +41,7 @@ public class UnicornStoreStack extends Stack {
         new UnicornStoreMicronaut(this, "UnicornStoreMicronaut", infrastructureStack);
         new UnicornStoreBasic(this, "UnicornStoreBasic", infrastructureStack);
         new UnicornStoreSpringNative(this, "UnicornStoreSpringNative", infrastructureStack);
-        new UnicornStoreQuarkus(this, "UnicornStoreQuarkus", infrastructureStack);
+        new UnicornStoreQuarkusJDBC(this, "UnicornStoreQuarkus", infrastructureStack);
 
         //Create output values for later reference
         new CfnOutput(this, "unicorn-store-spring-function-arn", CfnOutputProps.builder()
