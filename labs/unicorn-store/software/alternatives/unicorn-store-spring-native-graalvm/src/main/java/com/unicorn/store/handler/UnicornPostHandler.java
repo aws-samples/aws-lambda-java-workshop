@@ -18,9 +18,9 @@ public class UnicornPostHandler implements Function<APIGatewayProxyRequestEvent,
     private final UnicornService unicornService;
     private final Logger logger = LoggerFactory.getLogger(UnicornPostHandler.class);
 
-    public UnicornPostHandler(UnicornService unicornService, ObjectMapper objetMapper) {
+    public UnicornPostHandler(UnicornService unicornService, ObjectMapper objectMapper) {
         this.unicornService = unicornService;
-        this.objectMapper = objetMapper;
+        this.objectMapper = objectMapper;
     }
 
     @Override
