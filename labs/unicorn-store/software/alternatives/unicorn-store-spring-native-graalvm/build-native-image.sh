@@ -8,7 +8,7 @@ rm lambda-spring-native.zip
 docker build . -t graalvm-lambda-builder --progress=plain
 
 #Extract the resulting native image
-docker run --rm --entrypoint cat graalvm-lambda-builder target/unicorn-store-spring-native > unicorn-store-spring-native
+docker run --rm --entrypoint cat graalvm-lambda-builder lambda-spring-native.zip > lambda-spring-native.zip
 
-zip lambda-spring-native unicorn-store-spring-native bootstrap
+
 

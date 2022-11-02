@@ -1,7 +1,8 @@
 FROM public.ecr.aws/amazonlinux/amazonlinux:2
 
+#Install depencencies
 RUN yum -y update \
-    && yum install -y unzip tar gzip bzip2-devel ed gcc gcc-c++ gcc-gfortran \
+    && yum install -y unzip zip tar gzip bzip2-devel ed gcc gcc-c++ gcc-gfortran \
     less libcurl-devel openssl openssl-devel readline-devel xz-devel \
     zlib-devel glibc-static libcxx libcxx-devel llvm-toolset-7 zlib-static \
     && rm -rf /var/cache/yum
@@ -30,9 +31,20 @@ RUN ln -s /usr/lib/maven/bin/mvn /usr/bin/mvn
 
 ENV JAVA_HOME /usr/lib/graalvm
 
-#Build Native Image
+#Copy pom.xml to image & cache Maven dependencies
 WORKDIR project
 COPY pom.xml pom.xml
 RUN mvn verify clean --fail-never -B
+
+#Copy project and build native image
 COPY src src
 RUN mvn -Pnative -DskipTests package
+
+#Copy bootstrap file (needed for AWS Lambda custom runtime) to image, set file permissions and bundle as zip
+WORKDIR target
+COPY bootstrap bootstrap
+RUN chmod +x unicorn-store-spring-native
+RUN chmod +x bootstrap
+RUN zip lambda-spring-native unicorn-store-spring-native bootstrap
+
+

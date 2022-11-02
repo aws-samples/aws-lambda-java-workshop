@@ -10,15 +10,15 @@
   <parent>
     <groupId>io.micronaut</groupId>
     <artifactId>micronaut-parent</artifactId>
-    <version>3.1.1</version>
+    <version>3.7.2</version>
   </parent>
 
   <properties>
     <packaging>jar</packaging>
     <jdk.version>11</jdk.version>
     <release.version>11</release.version>
-    <micronaut.version>3.1.1</micronaut.version>
-    <micronaut.data.version>3.1.0</micronaut.data.version>
+    <micronaut.version>3.7.2</micronaut.version>
+    <micronaut.data.version>3.7.2</micronaut.data.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
