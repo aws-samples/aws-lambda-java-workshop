@@ -8,6 +8,7 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 public class UnicornStockBrokerHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     private static final UnicornTransactionRepository unicornTransactionRepository = new UnicornTransactionRepository();
+    private static final UnicornValidStockFetcher unicornValidStockFetcher = new UnicornValidStockFetcher();
 
     public APIGatewayProxyResponseEvent handleRequest(final APIGatewayProxyRequestEvent input, final Context context) {
         UnicornStock unicornStock = new UnicornStock();
