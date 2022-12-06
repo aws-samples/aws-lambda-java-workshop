@@ -1,0 +1,57 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  unicorn-stock-broker
+
+  This API allows you to store transactions of your favorite unicorn stocks
+
+Globals:
+  Function:
+    Timeout: 20
+
+Resources:
+  UnicornStockBrokerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: UnicornStockBroker
+      FunctionName: unicorn-stock-broker
+      Handler: com.unicorn.broker.UnicornStockBrokerHandler::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref TransactionsTable
+      MemorySize: 1024
+      Environment:
+        Variables:
+          PRODUCT_TABLE_NAME: !Ref TransactionsTable
+      Events:
+        UnicornStockBrokerEvent:
+          Type: Api
+          Properties:
+            Path: /transactions
+            Method: post
+  TransactionsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: 'transactionId'
+          AttributeType: 'S'
+      KeySchema:
+        - AttributeName: 'transactionId'
+          KeyType: 'HASH'
+      BillingMode: PAY_PER_REQUEST
+
+
+Outputs:
+  UnicornStockBrokerApi:
+    Description: "API Gateway endpoint URL for Prod stage for Unicorn StockBroker function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/transactions"
+  UnicornStockBrokerFunction:
+    Description: "Unicorn StockBroker Lambda Function ARN"
+    Value: !GetAtt UnicornStockBrokerFunction.Arn
+  UnicornStockBrokerFunctionIamRole:
+    Description: "Implicit IAM Role created for Unicorn StockBroker function"
+    Value: !GetAtt UnicornStockBrokerFunction.Arn
+
