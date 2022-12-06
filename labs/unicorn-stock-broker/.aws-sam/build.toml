@@ -8,6 +8,6 @@ architecture = "x86_64"
 handler = "com.unicorn.broker.UnicornStockBrokerHandler::handleRequest"
 manifest_hash = ""
 packagetype = "Zip"
-functions = ["UnicornStockBrokerFunction"]
+functions = ["UnicornStockBrokerFunction", "UnicornStockBrokerReadFunction"]
 
 [layer_build_definitions]

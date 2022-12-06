@@ -7,15 +7,23 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 
 public class UnicornStockBrokerHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
-    private static final UnicornTransactionWriter unicornTransactionWriter = new UnicornTransactionWriter();
+    private static final UnicornTransactionRepository unicornTransactionRepository = new UnicornTransactionRepository();
 
     public APIGatewayProxyResponseEvent handleRequest(final APIGatewayProxyRequestEvent input, final Context context) {
         UnicornStock unicornStock = new UnicornStock();
         unicornStock.stockId = "test";
         unicornStock.quantity = 2;
-        unicornTransactionWriter.writeTransaction(unicornStock);
+        unicornTransactionRepository.writeTransaction(unicornStock);
         return new APIGatewayProxyResponseEvent()
                 .withStatusCode(200)
                 .withBody("This is supposed to be the Unicorn Location API at some point!");
     }
+
+    public APIGatewayProxyResponseEvent handleReadRequest(final APIGatewayProxyRequestEvent input, final Context context) {
+        var transactions = unicornTransactionRepository.readTransactions();
+        return new APIGatewayProxyResponseEvent()
+                .withStatusCode(200)
+                .withBody(transactions);
+    }
+
 }

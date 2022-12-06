@@ -7,6 +7,13 @@ Description: >
 
 Globals:
   Function:
+    Runtime: java11
+    Architectures:
+      - x86_64
+    MemorySize: 1024
+    Environment:
+      Variables:
+        TABLE_NAME: !Ref TransactionsTable
     Timeout: 20
 
 Resources:
@@ -16,22 +23,30 @@ Resources:
       CodeUri: UnicornStockBroker
       FunctionName: unicorn-stock-broker
       Handler: com.unicorn.broker.UnicornStockBrokerHandler::handleRequest
-      Runtime: java11
-      Architectures:
-        - x86_64
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref TransactionsTable
-      MemorySize: 1024
-      Environment:
-        Variables:
-          PRODUCT_TABLE_NAME: !Ref TransactionsTable
       Events:
         UnicornStockBrokerEvent:
           Type: Api
           Properties:
             Path: /transactions
             Method: post
+  UnicornStockBrokerReadFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: UnicornStockBroker
+      FunctionName: unicorn-stock-broker-read
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref TransactionsTable
+      Handler: com.unicorn.broker.UnicornStockBrokerHandler::handleReadRequest
+      Events:
+        UnicornStockBrokerEvent:
+          Type: Api
+          Properties:
+            Path: /transactions
+            Method: get
   TransactionsTable:
     Type: AWS::DynamoDB::Table
     Properties:
