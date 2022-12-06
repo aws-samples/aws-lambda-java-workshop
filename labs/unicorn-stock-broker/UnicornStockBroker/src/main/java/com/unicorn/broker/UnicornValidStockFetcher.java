@@ -18,6 +18,7 @@ import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 public class UnicornValidStockFetcher {
 
@@ -39,8 +40,10 @@ public class UnicornValidStockFetcher {
                .thenApply(ResponseBytes::asUtf8String)
                .whenComplete((stringContent, e) -> {
                    if (stringContent != null)
-                       logger.info(stringContent);
-                   else
+                   {
+                       List<String> list = stringContent.lines().collect(Collectors.toList());
+                       logger.info(list.toString());
+                   } else
                        logger.error("Could not retrieve validation file" , e);
                });
 
