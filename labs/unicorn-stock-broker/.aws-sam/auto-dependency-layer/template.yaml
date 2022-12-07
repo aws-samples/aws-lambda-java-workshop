@@ -1,0 +1,114 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'unicorn-stock-broker
+
+  This API allows you to store transactions of your favorite unicorn stocks
+
+  '
+Globals:
+  Function:
+    Runtime: java11
+    Architectures:
+    - x86_64
+    MemorySize: 1024
+    Environment:
+      Variables:
+        TABLE_NAME:
+          Ref: TransactionsTable
+        BUCKET_NAME:
+          Ref: ValidationFilesS3Bucket
+    Timeout: 20
+Resources:
+  UnicornStockBrokerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: UnicornStockBrokerFunction
+      FunctionName: unicorn-stock-broker
+      Handler: com.unicorn.broker.UnicornStockBrokerHandler::handleRequest
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: TransactionsTable
+      - S3ReadPolicy:
+          BucketName:
+            Ref: ValidationFilesS3Bucket
+      Events:
+        UnicornStockBrokerEvent:
+          Type: Api
+          Properties:
+            Path: /transactions
+            Method: post
+      Layers:
+      - Fn::GetAtt:
+        - AwsSamAutoDependencyLayerNestedStack
+        - Outputs.UnicornStockBrokerFunction1c43b326DepLayer
+    Metadata:
+      SamResourceId: UnicornStockBrokerFunction
+  UnicornStockBrokerReadFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: UnicornStockBrokerReadFunction
+      FunctionName: unicorn-stock-broker-read
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: TransactionsTable
+      - S3ReadPolicy:
+          BucketName:
+            Ref: ValidationFilesS3Bucket
+      Handler: com.unicorn.broker.UnicornStockBrokerHandler::handleReadRequest
+      Events:
+        UnicornStockBrokerEvent:
+          Type: Api
+          Properties:
+            Path: /transactions
+            Method: get
+      Layers:
+      - Fn::GetAtt:
+        - AwsSamAutoDependencyLayerNestedStack
+        - Outputs.UnicornStockBrokerReadFunctionf805b39fDepLayer
+    Metadata:
+      SamResourceId: UnicornStockBrokerReadFunction
+  TransactionsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+      - AttributeName: transactionId
+        AttributeType: S
+      KeySchema:
+      - AttributeName: transactionId
+        KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+  ValidationFilesS3Bucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Delete
+  AwsSamAutoDependencyLayerNestedStack:
+    DeletionPolicy: Delete
+    Metadata:
+      CreatedBy: AWS SAM CLI sync command
+    Properties:
+      TemplateURL: /Users/mxschell/Projects/aws-lambda-java-workshop/labs/unicorn-stock-broker/.aws-sam/auto-dependency-layer/adl_nested_template.yaml
+    Type: AWS::CloudFormation::Stack
+Outputs:
+  UnicornStockBrokerApi:
+    Description: API Gateway endpoint URL for Prod stage for Unicorn StockBroker function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/transactions
+  UnicornStockBrokerFunction:
+    Description: Unicorn StockBroker Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - UnicornStockBrokerFunction
+      - Arn
+  UnicornStockBrokerFunctionIamRole:
+    Description: Implicit IAM Role created for Unicorn StockBroker function
+    Value:
+      Fn::GetAtt:
+      - UnicornStockBrokerFunction
+      - Arn
+  UnicornStockBrokerValidationS3Bucket:
+    Description: S3 Bucket for validation files
+    Value:
+      Fn::GetAtt:
+      - ValidationFilesS3Bucket
+      - Arn

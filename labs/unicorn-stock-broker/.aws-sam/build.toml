@@ -6,6 +6,7 @@ codeuri = "/Users/mxschell/Projects/aws-lambda-java-workshop/labs/unicorn-stock-
 runtime = "java11"
 architecture = "x86_64"
 handler = "com.unicorn.broker.UnicornStockBrokerHandler::handleRequest"
+source_hash = "ff4b38a7725134c78dede46055d477be39dafbfcd3dc5f0db8b164529eb10f86"
 manifest_hash = ""
 packagetype = "Zip"
 functions = ["UnicornStockBrokerFunction", "UnicornStockBrokerReadFunction"]

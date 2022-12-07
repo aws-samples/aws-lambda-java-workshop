@@ -1,0 +1,36 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: AWS SAM CLI Nested Stack for Auto Dependency Layer Creation
+Metadata:
+  SamCliInfo: 1.57.0
+  key: AWS SAM CLI sync command
+Outputs:
+  UnicornStockBrokerFunction1c43b326DepLayer:
+    Value:
+      Ref: UnicornStockBrokerFunction1c43b326DepLayer
+  UnicornStockBrokerReadFunctionf805b39fDepLayer:
+    Value:
+      Ref: UnicornStockBrokerReadFunctionf805b39fDepLayer
+Resources:
+  UnicornStockBrokerFunction1c43b326DepLayer:
+    Metadata:
+      CreatedBy: AWS SAM CLI sync command
+    Properties:
+      CompatibleRuntimes:
+      - java11
+      ContentUri: /Users/mxschell/Projects/aws-lambda-java-workshop/labs/unicorn-stock-broker/.aws-sam/auto-dependency-layer/UnicornStockBrokerFunction1c43b326DepLayer
+      Description: Auto created layer for dependencies of function UnicornStockBrokerFunction
+      LayerName: unicorn-stock-brea0408cf-UnicornStockBrokerFunc1c43b326-DepLayer
+      RetentionPolicy: Delete
+    Type: AWS::Serverless::LayerVersion
+  UnicornStockBrokerReadFunctionf805b39fDepLayer:
+    Metadata:
+      CreatedBy: AWS SAM CLI sync command
+    Properties:
+      CompatibleRuntimes:
+      - java11
+      ContentUri: /Users/mxschell/Projects/aws-lambda-java-workshop/labs/unicorn-stock-broker/.aws-sam/auto-dependency-layer/UnicornStockBrokerReadFunctionf805b39fDepLayer
+      Description: Auto created layer for dependencies of function UnicornStockBrokerReadFunction
+      LayerName: unicorn-stock-brea0408cf-UnicornStockBrokerReadf805b39f-DepLayer
+      RetentionPolicy: Delete
+    Type: AWS::Serverless::LayerVersion
+Transform: AWS::Serverless-2016-10-31
