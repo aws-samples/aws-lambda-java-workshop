@@ -6,7 +6,7 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.fasterxml.jackson.jr.ob.JSON;
 import com.unicorn.broker.data.TransactionRepository;
-import com.unicorn.broker.data.ValidStockFetcher;
+import com.unicorn.broker.data.BlockedStockFetcher;
 import com.unicorn.broker.exceptions.InvalidStockException;
 import com.unicorn.broker.model.Transaction;
 import org.slf4j.Logger;
@@ -17,7 +17,7 @@ import java.io.IOException;
 public class UnicornStockBrokerHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     private final Logger logger = LoggerFactory.getLogger(UnicornStockBrokerHandler.class);
-    private static final TransactionService transactionService = new TransactionService(new ValidStockFetcher(), new TransactionRepository());
+    private static final TransactionService transactionService = new TransactionService(new BlockedStockFetcher(), new TransactionRepository());
 
     public APIGatewayProxyResponseEvent handleRequest(final APIGatewayProxyRequestEvent input, final Context context) {
         try {

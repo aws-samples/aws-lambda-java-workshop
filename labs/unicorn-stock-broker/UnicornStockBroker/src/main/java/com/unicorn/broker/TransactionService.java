@@ -1,7 +1,7 @@
 package com.unicorn.broker;
 
 import com.unicorn.broker.data.TransactionRepository;
-import com.unicorn.broker.data.ValidStockFetcher;
+import com.unicorn.broker.data.BlockedStockFetcher;
 import com.unicorn.broker.exceptions.InvalidStockException;
 import com.unicorn.broker.model.Transaction;
 import org.slf4j.Logger;
@@ -13,18 +13,18 @@ import java.util.UUID;
 public class TransactionService {
 
     private String BROKER_ID = UUID.randomUUID().toString();
-    private final ValidStockFetcher validStockFetcher;
+    private final BlockedStockFetcher blockedStockFetcher;
     private final TransactionRepository transactionRepository;
     private final Logger logger = LoggerFactory.getLogger(TransactionService.class);
 
-    public TransactionService(final ValidStockFetcher validStockFetcher, final TransactionRepository transactionRepository) {
-        this.validStockFetcher = validStockFetcher;
+    public TransactionService(final BlockedStockFetcher validStockFetcher, final TransactionRepository transactionRepository) {
+        this.blockedStockFetcher = validStockFetcher;
         this.transactionRepository = transactionRepository;
     }
 
     public Optional<Transaction> writeTransaction(Transaction transaction) {
-        if(!validStockFetcher.getValidStocks().contains(transaction.stockId)) {
-            throw new InvalidStockException(transaction.stockId + " is not a valid stock.%n");
+        if(blockedStockFetcher.getBlockedStocks().contains(transaction.stockId)) {
+            throw new InvalidStockException(transaction.stockId + " is not a valid stock.\n");
         }
 
         transaction.transactionId = UUID.randomUUID().toString();

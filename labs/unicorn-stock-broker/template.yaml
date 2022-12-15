@@ -60,5 +60,5 @@ Outputs:
     Value: !GetAtt UnicornStockBrokerFunction.Arn
   UnicornStockBrokerValidationS3Bucket:
     Description: "S3 Bucket for validation files"
-    Value: !GetAtt ValidationFilesS3Bucket.Arn
+    Value: !Ref ValidationFilesS3Bucket
 

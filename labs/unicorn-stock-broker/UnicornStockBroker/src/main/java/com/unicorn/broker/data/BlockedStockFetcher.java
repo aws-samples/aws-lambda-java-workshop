@@ -14,27 +14,27 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ValidStockFetcher {
+public class BlockedStockFetcher {
 
-    private List<String> validStocks;
+    private List<String> blockedStocks;
     private static final String BUCKET_NAME = System.getenv("BUCKET_NAME");
-    private final Logger logger = LoggerFactory.getLogger(ValidStockFetcher.class);
+    private final Logger logger = LoggerFactory.getLogger(BlockedStockFetcher.class);
     private final S3AsyncClient s3Client = S3AsyncClient.builder()
             .region(Region.of(System.getenv(SdkSystemSetting.AWS_REGION.environmentVariable())))
             .httpClientBuilder(AwsCrtAsyncHttpClient.builder())
             .build();
 
-    public ValidStockFetcher() {
+    public BlockedStockFetcher() {
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()
                 .bucket(BUCKET_NAME)
-                .key("valid-stock-list")
+                .key("blocked-stock-list.txt")
                 .build();
 
        s3Client.getObject(getObjectRequest, AsyncResponseTransformer.toBytes())
                .thenApply(ResponseBytes::asUtf8String)
                .whenComplete((stringContent, e) -> {
                    if (stringContent != null) {
-                       validStocks = stringContent.lines().collect(Collectors.toList());
+                       blockedStocks = stringContent.lines().collect(Collectors.toList());
                    } else {
                        logger.error("Could not retrieve validation file" , e);
                    }
@@ -42,8 +42,8 @@ public class ValidStockFetcher {
 
     }
 
-    public List<String> getValidStocks(){
-        return Collections.unmodifiableList(validStocks);
+    public List<String> getBlockedStocks(){
+        return Collections.unmodifiableList(blockedStocks);
     }
 
 
