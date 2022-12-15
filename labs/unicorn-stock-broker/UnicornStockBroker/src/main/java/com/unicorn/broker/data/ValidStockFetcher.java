@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class ValidStockFetcher {
 
-    private List<String> validStocks = Collections.emptyList();
+    private List<String> validStocks;
     private static final String BUCKET_NAME = System.getenv("BUCKET_NAME");
     private final Logger logger = LoggerFactory.getLogger(ValidStockFetcher.class);
     private final S3AsyncClient s3Client = S3AsyncClient.builder()
@@ -43,7 +43,7 @@ public class ValidStockFetcher {
     }
 
     public List<String> getValidStocks(){
-        return validStocks;
+        return Collections.unmodifiableList(validStocks);
     }
 
 

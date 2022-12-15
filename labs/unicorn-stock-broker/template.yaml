@@ -11,10 +11,6 @@ Globals:
     Architectures:
       - x86_64
     MemorySize: 1024
-    Environment:
-      Variables:
-        TABLE_NAME: !Ref TransactionsTable
-        BUCKET_NAME: !Ref ValidationFilesS3Bucket
     Timeout: 20
 
 Resources:
@@ -29,29 +25,16 @@ Resources:
             TableName: !Ref TransactionsTable
         - S3ReadPolicy:
             BucketName: !Ref ValidationFilesS3Bucket
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref TransactionsTable
+          BUCKET_NAME: !Ref ValidationFilesS3Bucket
       Events:
         UnicornStockBrokerEvent:
           Type: Api
           Properties:
             Path: /transactions
             Method: post
-  UnicornStockBrokerReadFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: UnicornStockBroker
-      FunctionName: unicorn-stock-broker-read
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref TransactionsTable
-        - S3ReadPolicy:
-            BucketName: !Ref ValidationFilesS3Bucket
-      Handler: com.unicorn.broker.UnicornStockBrokerHandler::handleReadRequest
-      Events:
-        UnicornStockBrokerEvent:
-          Type: Api
-          Properties:
-            Path: /transactions
-            Method: get
   TransactionsTable:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -68,7 +51,7 @@ Resources:
 Outputs:
   UnicornStockBrokerApi:
     Description: "API Gateway endpoint URL for Prod stage for Unicorn StockBroker function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/transactions"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
   UnicornStockBrokerFunction:
     Description: "Unicorn StockBroker Lambda Function ARN"
     Value: !GetAtt UnicornStockBrokerFunction.Arn
