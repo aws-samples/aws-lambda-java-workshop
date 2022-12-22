@@ -12,7 +12,7 @@ import java.util.UUID;
 @Service
 public class TransactionService {
 
-    private final String BROKER_ID = UUID.randomUUID().toString();
+    private String BROKER_ID = UUID.randomUUID().toString();
     private final TransactionRepository transactionRepository;
     private final Logger logger = LoggerFactory.getLogger(TransactionService.class);
 

@@ -10,6 +10,12 @@
         <Bug pattern="EI_EXPOSE_REP2" />
     </Match>
 
+    <!-- Disable expose internal representation error for DI  -->
+    <Match>
+        <Class name="com.unicorn.broker.core.UnicornStockBrokerHandler" />
+        <Bug pattern="EI_EXPOSE_REP2" />
+    </Match>
+
     <!-- All bugs in test classes, except for JUnit-specific bugs -->
     <Match>
         <Class name="~.*\.*Test" />

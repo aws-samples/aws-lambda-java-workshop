@@ -1,8 +1,8 @@
 config:
   phases:
     - duration: 30
-      arrivalRate: 25
-      name: Loadtest with with 25 concurrent requests for 30 seconds
+      arrivalRate: 100
+      name: Loadtest with with 100 concurrent requests for 30 seconds
   http:
     timeout: 29
 scenarios:

@@ -121,24 +121,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>com.github.spotbugs</groupId>
-                <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.7.3.0</version>
-                <configuration>
-                    <effort>Max</effort>
-                    <threshold>medium</threshold>
-                    <failOnError>true</failOnError>
-                    <plugins>
-                        <plugin>
-                            <groupId>software.amazon.lambda.snapstart</groupId>
-                            <artifactId>aws-lambda-snapstart-java-rules</artifactId>
-                            <version>0.1</version>
-                        </plugin>
-                    </plugins>
-                    <excludeFilterFile>ignore.xml</excludeFilterFile>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <dependencies>
