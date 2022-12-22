@@ -10,7 +10,7 @@ Globals:
     Runtime: java11
     Architectures:
       - x86_64
-    MemorySize: 1024
+    MemorySize: 2048
     Timeout: 20
 
 Resources:
