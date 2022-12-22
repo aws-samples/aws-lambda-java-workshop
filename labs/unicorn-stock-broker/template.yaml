@@ -17,9 +17,9 @@ Resources:
   UnicornStockBrokerFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: UnicornStockBroker
+      CodeUri: target/UnicornStockBroker-1.0-aws.jar
       FunctionName: unicorn-stock-broker
-      Handler: com.unicorn.broker.UnicornStockBrokerHandler::handleRequest
+      Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref TransactionsTable
