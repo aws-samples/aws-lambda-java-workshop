@@ -17,7 +17,6 @@ public class TransactionService {
     private final Logger logger = LoggerFactory.getLogger(TransactionService.class);
 
     public TransactionService(final TransactionRepository transactionRepository) {
-        logger.info(String.format("[NEW BROKER] registered with ID: %s ", BROKER_ID));
         this.transactionRepository = transactionRepository;
     }
 
