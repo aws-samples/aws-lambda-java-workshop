@@ -35,19 +35,19 @@ public class TransactionRepository {
                     .get();
 
             return Optional.of(transaction);
-        } catch (InterruptedException | ExecutionException e) {
-            logger.error("Error while writing to DynamoDB", e);
+        } catch (ExecutionException | InterruptedException e) {
+            logger.error("Error while writing transaction to DynamoDB", e);
             return Optional.empty();
         }
     }
 
-    private static Map<String, AttributeValue> createTransactionDBItem(Transaction stock) {
+    private static Map<String, AttributeValue> createTransactionDBItem(Transaction transaction) {
         Map<String, AttributeValue> item = new HashMap<>();
 
-        item.put("transactionId", AttributeValue.builder().s(stock.transactionId).build());
-        item.put("stock", AttributeValue.builder().s(stock.stockId).build());
-        item.put("quantity", AttributeValue.builder().n(stock.quantity.toString()).build());
-        item.put("broker_id", AttributeValue.builder().s(stock.brokerId).build());
+        item.put("transactionId", AttributeValue.builder().s(transaction.transactionId).build());
+        item.put("stock", AttributeValue.builder().s(transaction.stockId).build());
+        item.put("quantity", AttributeValue.builder().n(transaction.quantity.toString()).build());
+        item.put("broker_id", AttributeValue.builder().s(transaction.brokerId).build());
 
         return item;
     }

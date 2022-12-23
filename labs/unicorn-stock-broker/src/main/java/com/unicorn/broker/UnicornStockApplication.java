@@ -9,4 +9,5 @@ public class UnicornStockApplication {
     public static void main(String[] args) {
         SpringApplication.run(UnicornStockApplication.class, args);
     }
+
 }
