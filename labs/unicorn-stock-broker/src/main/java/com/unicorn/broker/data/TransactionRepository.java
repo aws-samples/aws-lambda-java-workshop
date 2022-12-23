@@ -44,10 +44,10 @@ public class TransactionRepository {
     private static Map<String, AttributeValue> createTransactionDBItem(Transaction transaction) {
         Map<String, AttributeValue> item = new HashMap<>();
 
-        item.put("transactionId", AttributeValue.builder().s(transaction.transactionId).build());
+        item.put("transactionId", AttributeValue.builder().s(transaction.transactionId.toString()).build());
         item.put("stock", AttributeValue.builder().s(transaction.stockId).build());
         item.put("quantity", AttributeValue.builder().n(transaction.quantity.toString()).build());
-        item.put("broker_id", AttributeValue.builder().s(transaction.brokerId).build());
+        item.put("broker_id", AttributeValue.builder().s(transaction.brokerId.toString()).build());
 
         return item;
     }

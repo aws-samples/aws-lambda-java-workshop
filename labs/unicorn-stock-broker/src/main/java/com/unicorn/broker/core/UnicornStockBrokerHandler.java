@@ -33,7 +33,7 @@ public class UnicornStockBrokerHandler implements Function<Transaction, APIGatew
     }
 
     private String generateJSONResponse(Transaction transaction) {
-        return String.format("Broker %s successfully created transaction %s", transaction.brokerId.substring(0,8), transaction.transactionId);
+        return String.format("Broker %s successfully created transaction %s", transaction.brokerId.toString().substring(0,8), transaction.transactionId);
     }
 
 }
