@@ -17,6 +17,7 @@ unicorn-store-spring-native
 .settings
 .springBeans
 .sts4-cache
+.aws-sam
 
 ### IntelliJ IDEA ###
 .idea
