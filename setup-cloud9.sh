@@ -9,7 +9,7 @@ sudo ./aws/install
 rm awscliv2.zip
 
 ## Install Maven
-export MVN_VERSION=3.8.6
+export MVN_VERSION=3.8.7
 export MVN_FOLDERNAME=apache-maven-${MVN_VERSION}
 export MVN_FILENAME=apache-maven-${MVN_VERSION}-bin.tar.gz
 curl -4 -L https://dlcdn.apache.org/maven/maven-3/${MVN_VERSION}/binaries/${MVN_FILENAME} | tar -xvz
