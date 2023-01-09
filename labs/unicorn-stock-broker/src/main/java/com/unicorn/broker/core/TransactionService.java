@@ -21,9 +21,15 @@ public class TransactionService {
     }
 
     public Optional<Transaction> writeTransaction(Transaction transaction) {
-        transaction.transactionId = UUID.randomUUID();
-        transaction.brokerId = BROKER_ID;
+        try {
+            Thread.sleep(100); //Simulates some intensive calculation
+            transaction.transactionId = UUID.randomUUID();
+            transaction.brokerId = BROKER_ID;
 
-        return transactionRepository.writeTransaction(transaction);
+            return transactionRepository.writeTransaction(transaction);
+        } catch (InterruptedException e) {
+            logger.error("Error due to interruption while processing the transaction.", e);
+            return Optional.empty();
+        }
     }
 }
