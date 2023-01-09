@@ -1,0 +1,64 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  unicorn-stock-broker
+
+  This API allows you to store transactions of your favorite unicorn stocks
+
+Globals:
+  Function:
+    Runtime: java11
+    Architectures:
+      - x86_64
+    MemorySize: 2048
+    Timeout: 20
+
+Resources:
+  UnicornStockBrokerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: target/UnicornStockBroker-1.0-aws.jar
+      FunctionName: unicorn-stock-broker
+      Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref TransactionsTable
+        - S3ReadPolicy:
+            BucketName: !Ref ValidationFilesS3Bucket
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref TransactionsTable
+          BUCKET_NAME: !Ref ValidationFilesS3Bucket
+      Events:
+        UnicornStockBrokerEvent:
+          Type: Api
+          Properties:
+            Path: /transactions
+            Method: post
+  TransactionsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: 'transactionId'
+          AttributeType: 'S'
+      KeySchema:
+        - AttributeName: 'transactionId'
+          KeyType: 'HASH'
+      BillingMode: PAY_PER_REQUEST
+  ValidationFilesS3Bucket:
+    Type: 'AWS::S3::Bucket'
+    DeletionPolicy: Delete
+Outputs:
+  UnicornStockBrokerApi:
+    Description: "API Gateway endpoint URL for Prod stage for Unicorn StockBroker function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
+  UnicornStockBrokerFunction:
+    Description: "Unicorn StockBroker Lambda Function ARN"
+    Value: !GetAtt UnicornStockBrokerFunction.Arn
+  UnicornStockBrokerFunctionIamRole:
+    Description: "Implicit IAM Role created for Unicorn StockBroker function"
+    Value: !GetAtt UnicornStockBrokerFunction.Arn
+  UnicornStockBrokerValidationS3Bucket:
+    Description: "S3 Bucket for validation files"
+    Value: !Ref ValidationFilesS3Bucket
+
