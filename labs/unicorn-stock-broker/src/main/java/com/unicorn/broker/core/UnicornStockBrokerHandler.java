@@ -10,6 +10,7 @@ import java.util.function.Function;
 public class UnicornStockBrokerHandler implements Function<Transaction, APIGatewayProxyResponseEvent> {
 
     private final TransactionService transactionService;
+    private static final int END_OF_FIRST_UUID_GROUP = 8;
 
     public UnicornStockBrokerHandler(TransactionService transactionService) {
         this.transactionService = transactionService;
@@ -33,7 +34,7 @@ public class UnicornStockBrokerHandler implements Function<Transaction, APIGatew
     }
 
     private String generateJSONResponse(Transaction transaction) {
-        return String.format("Broker %s successfully created transaction %s", transaction.brokerId.toString().substring(0,8), transaction.transactionId);
+        return String.format("Broker %s successfully created transaction %s", transaction.brokerId.toString().substring(0,END_OF_FIRST_UUID_GROUP), transaction.transactionId);
     }
 
 }
