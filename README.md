@@ -21,7 +21,7 @@ In addition, we’ll introduce GraalVM native images and modify the existing app
 
 ![Unicorn Location API](resources/unicorn-location-api-overview.png)
 
-## [Starting up faster with AWS Lambda SnapStart](labs/unicorn-location-api)
+## [Starting up faster with AWS Lambda SnapStart](labs/unicorn-stock-broker)
 
 In this module you will learn how SnapStart addresses Java function performance. You will learn how to enable SnapStart with infrastructure as code, how to customize your snapshot behavior with runtime hooks and identify potential refactoring areas with automated tooling. Lastly, you will apply additional best practices for performance tuning and snapshot creation. After this module you will be able to make well-informed decisions when using SnapStart for your Java based AWS Lambda functions.
 
