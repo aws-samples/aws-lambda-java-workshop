@@ -48,6 +48,11 @@ Resources:
   ValidationFilesS3Bucket:
     Type: 'AWS::S3::Bucket'
     DeletionPolicy: Delete
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
 Outputs:
   UnicornStockBrokerApi:
     Description: "API Gateway endpoint URL for Prod stage for Unicorn StockBroker function"
