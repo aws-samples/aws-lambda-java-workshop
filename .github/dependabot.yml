@@ -61,6 +61,10 @@ updates:
       - dependency-name: "software.amazon.awssdk:*"
         versions:
           - "> 2.17.282"
+  - package-ecosystem: maven
+    directory: "/labs/unicorn-stock-broker"
+    schedule:
+      interval: "weekly"
   - package-ecosystem: docker
     directory: "/labs/unicorn-store/software/alternatives/unicorn-store-spring-native-graalvm"
     schedule:
