@@ -40,7 +40,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: unicorn-location-api-post-graal
-      CodeUri: UnicornLocationFunctionGraalVM
+      CodeUri: UnicornLocationFunctionGraalVM/unicorn-location-graal.zip
       Runtime: provided.al2
       MemorySize: 1024
       Handler: com.unicorn.location.UnicornPostLocationHandler
@@ -53,8 +53,6 @@ Resources:
       Policies:
         - DynamoDBWritePolicy:
             TableName: !Ref UnicornLocationTable
-    Metadata:
-      BuildMethod: makefile
 
 Outputs:
   UnicornLocationApi:
