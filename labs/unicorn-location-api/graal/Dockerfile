@@ -33,4 +33,12 @@ ENV JAVA_HOME /usr/lib/graalvm
 #Build Native Image
 WORKDIR project
 COPY UnicornLocationFunction .
+COPY graal/bootstrap bootstrap
+
 RUN mvn install -P native
+RUN cp target/native native
+
+RUN chmod +x bootstrap
+RUN chmod +x native
+
+RUN zip unicorn-location-graal.zip bootstrap native
