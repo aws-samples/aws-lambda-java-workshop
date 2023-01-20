@@ -5,7 +5,6 @@ cp -r graal/resources UnicornLocationFunction/src/main
 
 #Create a new folder for build results and copy needed components
 mkdir UnicornLocationFunctionGraalVM
-cp graal/Makefile UnicornLocationFunctionGraalVM
 cp graal/bootstrap UnicornLocationFunctionGraalVM
 
 #Copy the Dockerfile & build script for building the native image
