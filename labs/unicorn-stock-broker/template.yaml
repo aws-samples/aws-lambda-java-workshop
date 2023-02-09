@@ -53,6 +53,8 @@ Resources:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:
               SSEAlgorithm: AES256
+      VersioningConfiguration:
+        Status: Enabled
 Outputs:
   UnicornStockBrokerApi:
     Description: "API Gateway endpoint URL for Prod stage for Unicorn StockBroker function"
