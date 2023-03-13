@@ -17,7 +17,6 @@
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <serverless-java-container.version>1.9.1</serverless-java-container.version>
     </properties>
     <dependencies>
         <dependency>
