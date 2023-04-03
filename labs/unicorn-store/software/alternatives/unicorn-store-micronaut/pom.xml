@@ -10,7 +10,7 @@
   <parent>
     <groupId>io.micronaut</groupId>
     <artifactId>micronaut-parent</artifactId>
-    <version>3.8.7</version>
+    <version>3.8.8</version>
   </parent>
 
   <properties>
