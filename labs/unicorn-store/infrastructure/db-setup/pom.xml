@@ -8,7 +8,7 @@
     <name>AWS Lambda function to setup the Amazon RDS Instance</name>
 
     <properties>
-        <aws.java.sdk.version>2.20.22</aws.java.sdk.version>
+        <aws.java.sdk.version>2.20.57</aws.java.sdk.version>
     </properties>
 
     <dependencyManagement>
@@ -27,7 +27,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.5.4</version>
+            <version>42.6.0</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -42,7 +42,7 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-lambda-java-events</artifactId>
-            <version>3.11.0</version>
+            <version>3.11.1</version>
         </dependency>
 
     </dependencies>
