@@ -3,6 +3,7 @@ package com.unicorn.core;
 import com.unicorn.constructs.DatabaseSetupConstruct;
 import software.amazon.awscdk.*;
 import software.amazon.awscdk.services.ec2.*;
+import software.amazon.awscdk.services.ec2.InstanceType;
 import software.amazon.awscdk.services.events.EventBus;
 import software.amazon.awscdk.services.rds.*;
 import software.constructs.Construct;
@@ -61,7 +62,7 @@ public class InfrastructureStack extends Stack {
     private DatabaseInstance createRDSPostgresInstance(IVpc vpc, DatabaseSecret databaseSecret) {
 
         var databaseSecurityGroup = createDatabaseSecurityGroup(vpc);
-        var engine = DatabaseInstanceEngine.postgres(PostgresInstanceEngineProps.builder().version(PostgresEngineVersion.VER_13_4).build());
+        var engine = DatabaseInstanceEngine.postgres(PostgresInstanceEngineProps.builder().version(PostgresEngineVersion.VER_13).build());
 
         return DatabaseInstance.Builder.create(this, "UnicornInstance")
                 .engine(engine)
