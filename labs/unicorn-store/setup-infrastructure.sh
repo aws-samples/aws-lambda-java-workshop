@@ -11,6 +11,9 @@
 # Deploy the infrastructure
 cd infrastructure/cdk
 
+
+export ACCOUNT_ID=$(aws sts get-caller-identity --output text --query Account)
+
 cdk bootstrap
 cdk deploy UnicornStoreInfrastructure --require-approval never --outputs-file target/output.json
 

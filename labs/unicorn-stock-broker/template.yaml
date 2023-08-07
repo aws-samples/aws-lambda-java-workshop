@@ -7,7 +7,7 @@ Description: >
 
 Globals:
   Function:
-    Runtime: java11
+    Runtime: java17
     Architectures:
       - x86_64
     MemorySize: 2048
@@ -17,7 +17,7 @@ Resources:
   UnicornStockBrokerFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: target/UnicornStockBroker-1.0-aws.jar
+      CodeUri: target/UnicornStockBroker-1.1-aws.jar
       FunctionName: unicorn-stock-broker
       Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest
       Policies:
