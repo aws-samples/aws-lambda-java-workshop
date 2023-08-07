@@ -1,16 +1,19 @@
 package com.unicorn.constructs;
 
+import java.util.HashMap;
+import java.util.List;
+
 import com.unicorn.core.InfrastructureStack;
-import software.amazon.awscdk.*;
+
+import software.amazon.awscdk.CfnOutput;
+import software.amazon.awscdk.CfnOutputProps;
+import software.amazon.awscdk.Duration;
 import software.amazon.awscdk.services.apigateway.LambdaRestApi;
 import software.amazon.awscdk.services.apigateway.RestApi;
 import software.amazon.awscdk.services.lambda.Code;
 import software.amazon.awscdk.services.lambda.Function;
 import software.amazon.awscdk.services.lambda.Runtime;
 import software.constructs.Construct;
-
-import java.util.HashMap;
-import java.util.List;
 
 public class UnicornStoreMicronaut extends Construct {
 
@@ -52,7 +55,6 @@ public class UnicornStoreMicronaut extends Construct {
                     put("DATASOURCES_DEFAULT_PASSWORD", infrastructureStack.getDatabaseSecretString());
                     put("DATASOURCES_DEFAULT_URL", infrastructureStack.getDatabaseJDBCConnectionString());
                     put("DATASOURCES_DEFAULT_maxPoolSize", "1");
-                    put("JAVA_TOOL_OPTIONS", "-XX:+TieredCompilation -XX:TieredStopAtLevel=1");
                 }})
                 .build();
     }

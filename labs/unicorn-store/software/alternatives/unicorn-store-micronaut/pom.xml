@@ -7,20 +7,21 @@
   <version>1.0.0</version>
   <packaging>${packaging}</packaging>
 
-  <parent>
-    <groupId>io.micronaut</groupId>
-    <artifactId>micronaut-parent</artifactId>
-    <version>3.9.1</version>
-  </parent>
-
   <properties>
     <packaging>jar</packaging>
-    <jdk.version>11</jdk.version>
-    <release.version>11</release.version>
-    <micronaut.data.version>3.10.0</micronaut.data.version>
+    <jdk.version>17</jdk.version>
+    <release.version>17</release.version>
+    <micronaut.version>4.0.0</micronaut.version>
+    <build.plugins.plugin.version>3.11.0</build.plugins.plugin.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
+
+  <parent>
+    <groupId>io.micronaut.platform</groupId>
+    <artifactId>micronaut-parent</artifactId>
+    <version>4.0.0</version>
+  </parent>
 
   <repositories>
     <repository>
@@ -36,10 +37,15 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>io.micronaut</groupId>
+      <groupId>io.micronaut.validation</groupId>
       <artifactId>micronaut-validation</artifactId>
       <scope>compile</scope>
     </dependency>
+   <dependency>
+  <groupId>io.micronaut</groupId>
+  <artifactId>micronaut-jackson-databind</artifactId>
+  <scope>compile</scope>
+</dependency>
     <dependency>
       <groupId>io.micronaut.aws</groupId>
       <artifactId>micronaut-function-aws</artifactId>
@@ -80,6 +86,7 @@
       <artifactId>micronaut-jdbc-hikari</artifactId>
       <scope>compile</scope>
     </dependency>
+   
     <dependency>
       <groupId>javax.annotation</groupId>
       <artifactId>javax.annotation-api</artifactId>
@@ -115,6 +122,7 @@
       <artifactId>testcontainers</artifactId>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>software.amazon.awssdk</groupId>
       <artifactId>eventbridge</artifactId>
@@ -142,6 +150,7 @@
       <plugin>
         <groupId>io.micronaut.build</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
+        <version>3.5.4</version>
       </plugin>
       
       <plugin>
@@ -152,11 +161,16 @@
           <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
 
           <annotationProcessorPaths combine.children="append">
-            <path>
-              <groupId>io.micronaut.data</groupId>
-              <artifactId>micronaut-data-processor</artifactId>
-              <version>${micronaut.data.version}</version>
-            </path>
+          <path>
+              <groupId>io.micronaut</groupId>
+              <artifactId>micronaut-inject-java</artifactId>
+              <version>${micronaut.version}</version>
+          </path>
+          <path>
+            <groupId>io.micronaut.validation</groupId>
+            <artifactId>micronaut-validation-processor</artifactId>
+            <version>${micronaut.version}</version>
+          </path>
           </annotationProcessorPaths>
           <compilerArgs>
             <arg>-Amicronaut.processing.group=com.unicorn.store</arg>
