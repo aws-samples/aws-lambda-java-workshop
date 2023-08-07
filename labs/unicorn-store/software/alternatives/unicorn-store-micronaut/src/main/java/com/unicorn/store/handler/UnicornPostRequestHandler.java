@@ -2,6 +2,7 @@ package com.unicorn.store.handler;
 
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
+import io.micronaut.json.JsonMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.unicorn.store.model.Unicorn;
 import com.unicorn.store.service.UnicornService;
@@ -24,6 +25,7 @@ public class UnicornPostRequestHandler extends MicronautRequestHandler<APIGatewa
     @Override
     public APIGatewayProxyResponseEvent execute(APIGatewayProxyRequestEvent input) {
         try {
+            logger.info(input.getBody());
             var unicorn = objectMapper.readValue(input.getBody(), Unicorn.class);
             var savedUnicorn = unicornService.createUnicorn(unicorn);
             return new APIGatewayProxyResponseEvent().withStatusCode(200).withBody(objectMapper.writeValueAsString(savedUnicorn));

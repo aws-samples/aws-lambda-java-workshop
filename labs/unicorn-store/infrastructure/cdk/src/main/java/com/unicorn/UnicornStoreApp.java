@@ -1,14 +1,15 @@
 package com.unicorn;
 
+import java.util.List;
+
 import com.unicorn.core.InfrastructureStack;
+
 import io.github.cdklabs.cdknag.AwsSolutionsChecks;
 import io.github.cdklabs.cdknag.NagPackSuppression;
 import io.github.cdklabs.cdknag.NagSuppressions;
 import software.amazon.awscdk.App;
 import software.amazon.awscdk.Aspects;
 import software.amazon.awscdk.StackProps;
-
-import java.util.List;
 
 public class UnicornStoreApp {
 
