@@ -73,7 +73,7 @@ public class UnicornStoreBasic extends Construct {
 
     private Function createUnicornBasicLambdaFunction(String name, String handler) {
     	Function lambda = Function.Builder.create(this, name)
-                .runtime(Runtime.JAVA_11)
+                .runtime(Runtime.JAVA_17)
                 .memorySize(2048)
                 .functionName(name)
                 .timeout(Duration.seconds(29))

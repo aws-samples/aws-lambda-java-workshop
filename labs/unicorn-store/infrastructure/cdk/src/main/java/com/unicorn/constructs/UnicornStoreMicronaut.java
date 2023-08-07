@@ -43,7 +43,7 @@ public class UnicornStoreMicronaut extends Construct {
 
     private Function createUnicornLambdaFunction() {
         return Function.Builder.create(this, "UnicornStoreMicronautFunction")
-                .runtime(Runtime.JAVA_11)
+                .runtime(Runtime.JAVA_17)
                 .functionName("unicorn-store-micronaut")
                 .memorySize(2048)
                 .timeout(Duration.seconds(29))
