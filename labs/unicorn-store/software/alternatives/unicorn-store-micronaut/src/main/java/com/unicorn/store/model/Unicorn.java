@@ -1,6 +1,5 @@
 package com.unicorn.store.model;
 
-import io.micronaut.core.annotation.Introspected;
 import io.micronaut.data.annotation.MappedEntity;
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.GeneratedValue;
@@ -9,7 +8,6 @@ import jakarta.persistence.Id;
 
 @MappedEntity(value = "unicorns")
 @Serdeable
-@Introspected
 public class Unicorn {
 
     @Id
