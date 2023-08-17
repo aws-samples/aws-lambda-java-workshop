@@ -48,7 +48,7 @@ public class UnicornStoreMicronaut extends Construct {
                 .memorySize(2048)
                 .timeout(Duration.seconds(29))
                 .code(Code.fromAsset("../..//software/alternatives/unicorn-store-micronaut/target/store-micronaut-1.0.0.jar"))
-                .handler("com.unicorn.store.handler.UnicornPostRequestHandler::handleRequest")
+                .handler("com.unicorn.store.handler.UnicornPostRequestHandler")
                 .vpc(infrastructureStack.getVpc())
                 .securityGroups(List.of(infrastructureStack.getApplicationSecurityGroup()))
                 .environment(new HashMap<>() {{

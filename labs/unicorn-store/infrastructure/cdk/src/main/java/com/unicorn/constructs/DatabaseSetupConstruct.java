@@ -4,6 +4,7 @@ import com.unicorn.core.InfrastructureStack;
 import software.amazon.awscdk.CfnOutput;
 import software.amazon.awscdk.CfnOutputProps;
 import software.amazon.awscdk.Duration;
+import software.amazon.awscdk.services.iam.PolicyStatement;
 import software.amazon.awscdk.services.lambda.Code;
 import software.amazon.awscdk.services.lambda.Function;
 import software.amazon.awscdk.services.lambda.Runtime;
@@ -22,6 +23,12 @@ public class DatabaseSetupConstruct extends Construct{
         this.infrastructureStack = (InfrastructureStack) scope;
 
         var dbSetupLambdaFunction = createDbSetupLambdaFunction();
+        dbSetupLambdaFunction.addToRolePolicy(PolicyStatement
+                .Builder
+                .create()
+                .resources(List.of("arn:aws:secretsmanager:*:*:secret:unicornstore-db-secret-*"))
+                .actions(List.of("secretsmanager:GetSecretValue"))
+                .build());
 
         new CfnOutput(scope, "DbSetupArn", CfnOutputProps.builder()
                 .value(dbSetupLambdaFunction.getFunctionArn())
@@ -31,17 +38,12 @@ public class DatabaseSetupConstruct extends Construct{
     private Function createDbSetupLambdaFunction() {
         return Function.Builder.create(this, "DBSetupLambdaFunction")
                 .runtime(Runtime.JAVA_17)
-                .memorySize(512)
+                .memorySize(1024)
                 .timeout(Duration.seconds(29))
                 .code(Code.fromAsset("../db-setup/target/db-setup.jar"))
                 .handler("com.amazon.aws.DBSetupHandler::handleRequest")
                 .vpc(infrastructureStack.getVpc())
                 .securityGroups(List.of(infrastructureStack.getApplicationSecurityGroup()))
-                .environment(new HashMap<>() {{
-                    put("DB_PASSWORD", infrastructureStack.getDatabaseSecretString());
-                    put("DB_CONNECTION_URL", infrastructureStack.getDatabaseJDBCConnectionString());
-                    put("DB_USER", "postgres");
-                }})
                 .build();
     }
 
