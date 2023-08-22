@@ -14,7 +14,7 @@
     <name>store</name>
     <description>Unicorn storage service</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <spring-native.version>0.12.2</spring-native.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -61,7 +61,7 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-lambda-java-events</artifactId>
-            <version>3.11.1</version>
+            <version>3.11.2</version>
         </dependency>
 
         <dependency>

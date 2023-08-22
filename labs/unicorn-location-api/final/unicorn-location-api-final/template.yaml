@@ -20,7 +20,7 @@ Resources:
       CodeUri: UnicornLocationFunction
       FunctionName: unicorn-location-api-post
       Handler: com.unicorn.location.UnicornPostLocationHandler::handleRequest
-      Runtime: java11
+      Runtime: java17
       Architectures:
         - x86_64
       MemorySize: 1024

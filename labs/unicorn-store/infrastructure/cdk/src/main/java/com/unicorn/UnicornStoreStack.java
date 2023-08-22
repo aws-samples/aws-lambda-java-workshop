@@ -1,19 +1,24 @@
 package com.unicorn;
 
+import java.util.List;
+import java.util.Map;
+
 import com.unicorn.constructs.UnicornStoreBasic;
 import com.unicorn.constructs.UnicornStoreMicronaut;
 import com.unicorn.constructs.UnicornStoreSpringNative;
 import com.unicorn.core.InfrastructureStack;
-import software.amazon.awscdk.*;
+
+import software.amazon.awscdk.CfnOutput;
+import software.amazon.awscdk.CfnOutputProps;
+import software.amazon.awscdk.Duration;
+import software.amazon.awscdk.Stack;
+import software.amazon.awscdk.StackProps;
 import software.amazon.awscdk.services.apigateway.LambdaRestApi;
 import software.amazon.awscdk.services.apigateway.RestApi;
 import software.amazon.awscdk.services.lambda.Code;
 import software.amazon.awscdk.services.lambda.Function;
 import software.amazon.awscdk.services.lambda.Runtime;
 import software.constructs.Construct;
-
-import java.util.List;
-import java.util.Map;
 
 public class UnicornStoreStack extends Stack {
 
@@ -60,7 +65,7 @@ public class UnicornStoreStack extends Stack {
 
     private Function createUnicornLambdaFunction() {
         return Function.Builder.create(this, "UnicornStoreSpringFunction")
-                .runtime(Runtime.JAVA_11)
+                .runtime(Runtime.JAVA_17)
                 .functionName("unicorn-store-spring")
                 .memorySize(1024)
                 .timeout(Duration.seconds(29))
@@ -73,7 +78,6 @@ public class UnicornStoreStack extends Stack {
                     "SPRING_DATASOURCE_URL", infrastructureStack.getDatabaseJDBCConnectionString(),
                     "SPRING_DATASOURCE_HIKARI_maximumPoolSize", "1",
                     "AWS_SERVERLESS_JAVA_CONTAINER_INIT_GRACE_TIME", "500"
-                    //,"JAVA_TOOL_OPTIONS", "-XX:+TieredCompilation -XX:TieredStopAtLevel=1"
                 ))
                 .build();
     }

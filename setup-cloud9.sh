@@ -9,7 +9,7 @@ sudo ./aws/install
 rm awscliv2.zip
 
 ## Install Maven
-export MVN_VERSION=3.8.8
+export MVN_VERSION=3.9.4
 export MVN_FOLDERNAME=apache-maven-${MVN_VERSION}
 export MVN_FILENAME=apache-maven-${MVN_VERSION}-bin.tar.gz
 curl -4 -L https://archive.apache.org/dist/maven/maven-3/${MVN_VERSION}/binaries/${MVN_FILENAME} | tar -xvz
@@ -33,10 +33,12 @@ npm install -g artillery
 ## Resize disk
 /home/ec2-user/environment/aws-lambda-java-workshop/resize-cloud9.sh 30
 
-## Set JDK 11 as default
-sudo update-alternatives --set java /usr/lib/jvm/java-11-amazon-corretto.x86_64/bin/java
-sudo update-alternatives --set javac /usr/lib/jvm/java-11-amazon-corretto.x86_64/bin/javac
-export JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto.x86_64
+## Set JDK 17 as default
+sudo yum install java-17-amazon-corretto-headless
+sudo yum -y install java-17-amazon-corretto-devel
+sudo update-alternatives --set java /usr/lib/jvm/java-17-amazon-corretto.x86_64/bin/java
+sudo update-alternatives --set javac /usr/lib/jvm/java-17-amazon-corretto.x86_64/bin/javac
+export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto.x86_64
 
 
 ## Pre-Download Maven dependencies for Unicorn Store

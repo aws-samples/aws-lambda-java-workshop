@@ -1,16 +1,19 @@
 package com.unicorn.constructs;
 
+import java.util.HashMap;
+import java.util.List;
+
 import com.unicorn.core.InfrastructureStack;
-import software.amazon.awscdk.*;
+
+import software.amazon.awscdk.CfnOutput;
+import software.amazon.awscdk.CfnOutputProps;
+import software.amazon.awscdk.Duration;
 import software.amazon.awscdk.services.apigateway.LambdaRestApi;
 import software.amazon.awscdk.services.apigateway.RestApi;
 import software.amazon.awscdk.services.lambda.Code;
 import software.amazon.awscdk.services.lambda.Function;
 import software.amazon.awscdk.services.lambda.Runtime;
 import software.constructs.Construct;
-
-import java.util.HashMap;
-import java.util.List;
 
 public class UnicornStoreMicronaut extends Construct {
 
@@ -40,19 +43,18 @@ public class UnicornStoreMicronaut extends Construct {
 
     private Function createUnicornLambdaFunction() {
         return Function.Builder.create(this, "UnicornStoreMicronautFunction")
-                .runtime(Runtime.JAVA_11)
+                .runtime(Runtime.JAVA_17)
                 .functionName("unicorn-store-micronaut")
                 .memorySize(2048)
                 .timeout(Duration.seconds(29))
                 .code(Code.fromAsset("../..//software/alternatives/unicorn-store-micronaut/target/store-micronaut-1.0.0.jar"))
-                .handler("com.unicorn.store.handler.UnicornPostRequestHandler::handleRequest")
+                .handler("com.unicorn.store.handler.UnicornPostRequestHandler")
                 .vpc(infrastructureStack.getVpc())
                 .securityGroups(List.of(infrastructureStack.getApplicationSecurityGroup()))
                 .environment(new HashMap<>() {{
                     put("DATASOURCES_DEFAULT_PASSWORD", infrastructureStack.getDatabaseSecretString());
                     put("DATASOURCES_DEFAULT_URL", infrastructureStack.getDatabaseJDBCConnectionString());
                     put("DATASOURCES_DEFAULT_maxPoolSize", "1");
-                    put("JAVA_TOOL_OPTIONS", "-XX:+TieredCompilation -XX:TieredStopAtLevel=1");
                 }})
                 .build();
     }

@@ -1,6 +1,10 @@
 package com.unicorn.constructs;
 
+import java.util.HashMap;
+import java.util.List;
+
 import com.unicorn.core.InfrastructureStack;
+
 import software.amazon.awscdk.CfnOutput;
 import software.amazon.awscdk.CfnOutputProps;
 import software.amazon.awscdk.Duration;
@@ -12,9 +16,6 @@ import software.amazon.awscdk.services.lambda.Code;
 import software.amazon.awscdk.services.lambda.Function;
 import software.amazon.awscdk.services.lambda.Runtime;
 import software.constructs.Construct;
-
-import java.util.HashMap;
-import java.util.List;
 
 public class UnicornStoreBasic extends Construct {
 
@@ -72,7 +73,7 @@ public class UnicornStoreBasic extends Construct {
 
     private Function createUnicornBasicLambdaFunction(String name, String handler) {
     	Function lambda = Function.Builder.create(this, name)
-                .runtime(Runtime.JAVA_11)
+                .runtime(Runtime.JAVA_17)
                 .memorySize(2048)
                 .functionName(name)
                 .timeout(Duration.seconds(29))
@@ -84,7 +85,6 @@ public class UnicornStoreBasic extends Construct {
                     put("DB_PASSWORD", infrastructureStack.getDatabaseSecretString());
                     put("DB_CONNECTION_URL", infrastructureStack.getDatabaseJDBCConnectionString());
                     put("DB_USER", "postgres");
-                    put("JAVA_TOOL_OPTIONS", "-XX:+TieredCompilation -XX:TieredStopAtLevel=1");
                 }})
                 .build();
 

@@ -1,10 +1,11 @@
 package com.unicorn.store.data;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.unicorn.store.exceptions.PublisherException;
 import com.unicorn.store.model.Unicorn;
 import com.unicorn.store.model.UnicornEventType;
+import io.micronaut.json.JsonMapper;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.core.SdkSystemSetting;
@@ -14,10 +15,13 @@ import software.amazon.awssdk.services.eventbridge.EventBridgeAsyncClient;
 import software.amazon.awssdk.services.eventbridge.model.PutEventsRequest;
 import software.amazon.awssdk.services.eventbridge.model.PutEventsRequestEntry;
 
+
 @Singleton
 public class UnicornPublisher {
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    @Inject
+    private JsonMapper objectMapper;
+
     private static final EventBridgeAsyncClient eventBridgeClient = EventBridgeAsyncClient
             .builder()
             .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
@@ -31,8 +35,7 @@ public class UnicornPublisher {
             var eventsRequest = createEventRequestEntry(unicornEventType, unicornJson);
 
             eventBridgeClient.putEvents(eventsRequest).get();
-        } catch (JsonProcessingException e) {
-            throw new PublisherException("Error while serializing the Unicorn", e);
+
         } catch (Exception e) {
             throw new PublisherException("Error while publishing the event", e);
         }

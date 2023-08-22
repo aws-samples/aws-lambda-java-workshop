@@ -8,7 +8,8 @@ import com.unicorn.store.model.UnicornEventType;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class UnicornService {
+public class UnicornService  {
+
     private final UnicornRepository unicornRepository;
     private final UnicornPublisher unicornPublisher;
 

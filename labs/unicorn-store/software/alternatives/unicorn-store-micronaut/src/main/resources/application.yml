@@ -9,4 +9,9 @@ datasources:
     password: ''
     dialect: POSTGRES
     maximum-pool-size: 1
-jpa.default.properties.hibernate.hbm2ddl.auto: none
+    allow-pool-suspension: true
+jpa:
+  default:
+    properties.hibernate.hbm2ddl.auto: none
+    entity-scan:
+      packages: 'com.unicorn.store.model'

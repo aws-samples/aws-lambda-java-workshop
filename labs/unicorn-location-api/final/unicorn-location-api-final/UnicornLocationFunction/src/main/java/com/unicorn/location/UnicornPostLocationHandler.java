@@ -31,6 +31,7 @@ public class UnicornPostLocationHandler implements RequestHandler<APIGatewayProx
                 .httpClientBuilder(AwsCrtAsyncHttpClient.builder())
                 .build();
     }
+
     public APIGatewayProxyResponseEvent handleRequest(final APIGatewayProxyRequestEvent input, final Context context) {
         try {
             UnicornLocation unicornLocation = JSON.std.beanFrom(UnicornLocation.class, input.getBody());

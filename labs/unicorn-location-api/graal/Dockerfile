@@ -7,8 +7,8 @@ RUN yum -y update \
     && rm -rf /var/cache/yum
 
 # Graal VM
-ENV JAVA_VERSION java11
-ENV GRAAL_VERSION 22.2.0
+ENV JAVA_VERSION java17
+ENV GRAAL_VERSION 22.3.3
 ENV GRAAL_FOLDERNAME graalvm-ce-${JAVA_VERSION}-${GRAAL_VERSION}
 ENV GRAAL_FILENAME graalvm-ce-${JAVA_VERSION}-linux-amd64-${GRAAL_VERSION}.tar.gz
 RUN curl -4 -L https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAAL_VERSION}/${GRAAL_FILENAME} | tar -xvz
@@ -16,7 +16,7 @@ RUN mv $GRAAL_FOLDERNAME /usr/lib/graalvm
 RUN rm -rf $GRAAL_FOLDERNAME
 
 # Maven
-ENV MVN_VERSION 3.8.8
+ENV MVN_VERSION 3.9.4
 ENV MVN_FOLDERNAME apache-maven-${MVN_VERSION}
 ENV MVN_FILENAME apache-maven-${MVN_VERSION}-bin.tar.gz
 RUN curl -4 -L https://archive.apache.org/dist/maven/maven-3/${MVN_VERSION}/binaries/${MVN_FILENAME} | tar -xvz
