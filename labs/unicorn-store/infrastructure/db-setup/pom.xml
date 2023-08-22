@@ -8,7 +8,7 @@
     <name>AWS Lambda function to setup the Amazon RDS Instance</name>
 
     <properties>
-        <aws.java.sdk.version>2.20.57</aws.java.sdk.version>
+        <aws.java.sdk.version>2.20.131</aws.java.sdk.version>
     </properties>
 
     <dependencyManagement>
@@ -41,7 +41,6 @@
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>aws-crt-client</artifactId>
-            <version>2.20.22</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
