@@ -73,7 +73,7 @@ public class InfrastructureStack extends Stack {
                 .instanceIdentifier("UnicornInstance")
                 .instanceType(InstanceType.of(InstanceClass.BURSTABLE3, InstanceSize.MEDIUM))
                 .vpcSubnets(SubnetSelection.builder()
-                        .subnetType(SubnetType.PRIVATE_WITH_EGRESS)
+                        .subnetType(SubnetType.PRIVATE_ISOLATED)
                         .build())
                 .securityGroups(List.of(databaseSecurityGroup))
                 .credentials(Credentials.fromSecret(databaseSecret))
@@ -90,6 +90,7 @@ public class InfrastructureStack extends Stack {
     private IVpc createUnicornVpc() {
         return Vpc.Builder.create(this, "UnicornVpc")
                 .vpcName("UnicornVPC")
+                .natGateways(0)
                 .build();
     }
 
