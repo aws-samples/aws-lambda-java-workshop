@@ -4,6 +4,9 @@ import com.unicorn.core.InfrastructureStack;
 import software.amazon.awscdk.CfnOutput;
 import software.amazon.awscdk.CfnOutputProps;
 import software.amazon.awscdk.Duration;
+import software.amazon.awscdk.services.ec2.IInterfaceVpcEndpoint;
+import software.amazon.awscdk.services.ec2.InterfaceVpcEndpoint;
+import software.amazon.awscdk.services.ec2.InterfaceVpcEndpointAwsService;
 import software.amazon.awscdk.services.iam.PolicyStatement;
 import software.amazon.awscdk.services.lambda.Code;
 import software.amazon.awscdk.services.lambda.Function;
@@ -29,6 +32,7 @@ public class DatabaseSetupConstruct extends Construct{
                 .resources(List.of("arn:aws:secretsmanager:*:*:secret:unicornstore-db-secret-*"))
                 .actions(List.of("secretsmanager:GetSecretValue"))
                 .build());
+        createSecretsManagerVpcEndpoint();
 
         new CfnOutput(scope, "DbSetupArn", CfnOutputProps.builder()
                 .value(dbSetupLambdaFunction.getFunctionArn())
@@ -47,4 +51,10 @@ public class DatabaseSetupConstruct extends Construct{
                 .build();
     }
 
+    private IInterfaceVpcEndpoint createSecretsManagerVpcEndpoint() {
+        return InterfaceVpcEndpoint.Builder.create(this, "SecretsManagerEndpoint")
+                .service(InterfaceVpcEndpointAwsService.SECRETS_MANAGER)
+                .vpc(infrastructureStack.getVpc())
+                .build();
+    }
 }
