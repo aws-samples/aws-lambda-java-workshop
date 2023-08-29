@@ -15,6 +15,9 @@ import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.StackProps;
 import software.amazon.awscdk.services.apigateway.LambdaRestApi;
 import software.amazon.awscdk.services.apigateway.RestApi;
+import software.amazon.awscdk.services.ec2.IInterfaceVpcEndpoint;
+import software.amazon.awscdk.services.ec2.InterfaceVpcEndpoint;
+import software.amazon.awscdk.services.ec2.InterfaceVpcEndpointAwsService;
 import software.amazon.awscdk.services.lambda.Code;
 import software.amazon.awscdk.services.lambda.Function;
 import software.amazon.awscdk.services.lambda.Runtime;
@@ -31,6 +34,7 @@ public class UnicornStoreStack extends Stack {
         //Get previously created infrastructure stack
         this.infrastructureStack = infrastructureStack;
         var eventBridge = infrastructureStack.getEventBridge();
+        createEventBridgeVpcEndpoint();
 
         //Create Spring Lambda function
         var unicornStoreSpringLambda = createUnicornLambdaFunction();
@@ -79,6 +83,13 @@ public class UnicornStoreStack extends Stack {
                     "SPRING_DATASOURCE_HIKARI_maximumPoolSize", "1",
                     "AWS_SERVERLESS_JAVA_CONTAINER_INIT_GRACE_TIME", "500"
                 ))
+                .build();
+    }
+
+    private IInterfaceVpcEndpoint createEventBridgeVpcEndpoint() {
+        return InterfaceVpcEndpoint.Builder.create(this, "EventBridgeEndpoint")
+                .service(InterfaceVpcEndpointAwsService.EVENTBRIDGE)
+                .vpc(infrastructureStack.getVpc())
                 .build();
     }
 }
