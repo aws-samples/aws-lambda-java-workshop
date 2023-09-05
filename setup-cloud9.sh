@@ -2,7 +2,9 @@
 cd /tmp
 
 ## Ensure AWS CLI v2 is installed
-sudo yum -y remove aws-cli
+sudo rm `which aws`
+sudo rm `which aws_completer`
+sudo rm -Rf /usr/local/aws-cli/
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip -q awscliv2.zip
 sudo ./aws/install
@@ -25,21 +27,22 @@ sudo ./sam-installation/install --update
 rm -rf ./sam-installation/
 rm ./aws-sam-cli-linux-x86_64.zip
 
+## Resize disk
+/home/ubuntu/environment/aws-lambda-java-workshop/resize-cloud9.sh 30
+
 ## Install additional dependencies
-sudo yum install -y jq
+sudo apt install -y jq
 npm install -g aws-cdk --force
 npm install -g artillery
 
-## Resize disk
-/home/ec2-user/environment/aws-lambda-java-workshop/resize-cloud9.sh 30
-
 ## Set JDK 17 as default
-sudo yum install java-17-amazon-corretto-headless
-sudo yum -y install java-17-amazon-corretto-devel
-sudo update-alternatives --set java /usr/lib/jvm/java-17-amazon-corretto.x86_64/bin/java
-sudo update-alternatives --set javac /usr/lib/jvm/java-17-amazon-corretto.x86_64/bin/javac
-export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto.x86_64
+wget -O- https://apt.corretto.aws/corretto.key | sudo apt-key add - 
+sudo add-apt-repository 'deb https://apt.corretto.aws stable main' -y
+sudo apt-get install -y java-17-amazon-corretto-jdk
 
+sudo update-alternatives --set java /usr/lib/jvm/java-17-amazon-corretto/bin/java
+sudo update-alternatives --set javac /usr/lib/jvm/java-17-amazon-corretto/bin/javac
+export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto
 
 ## Pre-Download Maven dependencies for Unicorn Store
 cd ~/environment/aws-lambda-java-workshop/labs/unicorn-store
