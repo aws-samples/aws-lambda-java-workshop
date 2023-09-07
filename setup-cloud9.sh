@@ -31,6 +31,9 @@ rm ./aws-sam-cli-linux-x86_64.zip
 /home/ubuntu/environment/aws-lambda-java-workshop/resize-cloud9.sh 30
 
 ## Install additional dependencies
+sudo apt update
+# Suppress the information popup about the kernel
+sudo sed -i "s/#\$nrconf{kernelhints} = -1;/\$nrconf{kernelhints} = -1;/g" /etc/needrestart/needrestart.conf
 sudo apt install -y jq
 npm install -g aws-cdk --force
 npm install -g artillery
