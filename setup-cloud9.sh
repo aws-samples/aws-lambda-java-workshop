@@ -53,6 +53,3 @@ cd ~/environment/aws-lambda-java-workshop/labs/unicorn-store
 ./mvnw dependency:go-offline -f software/alternatives/unicorn-store-basic/pom.xml
 ./mvnw dependency:go-offline -f software/unicorn-store-spring/pom.xml
 ./mvnw dependency:go-offline -f software/alternatives/unicorn-store-micronaut/pom.xml
-
-## temporary hide warnings for deprecated Node version (requires updated Cloud9 AMI to be fixed)
-export JSII_SILENCE_WARNING_DEPRECATED_NODE_VERSION=1
