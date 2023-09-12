@@ -16,20 +16,12 @@
     <packaging>jar</packaging>
     <jdk.version>17</jdk.version>
     <release.version>17</release.version>
-    <micronaut.version>4.0.3</micronaut.version>
     <micronaut.runtime>lambda</micronaut.runtime>
     <aws.sdk.version>2.20.120</aws.sdk.version>
     <build.plugins.plugin.version>3.11.0</build.plugins.plugin.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
-
-  <repositories>
-    <repository>
-      <id>central</id>
-      <url>https://repo.maven.apache.org/maven2</url>
-    </repository>
-  </repositories>
 
   <dependencies>
     <dependency>
