@@ -56,6 +56,11 @@ public class InfrastructureStack extends Stack {
                 Port.tcp(5432),
                 "Allow Database Traffic from local network");
 
+        databaseSecurityGroup.addIngressRule(
+                Peer.ipv4("10.10.0.0/16"),
+                Port.tcp(5432),
+                "Allow Database Traffic from Cloud9 network");
+
         return databaseSecurityGroup;
     }
 
