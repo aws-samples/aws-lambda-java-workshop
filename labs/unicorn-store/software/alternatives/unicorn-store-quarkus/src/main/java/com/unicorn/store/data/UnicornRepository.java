@@ -3,8 +3,8 @@ package com.unicorn.store.data;
 import com.unicorn.store.model.Unicorn;
 import com.unicorn.store.model.UnicornEventType;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
 import java.util.Optional;
 
 @ApplicationScoped

@@ -6,8 +6,8 @@ import com.unicorn.store.exceptions.ResourceNotFoundException;
 import com.unicorn.store.model.Unicorn;
 import com.unicorn.store.model.UnicornEventType;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class UnicornService {
