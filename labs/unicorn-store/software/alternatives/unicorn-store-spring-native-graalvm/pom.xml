@@ -11,7 +11,7 @@
     <groupId>com.unicorn</groupId>
     <artifactId>unicorn-store-spring-native</artifactId>
     <version>1.0.0</version>
-    <name>store</name>
+
     <description>Unicorn storage service</description>
     <properties>
         <java.version>17</java.version>
