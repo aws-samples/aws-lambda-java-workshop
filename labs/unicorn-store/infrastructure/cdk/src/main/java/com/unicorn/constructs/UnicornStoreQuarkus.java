@@ -42,7 +42,7 @@ public class UnicornStoreQuarkus extends Construct {
 
     private Function createUnicornLambdaFunction() {
         return Function.Builder.create(this, "UnicornStoreQuarkusFunction")
-                .runtime(Runtime.JAVA_11)
+                .runtime(Runtime.JAVA_17)
                 .functionName("unicorn-store-quarkus")
                 .memorySize(2048)
                 .timeout(Duration.seconds(29))
