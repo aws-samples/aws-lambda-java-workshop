@@ -67,7 +67,7 @@ public class InfrastructureStack extends Stack {
     private DatabaseInstance createRDSPostgresInstance(IVpc vpc, DatabaseSecret databaseSecret) {
 
         var databaseSecurityGroup = createDatabaseSecurityGroup(vpc);
-        var engine = DatabaseInstanceEngine.postgres(PostgresInstanceEngineProps.builder().version(PostgresEngineVersion.VER_13).build());
+        var engine = DatabaseInstanceEngine.postgres(PostgresInstanceEngineProps.builder().version(PostgresEngineVersion.VER_15).build());
 
         return DatabaseInstance.Builder.create(this, "UnicornInstance")
                 .engine(engine)
