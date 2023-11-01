@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -18,11 +17,7 @@ public class UnicornController {
 
     private static final Logger logger = LoggerFactory.getLogger(UnicornController.class);
 
-    @Inject
-    UnicornService unicornService;
-
-    public UnicornController() {
-    }
+    private final UnicornService unicornService;
 
     public UnicornController(UnicornService unicornService) {
         this.unicornService = unicornService;

@@ -14,13 +14,16 @@ import software.amazon.awssdk.services.eventbridge.model.PutEventsRequest;
 import software.amazon.awssdk.services.eventbridge.model.PutEventsRequestEntry;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class UnicornPublisher {
 
-    @Inject
-    ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
+
+    public UnicornPublisher(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
     private static final EventBridgeAsyncClient eventBridgeClient = EventBridgeAsyncClient
             .builder()
             .credentialsProvider(EnvironmentVariableCredentialsProvider.create())

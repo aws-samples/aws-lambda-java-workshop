@@ -12,14 +12,9 @@ import jakarta.inject.Inject;
 @ApplicationScoped
 public class UnicornService {
 
-    @Inject
-    UnicornRepository unicornRepository;
+    private final UnicornRepository unicornRepository;
 
-    @Inject
-    UnicornPublisher unicornPublisher;
-
-    public UnicornService() {
-    }
+    private final UnicornPublisher unicornPublisher;
 
     public UnicornService(UnicornRepository unicornRepository, UnicornPublisher unicornPublisher) {
         this.unicornRepository = unicornRepository;
