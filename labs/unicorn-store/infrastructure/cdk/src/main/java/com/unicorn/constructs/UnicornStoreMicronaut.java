@@ -48,7 +48,7 @@ public class UnicornStoreMicronaut extends Construct {
                 .memorySize(2048)
                 .timeout(Duration.seconds(29))
                 .code(Code.fromAsset("../../software/alternatives/unicorn-store-micronaut/target/store-micronaut-2.0.0.jar"))
-                .handler("io.micronaut.function.aws.proxy.MicronautLambdaHandler")
+                .handler("io.micronaut.function.aws.proxy.payload1.ApiGatewayProxyRequestEventFunction")
                 .vpc(infrastructureStack.getVpc())
                 .securityGroups(List.of(infrastructureStack.getApplicationSecurityGroup()))
                 .environment(new HashMap<>() {{
