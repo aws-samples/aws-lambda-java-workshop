@@ -17,7 +17,7 @@
     <jdk.version>17</jdk.version>
     <release.version>17</release.version>
     <micronaut.version>4.1.6</micronaut.version>
-    <micronaut.aot.enabled>false</micronaut.aot.enabled>
+    <micronaut.aot.enabled>true</micronaut.aot.enabled>
     <micronaut.aot.packageName>com.unicorn.store.aot.generated</micronaut.aot.packageName>
     <micronaut.runtime>lambda</micronaut.runtime>
     <build.plugins.plugin.version>3.11.0</build.plugins.plugin.version>
