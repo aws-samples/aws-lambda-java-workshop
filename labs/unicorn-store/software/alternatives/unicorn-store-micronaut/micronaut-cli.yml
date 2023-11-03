@@ -3,4 +3,4 @@ defaultPackage: com.unicorn.store
 testFramework: junit
 sourceLanguage: java
 buildTool: maven
-features: [annotation-api, app-name, aws-lambda, data, data-jpa, java, jdbc-hikari, junit, logback, maven, postgres, readme, shade, testcontainers, yaml]
+features: [annotation-api, app-name, aws-lambda, aws-lambda-events-serde, aws-lambda-handler-default, data, data-jpa, http-client-test, java, java-application, jdbc-hikari, junit, logback, maven, maven-enforcer-plugin, micronaut-aot, micronaut-http-validation, postgres, properties, readme, serialization-jackson, shade, snapstart, x86, testcontainers, yaml]
