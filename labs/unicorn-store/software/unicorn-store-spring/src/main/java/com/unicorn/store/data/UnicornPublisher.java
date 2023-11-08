@@ -12,6 +12,7 @@ import software.amazon.awssdk.http.crt.AwsCrtAsyncHttpClient;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.eventbridge.EventBridgeAsyncClient;
 import software.amazon.awssdk.services.eventbridge.model.EventBridgeException;
+import software.amazon.awssdk.services.eventbridge.model.ListEventBusesRequest;
 import software.amazon.awssdk.services.eventbridge.model.PutEventsRequest;
 import software.amazon.awssdk.services.eventbridge.model.PutEventsRequestEntry;
 
@@ -29,6 +30,12 @@ public class UnicornPublisher {
             .build();
 
     public UnicornPublisher(ObjectMapper objectMapper) {
+        try {
+            eventBridgeClient.listEventBuses(ListEventBusesRequest.builder().build()).get();
+        } catch (Exception e) {
+            //Ignore
+        }
+
         this.objectMapper = objectMapper;
     }
 
