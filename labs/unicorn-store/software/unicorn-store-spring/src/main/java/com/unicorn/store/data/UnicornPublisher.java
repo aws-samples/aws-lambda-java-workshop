@@ -35,7 +35,6 @@ public class UnicornPublisher {
         } catch (Exception e) {
             //Ignore
         }
-
         this.objectMapper = objectMapper;
     }
 
