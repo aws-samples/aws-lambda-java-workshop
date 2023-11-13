@@ -48,6 +48,7 @@ sudo update-alternatives --set javac /usr/lib/jvm/java-17-amazon-corretto/bin/ja
 export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto
 
 export AWS_REGION=$(curl -s 169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region')
+echo "export AWS_REGION=${AWS_REGION}" >> ~/.bash_profile
 
 ## Pre-Download Maven dependencies for Unicorn Store
 cd ~/environment/aws-lambda-java-workshop/labs/unicorn-store
