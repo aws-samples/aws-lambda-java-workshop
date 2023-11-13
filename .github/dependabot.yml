@@ -33,10 +33,10 @@ updates:
     directory: "/labs/unicorn-store/software/alternatives/unicorn-store-micronaut"
     schedule:
       interval: "weekly"
-    ignore: # needs manual GraalVM config updates (reflect-config)
-      - dependency-name: "software.amazon.awssdk:*"
-        versions:
-          - "> 2.20.22"
+  - package-ecosystem: maven
+    directory: "/labs/unicorn-store/software/alternatives/unicorn-store-quarkus"
+    schedule:
+      interval: "weekly"
   - package-ecosystem: maven
     directory: "/labs/unicorn-store/infrastructure/cdk" 
     schedule:
