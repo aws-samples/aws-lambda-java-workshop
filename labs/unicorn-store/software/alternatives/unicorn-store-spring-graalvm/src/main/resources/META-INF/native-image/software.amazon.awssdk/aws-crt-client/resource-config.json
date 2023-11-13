@@ -1,0 +1,12 @@
+{
+  "resources":{
+  "includes":[
+    {
+      "pattern":"\\Qlinux/x86_64/libaws-crt-jni.so\\E"
+    }, 
+    {
+      "pattern":"\\Qosx/x86_64/libaws-crt-jni.dylib\\E"
+    }
+  ]},
+  "bundles":[]
+}

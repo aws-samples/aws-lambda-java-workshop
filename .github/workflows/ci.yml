@@ -37,9 +37,6 @@ jobs:
       - name: mvn cdk
         run: ./mvnw package -f infrastructure/cdk/pom.xml
         working-directory: ./labs/unicorn-store
-      - name: mvn unicorn-store-basic
-        run: ./mvnw package -f software/alternatives/unicorn-store-basic/pom.xml
-        working-directory: ./labs/unicorn-store
       - name: mvn unicorn-store-spring
         run: ./mvnw package -f software/unicorn-store-spring/pom.xml
         working-directory: ./labs/unicorn-store

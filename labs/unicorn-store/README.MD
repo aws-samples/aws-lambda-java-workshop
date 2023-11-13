@@ -51,12 +51,12 @@ The following script will build the infrastructure stack via AWS CDK.
 To deploy the different applications use:
 
 ```bash
-./deploy.sh spring #(or basic, micronaut)
+./deploy.sh spring #(or quarkus, micronaut, spring-graalvm)
 ```
 
 To run a load test for the Spring-App use the following script:
 ```bash
-./benchmark.sh spring #(or basic, micronaut)
+./benchmark.sh spring #(or quarkus, micronaut, spring-graalvm)
 ```
 ## Security
 The project uses [CDK-Nag](https://github.com/cdklabs/cdk-nag) to identify issues with the environment configuration. Since this is workshop environment we are

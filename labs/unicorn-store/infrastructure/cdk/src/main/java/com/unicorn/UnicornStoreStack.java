@@ -3,10 +3,6 @@ package com.unicorn;
 import java.util.List;
 import java.util.Map;
 
-import com.unicorn.constructs.UnicornStoreBasic;
-import com.unicorn.constructs.UnicornStoreMicronaut;
-import com.unicorn.constructs.UnicornStoreQuarkus;
-import com.unicorn.constructs.UnicornStoreSpringNative;
 import com.unicorn.core.InfrastructureStack;
 
 import software.amazon.awscdk.CfnOutput;
@@ -35,7 +31,6 @@ public class UnicornStoreStack extends Stack {
         //Get previously created infrastructure stack
         this.infrastructureStack = infrastructureStack;
         var eventBridge = infrastructureStack.getEventBridge();
-        createEventBridgeVpcEndpoint();
 
         //Create Spring Lambda function
         var unicornStoreSpringLambda = createUnicornLambdaFunction();
@@ -45,12 +40,6 @@ public class UnicornStoreStack extends Stack {
 
         //Setup a Proxy-Rest API to access the Spring Lambda function
         var restApi = setupRestApi(unicornStoreSpringLambda);
-
-        //Alternative Solutions with No-Framework (Basic) & Micronaut
-        new UnicornStoreMicronaut(this, "UnicornStoreMicronaut", infrastructureStack);
-        new UnicornStoreBasic(this, "UnicornStoreBasic", infrastructureStack);
-        new UnicornStoreSpringNative(this, "UnicornStoreSpringNative", infrastructureStack);
-        new UnicornStoreQuarkus(this, "UnicornStoreQuarkus", infrastructureStack);
 
         //Create output values for later reference
         new CfnOutput(this, "unicorn-store-spring-function-arn", CfnOutputProps.builder()
@@ -73,7 +62,7 @@ public class UnicornStoreStack extends Stack {
         return Function.Builder.create(this, "UnicornStoreSpringFunction")
                 .runtime(Runtime.JAVA_17)
                 .functionName("unicorn-store-spring")
-                .memorySize(1024)
+                .memorySize(512)
                 .timeout(Duration.seconds(29))
                 .code(Code.fromAsset("../../software/unicorn-store-spring/target/store-spring-1.0.0.jar"))
                 .handler("com.unicorn.store.StreamLambdaHandler::handleRequest")
@@ -83,15 +72,9 @@ public class UnicornStoreStack extends Stack {
                     "SPRING_DATASOURCE_PASSWORD", infrastructureStack.getDatabaseSecretString(),
                     "SPRING_DATASOURCE_URL", infrastructureStack.getDatabaseJDBCConnectionString(),
                     "SPRING_DATASOURCE_HIKARI_maximumPoolSize", "1",
-                    "AWS_SERVERLESS_JAVA_CONTAINER_INIT_GRACE_TIME", "500"
+                    "AWS_SERVERLESS_JAVA_CONTAINER_INIT_GRACE_TIME", "250"
                 ))
                 .build();
     }
 
-    private IInterfaceVpcEndpoint createEventBridgeVpcEndpoint() {
-        return InterfaceVpcEndpoint.Builder.create(this, "EventBridgeEndpoint")
-                .service(InterfaceVpcEndpointAwsService.EVENTBRIDGE)
-                .vpc(infrastructureStack.getVpc())
-                .build();
-    }
 }

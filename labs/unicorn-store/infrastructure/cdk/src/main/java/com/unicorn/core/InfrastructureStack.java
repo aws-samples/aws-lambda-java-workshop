@@ -33,7 +33,7 @@ public class InfrastructureStack extends Stack {
                         .vpc(vpc)
                         .allowAllOutbound(true)
                         .build());
-
+        createEventBridgeVpcEndpoint();
         new DatabaseSetupConstruct(this, "UnicornDatabaseConstruct");
     }
 
@@ -117,6 +117,13 @@ public class InfrastructureStack extends Stack {
 
     public String getDatabaseJDBCConnectionString(){
         return "jdbc:postgresql://" + database.getDbInstanceEndpointAddress() + ":5432/unicorns";
+    }
+
+    private IInterfaceVpcEndpoint createEventBridgeVpcEndpoint() {
+        return InterfaceVpcEndpoint.Builder.create(this, "EventBridgeEndpoint")
+                .service(InterfaceVpcEndpointAwsService.EVENTBRIDGE)
+                .vpc(this.getVpc())
+                .build();
     }
 
 

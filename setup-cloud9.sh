@@ -53,6 +53,6 @@ echo "export AWS_REGION=${AWS_REGION}" >> ~/.bash_profile
 ## Pre-Download Maven dependencies for Unicorn Store
 cd ~/environment/aws-lambda-java-workshop/labs/unicorn-store
 ./mvnw dependency:go-offline -f infrastructure/db-setup/pom.xml
-./mvnw dependency:go-offline -f software/alternatives/unicorn-store-basic/pom.xml
 ./mvnw dependency:go-offline -f software/unicorn-store-spring/pom.xml
 ./mvnw dependency:go-offline -f software/alternatives/unicorn-store-micronaut/pom.xml
+./mvnw dependency:go-offline -f software/alternatives/unicorn-store-quarkus/pom.xml
