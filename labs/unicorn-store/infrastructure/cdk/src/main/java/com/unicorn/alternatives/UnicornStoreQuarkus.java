@@ -4,8 +4,7 @@ import com.unicorn.core.InfrastructureStack;
 import software.amazon.awscdk.*;
 import software.amazon.awscdk.services.apigateway.LambdaRestApi;
 import software.amazon.awscdk.services.apigateway.RestApi;
-import software.amazon.awscdk.services.lambda.Code;
-import software.amazon.awscdk.services.lambda.Function;
+import software.amazon.awscdk.services.lambda.*;
 import software.amazon.awscdk.services.lambda.Runtime;
 import software.constructs.Construct;
 
@@ -33,15 +32,15 @@ public class UnicornStoreQuarkus extends Stack {
                 .build());
     }
 
-    private RestApi setupRestApi(Function unicornStoreLambdaContainer) {
+    private RestApi setupRestApi(Version unicornStoreLambdaContainer) {
         return LambdaRestApi.Builder.create(this, "UnicornStoreQuarkusApi")
                 .restApiName("UnicornStoreQuarkusApi")
                 .handler(unicornStoreLambdaContainer)
                 .build();
     }
 
-    private Function createUnicornLambdaFunction() {
-        return Function.Builder.create(this, "UnicornStoreQuarkusFunction")
+    private Version createUnicornLambdaFunction() {
+        var lambda =  Function.Builder.create(this, "UnicornStoreQuarkusFunction")
                 .runtime(Runtime.JAVA_17)
                 .functionName("unicorn-store-quarkus")
                 .memorySize(2048)
@@ -50,14 +49,15 @@ public class UnicornStoreQuarkus extends Stack {
                 .handler("io.quarkus.amazon.lambda.runtime.QuarkusStreamHandler::handleRequest")
                 .vpc(infrastructureStack.getVpc())
                 .securityGroups(List.of(infrastructureStack.getApplicationSecurityGroup()))
+                .snapStart(SnapStartConf.ON_PUBLISHED_VERSIONS)
                 .environment(new HashMap<>() {{
                     put("QUARKUS_DATASOURCE_PASSWORD", infrastructureStack.getDatabaseSecretString());
                     put("QUARKUS_DATASOURCE_JDBC_URL", infrastructureStack.getDatabaseJDBCConnectionString());
                     put("QUARKUS_DATASOURCE_JDBC_INITIAL_SIZE", "1");
-                    put("QUARKUS_DATASOURCE_JDBC_MIN_SIZE", "1");
+                    put("QUARKUS_DATASOURCE_JDBC_MIN_SIZE", "0");
                     put("QUARKUS_DATASOURCE_JDBC_MAX_SIZE", "1");
-                    put("JAVA_TOOL_OPTIONS", "-XX:+TieredCompilation -XX:TieredStopAtLevel=1");
                 }})
                 .build();
+        return lambda.getCurrentVersion();
     }
 }

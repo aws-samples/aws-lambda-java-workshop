@@ -8,8 +8,7 @@ import com.unicorn.core.InfrastructureStack;
 import software.amazon.awscdk.*;
 import software.amazon.awscdk.services.apigateway.LambdaRestApi;
 import software.amazon.awscdk.services.apigateway.RestApi;
-import software.amazon.awscdk.services.lambda.Code;
-import software.amazon.awscdk.services.lambda.Function;
+import software.amazon.awscdk.services.lambda.*;
 import software.amazon.awscdk.services.lambda.Runtime;
 import software.constructs.Construct;
 
@@ -32,15 +31,15 @@ public class UnicornStoreMicronaut extends Stack {
                 .build());
     }
 
-    private RestApi setupRestApi(Function unicornStoreLambdaContainer) {
+    private RestApi setupRestApi(Version unicornStoreLambdaContainer) {
         return LambdaRestApi.Builder.create(this, "UnicornStoreMicronautApi")
                 .restApiName("UnicornStoreMicronautApi")
                 .handler(unicornStoreLambdaContainer)
                 .build();
     }
 
-    private Function createUnicornLambdaFunction() {
-        return Function.Builder.create(this, "UnicornStoreMicronautFunction")
+    private Version createUnicornLambdaFunction() {
+        var lambda = Function.Builder.create(this, "UnicornStoreMicronautFunction")
                 .runtime(Runtime.JAVA_17)
                 .functionName("unicorn-store-micronaut")
                 .memorySize(2048)
@@ -48,6 +47,7 @@ public class UnicornStoreMicronaut extends Stack {
                 .code(Code.fromAsset("../../software/alternatives/unicorn-store-micronaut/target/store-micronaut-2.0.0.jar"))
                 .handler("io.micronaut.function.aws.proxy.payload1.ApiGatewayProxyRequestEventFunction")
                 .vpc(infrastructureStack.getVpc())
+                .snapStart(SnapStartConf.ON_PUBLISHED_VERSIONS)
                 .securityGroups(List.of(infrastructureStack.getApplicationSecurityGroup()))
                 .environment(new HashMap<>() {{
                     put("DATASOURCES_DEFAULT_PASSWORD", infrastructureStack.getDatabaseSecretString());
@@ -55,5 +55,7 @@ public class UnicornStoreMicronaut extends Stack {
                     put("DATASOURCES_DEFAULT_maxPoolSize", "1");
                 }})
                 .build();
+
+        return lambda.getCurrentVersion();
     }
 }
