@@ -22,14 +22,10 @@ import java.util.List;
 
 public class UnicornAuditService extends Stack {
 
-    private final InfrastructureStack infrastructureStack;
-
     public UnicornAuditService(final Construct scope, final String id, final StackProps props, final InfrastructureStack infrastructureStack) {
         super(scope, id, props);
-        this.infrastructureStack = infrastructureStack;
-        createDynamoDBVpcEndpoint();
 
-        //** Add your code for the Amazon DynamoDB table creation below **/
+        //** Your code will go here **//
         var auditTable = Table.Builder.create(this, "UnicornStoreAuditServiceTable")
                 .tableName("unicorn-audit")
                 .partitionKey(Attribute.builder().name("id").type(AttributeType.STRING).build())
@@ -59,10 +55,4 @@ public class UnicornAuditService extends Stack {
         rule.addTarget(new LambdaFunction(unicornAuditServiceFunction));
     }
 
-    private IGatewayVpcEndpoint createDynamoDBVpcEndpoint() {
-        return GatewayVpcEndpoint.Builder.create(this, "DynamoDBVpcEndpoint")
-                .service(GatewayVpcEndpointAwsService.DYNAMODB)
-                .vpc(this.infrastructureStack.getVpc())
-                .build();
-    }
 }

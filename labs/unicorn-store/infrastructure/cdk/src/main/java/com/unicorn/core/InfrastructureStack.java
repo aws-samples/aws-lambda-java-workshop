@@ -34,6 +34,7 @@ public class InfrastructureStack extends Stack {
                         .allowAllOutbound(true)
                         .build());
         createEventBridgeVpcEndpoint();
+        createDynamoDBVpcEndpoint();
         new DatabaseSetupConstruct(this, "UnicornDatabaseConstruct");
     }
 
@@ -124,6 +125,13 @@ public class InfrastructureStack extends Stack {
     private IInterfaceVpcEndpoint createEventBridgeVpcEndpoint() {
         return InterfaceVpcEndpoint.Builder.create(this, "EventBridgeEndpoint")
                 .service(InterfaceVpcEndpointAwsService.EVENTBRIDGE)
+                .vpc(this.getVpc())
+                .build();
+    }
+
+    private IGatewayVpcEndpoint createDynamoDBVpcEndpoint() {
+        return GatewayVpcEndpoint.Builder.create(this, "DynamoDBVpcEndpoint")
+                .service(GatewayVpcEndpointAwsService.DYNAMODB)
                 .vpc(this.getVpc())
                 .build();
     }

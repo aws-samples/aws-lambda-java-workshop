@@ -1,4 +1,4 @@
-package com.unicorn.store;
+package com.unicorn;
 
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
@@ -7,7 +7,6 @@ import software.amazon.awssdk.http.crt.AwsCrtAsyncHttpClient;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbAsyncClient;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
-import software.amazon.awssdk.services.dynamodb.model.DynamoDbException;
 import software.amazon.awssdk.services.dynamodb.model.PutItemRequest;
 
 import java.util.Map;
@@ -16,7 +15,6 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 public class UnicornWriter {
-
     private static final DynamoDbAsyncClient dynamoDbAsyncClient = DynamoDbAsyncClient
             .builder()
             .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
@@ -27,7 +25,13 @@ public class UnicornWriter {
     public String save(String payload) {
         try {
             var id = UUID.randomUUID().toString();
-            var dynamoDBRequest = createPutItemRequest(id, payload);
+            var dynamoDBRequest = PutItemRequest.builder()
+                    .tableName("unicorn-audit")
+                    .item(Map.of(
+                            "id", AttributeValue.builder().s(id).build(),
+                            "details", AttributeValue.builder().s(payload).build()
+                    ))
+                    .build();
             dynamoDbAsyncClient.putItem(dynamoDBRequest).get();
             return id;
         } catch (ExecutionException | InterruptedException e) {
@@ -35,13 +39,4 @@ public class UnicornWriter {
         }
     }
 
-    private PutItemRequest createPutItemRequest(String id, String details) {
-        return PutItemRequest.builder()
-                .tableName("unicorn-audit")
-                .item(Map.of(
-                        "id", AttributeValue.builder().s(id).build(),
-                        "details", AttributeValue.builder().s(details).build()
-                ))
-                .build();
-    }
 }
