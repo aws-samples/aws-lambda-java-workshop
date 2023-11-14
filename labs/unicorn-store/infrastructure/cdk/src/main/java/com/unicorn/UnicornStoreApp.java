@@ -2,6 +2,7 @@ package com.unicorn;
 
 import java.util.List;
 
+import com.unicorn.alternatives.UnicornAuditService;
 import com.unicorn.alternatives.UnicornStoreMicronaut;
 import com.unicorn.alternatives.UnicornStoreQuarkus;
 import com.unicorn.alternatives.UnicornStoreSpringGraalVM;
@@ -35,6 +36,9 @@ public class UnicornStoreApp {
         var unicornStoreQuarkus = new UnicornStoreQuarkus(app, "UnicornStoreQuarkusApp", StackProps.builder()
                 .build(), infrastructureStack);
 
+        var unicornAuditService = new UnicornAuditService(app, "UnicornAuditServiceApp", StackProps.builder()
+                .build(), infrastructureStack);
+
 
         //Add CDK-NAG checks: https://github.com/cdklabs/cdk-nag
         //Add suppression to exclude certain findings that are not needed for Workshop environment
@@ -64,6 +68,7 @@ public class UnicornStoreApp {
         NagSuppressions.addStackSuppressions(unicornStoreMicronaut, suppression);
         NagSuppressions.addStackSuppressions(unicornStoreSpringGraalVM, suppression);
         NagSuppressions.addStackSuppressions(unicornStoreQuarkus, suppression);
+        NagSuppressions.addStackSuppressions(unicornAuditService, suppression);
 
         app.synth();
     }

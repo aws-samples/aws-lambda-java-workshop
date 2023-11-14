@@ -1,18 +1,23 @@
 package com.unicorn.alternatives;
 
 import com.unicorn.core.InfrastructureStack;
-import software.amazon.awscdk.*;
-import software.amazon.awscdk.services.apigateway.LambdaRestApi;
-import software.amazon.awscdk.services.apigateway.RestApi;
+import software.amazon.awscdk.Duration;
+import software.amazon.awscdk.Stack;
+import software.amazon.awscdk.StackProps;
+import software.amazon.awscdk.services.dynamodb.Attribute;
+import software.amazon.awscdk.services.dynamodb.AttributeType;
 import software.amazon.awscdk.services.dynamodb.Table;
+import software.amazon.awscdk.services.ec2.GatewayVpcEndpoint;
+import software.amazon.awscdk.services.ec2.GatewayVpcEndpointAwsService;
+import software.amazon.awscdk.services.ec2.IGatewayVpcEndpoint;
 import software.amazon.awscdk.services.events.EventPattern;
 import software.amazon.awscdk.services.events.Rule;
 import software.amazon.awscdk.services.events.targets.LambdaFunction;
+import software.amazon.awscdk.services.lambda.Code;
+import software.amazon.awscdk.services.lambda.Function;
 import software.amazon.awscdk.services.lambda.Runtime;
-import software.amazon.awscdk.services.lambda.*;
 import software.constructs.Construct;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class UnicornAuditService extends Stack {
@@ -22,16 +27,31 @@ public class UnicornAuditService extends Stack {
     public UnicornAuditService(final Construct scope, final String id, final StackProps props, final InfrastructureStack infrastructureStack) {
         super(scope, id, props);
         this.infrastructureStack = infrastructureStack;
+        createDynamoDBVpcEndpoint();
 
+        //** Add your code for the Amazon DynamoDB table creation below **/
+        var auditTable = Table.Builder.create(this, "UnicornStoreAuditServiceTable")
+                .tableName("unicorn-audit")
+                .partitionKey(Attribute.builder().name("id").type(AttributeType.STRING).build())
+                .build();
 
-        //Micronaut app
-        var unicornAuditServiceFunction = createUnicornAuditServiceFunction();
-        var auditTable = createDynamoDBTable();
+        //** Add your code for the AWS Lambda function creation below **/
+        var unicornAuditServiceFunction = Function.Builder.create(this, "UnicornAuditServiceFunction")
+                .runtime(Runtime.JAVA_17)
+                .functionName("unicorn-audit-service")
+                .memorySize(512)
+                .timeout(Duration.seconds(29))
+                .code(Code.fromAsset("../../software/alternatives/unicorn-audit-service/target/unicorn-audit-service-1.0.0-aws.jar"))
+                .handler("org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest")
+                .vpc(infrastructureStack.getVpc())
+                .securityGroups(List.of(infrastructureStack.getApplicationSecurityGroup()))
+                .build();
 
         auditTable.grantWriteData(unicornAuditServiceFunction);
 
+        //** Trigger the Lambda Function from the existing Amazon EventBridge EventBus **/
         var rule = Rule.Builder.create(this, "EventBridgeRuleAudit")
-                .ruleName("my-rule")
+                .ruleName("audit-service-rule")
                 .eventBus(infrastructureStack.getEventBridge())
                 .eventPattern(EventPattern.builder().source(List.of("com.unicorn.store")).build())
                 .build();
@@ -39,23 +59,10 @@ public class UnicornAuditService extends Stack {
         rule.addTarget(new LambdaFunction(unicornAuditServiceFunction));
     }
 
-    private Table createDynamoDBTable(){
-        return Table.Builder.create(this, "UnicornStoreAuditServiceTable")
-                .tableName("unicorn-audits")
+    private IGatewayVpcEndpoint createDynamoDBVpcEndpoint() {
+        return GatewayVpcEndpoint.Builder.create(this, "DynamoDBVpcEndpoint")
+                .service(GatewayVpcEndpointAwsService.DYNAMODB)
+                .vpc(this.infrastructureStack.getVpc())
                 .build();
-    }
-
-    private Function createUnicornAuditServiceFunction() {
-       return Function.Builder.create(this, "UnicornAuditServiceFunction")
-                .runtime(Runtime.JAVA_17)
-                .functionName("unicorn-audit-service")
-                .memorySize(512)
-                .timeout(Duration.seconds(29))
-                .code(Code.fromAsset("../../software/unicorn-audit-service/target/unicorn-audit-service-2.0.0.jar"))
-                .handler("org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest")
-                .vpc(infrastructureStack.getVpc())
-                .securityGroups(List.of(infrastructureStack.getApplicationSecurityGroup()))
-                .build();
-
     }
 }

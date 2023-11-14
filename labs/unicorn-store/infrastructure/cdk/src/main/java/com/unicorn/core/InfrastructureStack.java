@@ -128,5 +128,4 @@ public class InfrastructureStack extends Stack {
                 .build();
     }
 
-
 }
