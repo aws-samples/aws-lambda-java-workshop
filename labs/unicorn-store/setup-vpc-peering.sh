@@ -1,6 +1,6 @@
 #bin/sh
 
-export UNICORN_VPC_ID=$(cat infrastructure/cdk/target/output.json | jq -r '.UnicornStoreInfrastructure | values[] | select(. | startswith("vpc"))')
+export UNICORN_VPC_ID=$(cat infrastructure/cdk/target/output.json | jq -r '.UnicornStoreInfrastructure.UnicornStoreVpcId')
 
 export CLOUD9_VPC_ID=$(curl -s http://169.254.169.254/latest/meta-data/network/interfaces/macs/$( ip address show dev ens5 | grep ether | awk ' { print $2  } ' )/vpc-id)
 

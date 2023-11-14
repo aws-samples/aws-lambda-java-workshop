@@ -93,10 +93,12 @@ public class InfrastructureStack extends Stack {
     }
 
     private IVpc createUnicornVpc() {
-        return Vpc.Builder.create(this, "UnicornVpc")
+         IVpc vpc = Vpc.Builder.create(this, "UnicornVpc")
                 .vpcName("UnicornVPC")
                 .natGateways(0)
                 .build();
+        new CfnOutput(this, "UnicornStoreVpcId", CfnOutputProps.builder().value(vpc.getVpcId()).build());
+        return vpc;
     }
 
     public EventBus getEventBridge() {
