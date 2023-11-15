@@ -1,24 +1,16 @@
 package com.unicorn;
 
-import java.util.List;
-import java.util.Map;
-
 import com.unicorn.core.InfrastructureStack;
-
-import software.amazon.awscdk.CfnOutput;
-import software.amazon.awscdk.CfnOutputProps;
-import software.amazon.awscdk.Duration;
-import software.amazon.awscdk.Stack;
-import software.amazon.awscdk.StackProps;
+import software.amazon.awscdk.*;
 import software.amazon.awscdk.services.apigateway.LambdaRestApi;
 import software.amazon.awscdk.services.apigateway.RestApi;
-import software.amazon.awscdk.services.ec2.IInterfaceVpcEndpoint;
-import software.amazon.awscdk.services.ec2.InterfaceVpcEndpoint;
-import software.amazon.awscdk.services.ec2.InterfaceVpcEndpointAwsService;
 import software.amazon.awscdk.services.lambda.Code;
 import software.amazon.awscdk.services.lambda.Function;
 import software.amazon.awscdk.services.lambda.Runtime;
 import software.constructs.Construct;
+
+import java.util.List;
+import java.util.Map;
 
 public class UnicornStoreStack extends Stack {
 
