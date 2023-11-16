@@ -6,14 +6,6 @@
 version: 2
 updates:
   - package-ecosystem: maven
-    directory: "/labs/unicorn-store/software/alternatives/unicorn-store-basic"
-    schedule:
-      interval: "weekly"
-    ignore: # needs manual GraalVM config updates (reflect-config)
-      - dependency-name: "software.amazon.awssdk:*"
-        versions:
-          - "> 2.20.22"
-  - package-ecosystem: maven
     directory: "/labs/unicorn-store/software/unicorn-store-spring" 
     schedule:
       interval: "weekly"

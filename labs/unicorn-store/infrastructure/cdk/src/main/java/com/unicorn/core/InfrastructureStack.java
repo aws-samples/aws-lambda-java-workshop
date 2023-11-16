@@ -33,7 +33,8 @@ public class InfrastructureStack extends Stack {
                         .vpc(vpc)
                         .allowAllOutbound(true)
                         .build());
-
+        createEventBridgeVpcEndpoint();
+        createDynamoDBVpcEndpoint();
         new DatabaseSetupConstruct(this, "UnicornDatabaseConstruct");
     }
 
@@ -93,10 +94,12 @@ public class InfrastructureStack extends Stack {
     }
 
     private IVpc createUnicornVpc() {
-        return Vpc.Builder.create(this, "UnicornVpc")
+         IVpc vpc = Vpc.Builder.create(this, "UnicornVpc")
                 .vpcName("UnicornVPC")
                 .natGateways(0)
                 .build();
+        new CfnOutput(this, "UnicornStoreVpcId", CfnOutputProps.builder().value(vpc.getVpcId()).build());
+        return vpc;
     }
 
     public EventBus getEventBridge() {
@@ -119,5 +122,18 @@ public class InfrastructureStack extends Stack {
         return "jdbc:postgresql://" + database.getDbInstanceEndpointAddress() + ":5432/unicorns";
     }
 
+    private IInterfaceVpcEndpoint createEventBridgeVpcEndpoint() {
+        return InterfaceVpcEndpoint.Builder.create(this, "EventBridgeEndpoint")
+                .service(InterfaceVpcEndpointAwsService.EVENTBRIDGE)
+                .vpc(this.getVpc())
+                .build();
+    }
+
+    private IGatewayVpcEndpoint createDynamoDBVpcEndpoint() {
+        return GatewayVpcEndpoint.Builder.create(this, "DynamoDBVpcEndpoint")
+                .service(GatewayVpcEndpointAwsService.DYNAMODB)
+                .vpc(this.getVpc())
+                .build();
+    }
 
 }

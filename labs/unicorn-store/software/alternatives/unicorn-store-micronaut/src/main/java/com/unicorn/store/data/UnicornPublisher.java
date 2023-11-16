@@ -14,20 +14,27 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.eventbridge.EventBridgeAsyncClient;
 import software.amazon.awssdk.services.eventbridge.model.PutEventsRequest;
 import software.amazon.awssdk.services.eventbridge.model.PutEventsRequestEntry;
+import software.amazon.awssdk.services.eventbridge.model.ListEventBusesRequest;
 
 
 @Singleton
 public class UnicornPublisher {
 
-    @Inject
     private JsonMapper objectMapper;
-
     private static final EventBridgeAsyncClient eventBridgeClient = EventBridgeAsyncClient
             .builder()
-            .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
             .region(Region.of(System.getenv(SdkSystemSetting.AWS_REGION.environmentVariable())))
             .httpClient(AwsCrtAsyncHttpClient.create())
             .build();
+
+    public UnicornPublisher(JsonMapper objectMapper) {
+        try {
+            eventBridgeClient.listEventBuses(ListEventBusesRequest.builder().build()).get();
+        } catch (Exception e) {
+            //Ignore
+        }
+        this.objectMapper = objectMapper;
+    }
 
     public void publish(Unicorn unicorn, UnicornEventType unicornEventType) {
         try {

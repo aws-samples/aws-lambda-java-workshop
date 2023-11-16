@@ -19,6 +19,7 @@ public class UnicornController {
 
     private final UnicornService unicornService;
 
+
     public UnicornController(UnicornService unicornService) {
         this.unicornService = unicornService;
     }

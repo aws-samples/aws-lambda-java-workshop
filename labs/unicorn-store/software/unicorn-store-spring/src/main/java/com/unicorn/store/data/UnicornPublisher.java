@@ -6,12 +6,12 @@ import com.unicorn.store.exceptions.PublisherException;
 import com.unicorn.store.model.Unicorn;
 import com.unicorn.store.model.UnicornEventType;
 import org.springframework.stereotype.Service;
-import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.core.SdkSystemSetting;
 import software.amazon.awssdk.http.crt.AwsCrtAsyncHttpClient;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.eventbridge.EventBridgeAsyncClient;
 import software.amazon.awssdk.services.eventbridge.model.EventBridgeException;
+import software.amazon.awssdk.services.eventbridge.model.ListEventBusesRequest;
 import software.amazon.awssdk.services.eventbridge.model.PutEventsRequest;
 import software.amazon.awssdk.services.eventbridge.model.PutEventsRequestEntry;
 
@@ -23,12 +23,16 @@ public class UnicornPublisher {
     private final ObjectMapper objectMapper;
     private static final EventBridgeAsyncClient eventBridgeClient = EventBridgeAsyncClient
             .builder()
-            .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
             .region(Region.of(System.getenv(SdkSystemSetting.AWS_REGION.environmentVariable())))
             .httpClient(AwsCrtAsyncHttpClient.create())
             .build();
 
     public UnicornPublisher(ObjectMapper objectMapper) {
+        try {
+            eventBridgeClient.listEventBuses(ListEventBusesRequest.builder().build()).get();
+        } catch (Exception e) {
+            //Ignore
+        }
         this.objectMapper = objectMapper;
     }
 
