@@ -30,6 +30,10 @@ updates:
     schedule:
       interval: "weekly"
   - package-ecosystem: maven
+    directory: "/labs/unicorn-store/software/alternatives/unicorn-audit-service"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: maven
     directory: "/labs/unicorn-store/infrastructure/cdk" 
     schedule:
       interval: "weekly"

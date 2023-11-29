@@ -49,6 +49,9 @@ jobs:
       - name: mvn unicorn-store-quarkus
         run: ./mvnw package -f software/alternatives/unicorn-store-quarkus/pom.xml
         working-directory: ./labs/unicorn-store
+      - name: mvn unicorn-audit-service
+        run: ./mvnw package -f software/alternatives/unicorn-audit-service/pom.xml
+        working-directory: ./labs/unicorn-store
       - name: install cdk
         run: npm install -g aws-cdk
       - name: synth
