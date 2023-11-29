@@ -41,7 +41,7 @@ public class UnicornStoreQuarkus extends Stack {
 
     private Version createUnicornLambdaFunction() {
         var lambda =  Function.Builder.create(this, "UnicornStoreQuarkusFunction")
-                .runtime(Runtime.JAVA_17)
+                .runtime(Runtime.JAVA_21)
                 .functionName("unicorn-store-quarkus")
                 .memorySize(2048)
                 .timeout(Duration.seconds(29))

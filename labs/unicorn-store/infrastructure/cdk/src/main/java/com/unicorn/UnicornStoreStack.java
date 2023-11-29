@@ -52,7 +52,7 @@ public class UnicornStoreStack extends Stack {
 
     private Function createUnicornLambdaFunction() {
         return Function.Builder.create(this, "UnicornStoreSpringFunction")
-                .runtime(Runtime.JAVA_17)
+                .runtime(Runtime.JAVA_21)
                 .functionName("unicorn-store-spring")
                 .memorySize(512)
                 .timeout(Duration.seconds(29))

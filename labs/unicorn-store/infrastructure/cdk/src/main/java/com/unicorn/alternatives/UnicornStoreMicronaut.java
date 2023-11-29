@@ -40,7 +40,7 @@ public class UnicornStoreMicronaut extends Stack {
 
     private Version createUnicornLambdaFunction() {
         var lambda = Function.Builder.create(this, "UnicornStoreMicronautFunction")
-                .runtime(Runtime.JAVA_17)
+                .runtime(Runtime.JAVA_21)
                 .functionName("unicorn-store-micronaut")
                 .memorySize(2048)
                 .timeout(Duration.seconds(29))
