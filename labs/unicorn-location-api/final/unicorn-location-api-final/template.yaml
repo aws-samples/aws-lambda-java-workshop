@@ -41,7 +41,7 @@ Resources:
     Properties:
       FunctionName: unicorn-location-api-post-graal
       CodeUri: UnicornLocationFunctionGraalVM/unicorn-location-graal.zip
-      Runtime: provided.al2
+      Runtime: provided.al2023
       MemorySize: 1024
       Handler: com.unicorn.location.UnicornPostLocationHandler
       Events:
