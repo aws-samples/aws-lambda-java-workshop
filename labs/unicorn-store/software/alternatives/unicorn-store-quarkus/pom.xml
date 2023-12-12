@@ -70,9 +70,9 @@
     </dependency>
 
     <dependency>
-      <groupId>io.github.crac</groupId>
-      <artifactId>org-crac</artifactId>
-      <version>0.1.3</version>
+      <groupId>org.crac</groupId>
+      <artifactId>crac</artifactId>
+      <version>1.4.0</version>
     </dependency>
   
     <!-- use for REST API Gateway and for LB integration -->
