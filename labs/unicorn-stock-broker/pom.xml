@@ -17,7 +17,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-cloud.version>2023.0.0</spring-cloud.version>
-        <aws-sdk.version>2.21.43</aws-sdk.version>
+        <aws-sdk.version>2.22.9</aws-sdk.version>
     </properties>
 
     <dependencies>
