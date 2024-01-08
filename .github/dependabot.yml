@@ -25,22 +25,42 @@ updates:
     directory: "/labs/unicorn-store/software/alternatives/unicorn-store-micronaut"
     schedule:
       interval: "weekly"
+    groups:
+      awssdk:
+        patterns:
+          - "software.amazon.awssdk:*"
   - package-ecosystem: maven
     directory: "/labs/unicorn-store/software/alternatives/unicorn-store-quarkus"
     schedule:
       interval: "weekly"
+    groups:
+      awssdk:
+        patterns:
+          - "software.amazon.awssdk:*"
   - package-ecosystem: maven
     directory: "/labs/unicorn-store/software/alternatives/unicorn-audit-service"
     schedule:
       interval: "weekly"
+    groups:
+      awssdk:
+        patterns:
+          - "software.amazon.awssdk:*"
   - package-ecosystem: maven
     directory: "/labs/unicorn-store/infrastructure/cdk" 
     schedule:
       interval: "weekly"
+    groups:
+      awssdk:
+        patterns:
+          - "software.amazon.awssdk:*"
   - package-ecosystem: maven
     directory: "/labs/unicorn-store/infrastructure/db-setup" 
     schedule:
       interval: "weekly"
+    groups:
+      awssdk:
+        patterns:
+          - "software.amazon.awssdk:*"
   - package-ecosystem: maven
     directory: "/labs/unicorn-location-api/UnicornLocationFunction" 
     schedule:
@@ -61,6 +81,10 @@ updates:
     directory: "/labs/unicorn-stock-broker"
     schedule:
       interval: "weekly"
+    groups:
+      awssdk:
+        patterns:
+          - "software.amazon.awssdk:*"
   - package-ecosystem: docker
     directory: "/labs/unicorn-store/software/alternatives/unicorn-store-spring-graalvm"
     schedule:
