@@ -61,7 +61,7 @@ public class UnicornPostLocationHandler implements RequestHandler<APIGatewayProx
         try {
             dynamoDbClient.putItem(putItemRequest).get(); //<-- Add .get() call and catch the checked exceptions
         } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException("Error creating Put Item request");
+            throw new RuntimeException("Error creating Put Item request", e);
         }
     }
 }
