@@ -22,7 +22,7 @@ updates:
     ignore: # needs manual GraalVM config updates (reflect-config)
       - dependency-name: "software.amazon.awssdk:*"
         versions:
-          - "> 2.20.22"
+          - "> 2.25.45"
   - package-ecosystem: docker
     directories:
      - "/labs/unicorn-store/software/alternatives/unicorn-store-spring-graalvm"
