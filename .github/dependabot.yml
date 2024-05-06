@@ -6,94 +6,27 @@
 version: 2
 updates:
   - package-ecosystem: maven
-    directory: "/labs/unicorn-store/software/unicorn-store-spring" 
+    directories:
+     - "/labs/unicorn-store/software/unicorn-store-spring"
+     - "/labs/unicorn-store/software/alternatives/unicorn-store-spring-graalvm"
+     - "/labs/unicorn-store/software/alternatives/unicorn-store-micronaut"
+     - "/labs/unicorn-store/software/alternatives/unicorn-store-quarkus"
+     - "/labs/unicorn-store/software/alternatives/unicorn-audit-service"
+     - "/labs/unicorn-store/infrastructure/cdk"
+     - "/labs/unicorn-store/infrastructure/db-setup"
+     - "/labs/unicorn-location-api/UnicornLocationFunction"
+     - "/labs/unicorn-location-api/final/unicorn-location-api-final/UnicornLocationFunction"
+     - "/labs/unicorn-stock-broker"
     schedule:
       interval: "weekly"
     ignore: # needs manual GraalVM config updates (reflect-config)
       - dependency-name: "software.amazon.awssdk:*"
         versions:
           - "> 2.20.22"
-  - package-ecosystem: maven
-    directory: "/labs/unicorn-store/software/alternatives/unicorn-store-spring-graalvm"
-    schedule:
-      interval: "weekly"
-    ignore: # needs manual GraalVM config updates (reflect-config)
-      - dependency-name: "software.amazon.awssdk:*"
-        versions:
-          - "> 2.20.22"
-  - package-ecosystem: maven
-    directory: "/labs/unicorn-store/software/alternatives/unicorn-store-micronaut"
-    schedule:
-      interval: "weekly"
-    groups:
-      awssdk:
-        patterns:
-          - "software.amazon.awssdk:*"
-  - package-ecosystem: maven
-    directory: "/labs/unicorn-store/software/alternatives/unicorn-store-quarkus"
-    schedule:
-      interval: "weekly"
-    groups:
-      awssdk:
-        patterns:
-          - "software.amazon.awssdk:*"
-  - package-ecosystem: maven
-    directory: "/labs/unicorn-store/software/alternatives/unicorn-audit-service"
-    schedule:
-      interval: "weekly"
-    groups:
-      awssdk:
-        patterns:
-          - "software.amazon.awssdk:*"
-  - package-ecosystem: maven
-    directory: "/labs/unicorn-store/infrastructure/cdk" 
-    schedule:
-      interval: "weekly"
-    groups:
-      awssdk:
-        patterns:
-          - "software.amazon.awssdk:*"
-  - package-ecosystem: maven
-    directory: "/labs/unicorn-store/infrastructure/db-setup" 
-    schedule:
-      interval: "weekly"
-    groups:
-      awssdk:
-        patterns:
-          - "software.amazon.awssdk:*"
-  - package-ecosystem: maven
-    directory: "/labs/unicorn-location-api/UnicornLocationFunction" 
-    schedule:
-      interval: "weekly"
-    ignore: # needs manual GraalVM config updates (reflect-config)
-      - dependency-name: "software.amazon.awssdk:*"
-        versions:
-          - "> 2.20.22"
-  - package-ecosystem: maven
-    directory: "/labs/unicorn-location-api/final/unicorn-location-api-final/UnicornLocationFunction" 
-    schedule:
-      interval: "weekly"
-    ignore: # needs manual GraalVM config updates (reflect-config)
-      - dependency-name: "software.amazon.awssdk:*"
-        versions:
-          - "> 2.20.22"
-  - package-ecosystem: maven
-    directory: "/labs/unicorn-stock-broker"
-    schedule:
-      interval: "weekly"
-    groups:
-      awssdk:
-        patterns:
-          - "software.amazon.awssdk:*"
   - package-ecosystem: docker
-    directory: "/labs/unicorn-store/software/alternatives/unicorn-store-spring-graalvm"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: docker
-    directory: "/labs/unicorn-location-api/graal"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: docker
-    directory: "/labs/unicorn-location-api/final/unicorn-location-api-final"
+    directories:
+     - "/labs/unicorn-store/software/alternatives/unicorn-store-spring-graalvm"
+     - "/labs/unicorn-location-api/graal"
+     - "/labs/unicorn-location-api/final/unicorn-location-api-final"
     schedule:
       interval: "weekly"
