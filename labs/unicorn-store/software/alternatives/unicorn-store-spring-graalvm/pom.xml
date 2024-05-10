@@ -152,8 +152,9 @@
                         </executions>
                         <configuration>
                             <buildArgs>
-                                --enable-url-protocols=http
-                                -H:+AddAllCharsets
+                                <buildArg>--enable-url-protocols=http</buildArg>
+                                <buildArg>-H:+AddAllCharsets</buildArg>
+                                <buildArg>-march=compatibility</buildArg>
                             </buildArgs>
                         </configuration>
                     </plugin>

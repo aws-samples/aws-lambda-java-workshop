@@ -28,6 +28,11 @@ public class UnicornStoreSpringGraalVM extends Stack {
         new CfnOutput(this, "ApiEndpointSpringGraalVM", CfnOutputProps.builder()
                 .value(restApi.getUrl())
                 .build());
+
+        //Create output values for later reference
+        new CfnOutput(this, "unicorn-store-spring-graalvm-function-arn", CfnOutputProps.builder()
+                .value(unicornStoreSpringGraalVM.getFunctionArn())
+                .build());
     }
 
     private RestApi setupRestApi(Function unicornStoreSpringGraalVM) {
