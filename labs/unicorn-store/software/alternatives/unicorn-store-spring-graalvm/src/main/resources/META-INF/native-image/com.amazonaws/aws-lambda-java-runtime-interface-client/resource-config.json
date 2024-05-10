@@ -1,18 +1,9 @@
 {
   "resources": {
     "includes": [
-      {
-        "pattern": "\\Qjni/libaws-lambda-jni.linux-aarch_64.so\\E"
-      },
-      {
-        "pattern": "\\Qjni/libaws-lambda-jni.linux_musl-aarch_64.so\\E"
-      },
-      {
-        "pattern": "\\Qjni/libaws-lambda-jni.linux-x86_64.so\\E"
-      },
-      {
-        "pattern": "\\Qjni/libaws-lambda-jni.linux_musl-x86_64.so\\E"
-      }
+      {"pattern":".*libaws-crt-jni.dylib"},
+      {"pattern":".*libaws-crt-jni.so"},
+      {"pattern":".*libaws-crt-jni.dll"}
     ]
   },
   "bundles": []
