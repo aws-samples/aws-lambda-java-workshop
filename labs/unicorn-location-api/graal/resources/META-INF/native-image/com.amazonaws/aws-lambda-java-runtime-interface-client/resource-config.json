@@ -2,6 +2,9 @@
   "resources": {
     "includes": [
       {
+        "pattern":"\\QMETA-INF/services/com.amazonaws.services.lambda.runtime.CustomPojoSerializer\\E"
+      },
+      {
         "pattern": "\\Qjni/libaws-lambda-jni.linux-aarch_64.so\\E"
       },
       {
