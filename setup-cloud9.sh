@@ -11,7 +11,7 @@ sudo ./aws/install
 rm awscliv2.zip
 
 ## Install Maven
-export MVN_VERSION=3.9.5
+export MVN_VERSION=3.9.6
 export MVN_FOLDERNAME=apache-maven-${MVN_VERSION}
 export MVN_FILENAME=apache-maven-${MVN_VERSION}-bin.tar.gz
 curl -4 -L https://archive.apache.org/dist/maven/maven-3/${MVN_VERSION}/binaries/${MVN_FILENAME} | tar -xvz
@@ -34,6 +34,8 @@ rm ./aws-sam-cli-linux-x86_64.zip
 sudo apt update
 # Suppress the information popup about the kernel
 sudo sed -i "s/#\$nrconf{kernelhints} = -1;/\$nrconf{kernelhints} = -1;/g" /etc/needrestart/needrestart.conf
+sudo sed -i "s/#\$nrconf{restart} = 'i';/\$nrconf{restart} = 'a';/g" /etc/needrestart/needrestart.conf
+
 sudo apt install -y jq
 npm install -g aws-cdk --force
 npm install -g artillery
