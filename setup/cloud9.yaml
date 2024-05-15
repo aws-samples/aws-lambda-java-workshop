@@ -240,21 +240,6 @@ Resources:
           CidrIp: 0.0.0.0/0
           Description: "HTTPS Outbound traffic"
 
-  # CloudEnv:
-  #   Type: AWS::Cloud9::EnvironmentEC2
-  #   Properties:
-  #     ConnectionType: CONNECT_SSM
-  #     Description: Jam Cloud9 Environment
-  #     InstanceType: t2.micro
-  #     Name: jam-cloudenv
-  #     OwnerArn: !Join
-  #       - ''
-  #       - - 'arn:aws:iam::'
-  #         - !Ref 'AWS::AccountId'
-  #         - ':assumed-role/TeamRole/MasterKey'
-  #     SubnetId: !Ref PrivateSubnet1
-
-
   ################## PERMISSIONS AND ROLES #################
   C9Role:
     Type: AWS::IAM::Role
@@ -541,16 +526,21 @@ Resources:
                 - echo LANG=en_US.utf-8 >> /etc/environment
                 - echo LC_ALL=en_US.UTF-8 >> /etc/environment
                 - . /home/ubuntu/.bashrc
+                - declare -i EXIT_CODE=0
                 - echo '=== Clone Git repository ==='
                 - !Sub sudo -H -u ubuntu bash -c "git clone https://github.com/aws-samples/aws-lambda-java-workshop.git /home/ubuntu/environment/aws-lambda-java-workshop/"
+                - EXIT_CODE+=$?
                 - echo '=== Update and install default software components, resize disk ==='
                 - sudo -H -i -u ubuntu bash -c "/home/ubuntu/environment/aws-lambda-java-workshop/setup-cloud9.sh &>> /home/ubuntu/java-ws-c9setup.log"
+                - EXIT_CODE+=$?
                 - echo '=== Setup infrastructure components ==='
                 - sudo -H -i -u ubuntu bash -c "cd /home/ubuntu/environment/aws-lambda-java-workshop/labs/unicorn-store/ && ./setup-infrastructure.sh &>> /home/ubuntu/java-ws-infrasetup.log"
+                - EXIT_CODE+=$?
                 - echo '=== Install cfn-signal and report status ==='
                 - pip3 install https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-py3-latest.tar.gz
-                - if [ "$?" -ne 0 ]; then export BOOTSTRAP_RESULT=false; else export BOOTSTRAP_RESULT=true; fi
-                - "cfn-signal -e $? -s $BOOTSTRAP_RESULT '{{ WaitHandleUrl }}' "
+                - EXIT_CODE+=$?
+                - if [ $EXIT_CODE -ne 0 ]; then export BOOTSTRAP_RESULT=false; else export BOOTSTRAP_RESULT=true; fi
+                - "cfn-signal -e $EXIT_CODE -s $BOOTSTRAP_RESULT '{{ WaitHandleUrl }}' "
                 - echo "Bootstrap completed with return code $?"
 
   C9BootstrapAssociation:
