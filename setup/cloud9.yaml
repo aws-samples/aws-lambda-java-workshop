@@ -541,7 +541,7 @@ Resources:
                 - EXIT_CODE+=$?
                 - if [ $EXIT_CODE -ne 0 ]; then export BOOTSTRAP_RESULT=false; else export BOOTSTRAP_RESULT=true; fi
                 - "cfn-signal -e $EXIT_CODE -s $BOOTSTRAP_RESULT '{{ WaitHandleUrl }}' "
-                - echo "Bootstrap completed with return code $?"
+                - echo "Bootstrap completed with return code $EXIT_CODE"
 
   C9BootstrapAssociation:
     Type: AWS::SSM::Association
