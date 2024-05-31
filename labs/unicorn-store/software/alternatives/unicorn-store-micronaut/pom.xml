@@ -10,13 +10,12 @@
   <parent>
     <groupId>io.micronaut.platform</groupId>
     <artifactId>micronaut-parent</artifactId>
-    <version>4.4.2</version>
+    <version>4.4.3</version>
   </parent>
   <properties>
     <packaging>jar</packaging>
     <jdk.version>17</jdk.version>
     <release.version>17</release.version>
-    <micronaut.version>4.1.6</micronaut.version>
     <micronaut.aot.enabled>true</micronaut.aot.enabled>
     <micronaut.aot.packageName>com.unicorn.store.aot.generated</micronaut.aot.packageName>
     <micronaut.runtime>lambda</micronaut.runtime>
