@@ -57,10 +57,11 @@ public class UnicornStoreStack extends Stack {
                 .memorySize(512)
                 .timeout(Duration.seconds(29))
                 .code(Code.fromAsset("../../software/unicorn-store-spring/target/store-spring-1.0.0.jar"))
-                .handler("com.unicorn.store.StreamLambdaHandler::handleRequest")
+                .handler("com.amazonaws.serverless.proxy.spring.SpringDelegatingLambdaContainerHandler")
                 .vpc(infrastructureStack.getVpc())
                 .securityGroups(List.of(infrastructureStack.getApplicationSecurityGroup()))
                 .environment(Map.of(
+                    "MAIN_CLASS", "com.unicorn.store.StoreApplication",
                     "SPRING_DATASOURCE_PASSWORD", infrastructureStack.getDatabaseSecretString(),
                     "SPRING_DATASOURCE_URL", infrastructureStack.getDatabaseJDBCConnectionString(),
                     "SPRING_DATASOURCE_HIKARI_maximumPoolSize", "1",
