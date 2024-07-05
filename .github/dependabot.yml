@@ -7,26 +7,11 @@ version: 2
 updates:
   - package-ecosystem: maven
     directories:
-     - "/labs/unicorn-store/software/unicorn-store-spring"
-     - "/labs/unicorn-store/software/alternatives/unicorn-store-spring-graalvm"
-     - "/labs/unicorn-store/software/alternatives/unicorn-store-micronaut"
-     - "/labs/unicorn-store/software/alternatives/unicorn-store-quarkus"
-     - "/labs/unicorn-store/software/alternatives/unicorn-audit-service"
-     - "/labs/unicorn-store/infrastructure/cdk"
-     - "/labs/unicorn-store/infrastructure/db-setup"
-     - "/labs/unicorn-location-api/UnicornLocationFunction"
-     - "/labs/unicorn-location-api/final/unicorn-location-api-final/UnicornLocationFunction"
-     - "/labs/unicorn-stock-broker"
+      - "**/*"
     schedule:
       interval: "weekly"
-    ignore: # needs manual GraalVM config updates (reflect-config)
-      - dependency-name: "software.amazon.awssdk:*"
-        versions:
-          - "> 2.25.45"
   - package-ecosystem: docker
     directories:
-     - "/labs/unicorn-store/software/alternatives/unicorn-store-spring-graalvm"
-     - "/labs/unicorn-location-api/graal"
-     - "/labs/unicorn-location-api/final/unicorn-location-api-final"
+      - "**/*"
     schedule:
       interval: "weekly"
