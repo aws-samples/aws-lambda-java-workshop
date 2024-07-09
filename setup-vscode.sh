@@ -3,6 +3,9 @@
 ## go to tmp directory
 cd /tmp
 
+sudo yum update
+sudo yum install -y npm
+
 ## Ensure AWS CLI v2 is installed
 sudo yum -y remove aws-cli
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
