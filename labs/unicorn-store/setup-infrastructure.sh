@@ -1,8 +1,8 @@
 #bin/sh
 
-ACCOUNT_ID=$(aws sts get-caller-identity --output text --query Account)
 TOKEN=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
 AWS_REGION=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region')
+ACCOUNT_ID=$(aws sts get-caller-identity --output text --query Account --region $AWS_REGION)
 
 # Build the database setup function
 ./mvnw clean package -f infrastructure/db-setup/pom.xml
