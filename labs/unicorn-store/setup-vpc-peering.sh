@@ -46,6 +46,6 @@ aws ec2 create-route --route-table-id $IDE_ROUTE_TABLE_ID \
 --destination-cidr-block 10.0.0.0/16 --vpc-peering-connection-id $VPC_PEERING_ID
 
 aws ec2 create-route --route-table-id $UNICORN_DB_ROUTE_TABLE_ID_1 \
---destination-cidr-block 10.10.0.0/16 --vpc-peering-connection-id $VPC_PEERING_ID
+--destination-cidr-block 192.168.0.0/16 --vpc-peering-connection-id $VPC_PEERING_ID
 aws ec2 create-route --route-table-id $UNICORN_DB_ROUTE_TABLE_ID_2 \
---destination-cidr-block 10.10.0.0/16 --vpc-peering-connection-id $VPC_PEERING_ID
+--destination-cidr-block 192.168.0.0/16 --vpc-peering-connection-id $VPC_PEERING_ID
