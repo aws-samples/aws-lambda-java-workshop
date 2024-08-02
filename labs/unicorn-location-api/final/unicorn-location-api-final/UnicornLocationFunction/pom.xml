@@ -37,7 +37,7 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-lambda-java-runtime-interface-client</artifactId>
-            <version>2.5.0</version>
+            <version>2.5.1</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
@@ -53,7 +53,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.jr</groupId>
             <artifactId>jackson-jr-objects</artifactId>
-            <version>2.17.1</version>
+            <version>2.17.2</version>
         </dependency>
 
         <dependency>
@@ -65,7 +65,7 @@
         <dependency>
           <groupId>com.amazonaws</groupId>
           <artifactId>aws-lambda-java-events</artifactId>
-          <version>3.11.6</version>
+          <version>3.13.0</version>
         </dependency>
         <dependency>
           <groupId>org.junit.jupiter</groupId>
