@@ -560,10 +560,6 @@ Resources:
         Ref: javaonawsworkshopBootstrapDocumentA39E080E
     UpdateReplacePolicy: Delete
     DeletionPolicy: Delete
-  CDKMetadata:
-    Type: AWS::CDK::Metadata
-    Properties:
-      Analytics: v2:deflate64:H4sIAAAAAAAA/21RQW7CMBB8C3fjJvwAgUo5EYWKHquNs4EFZw32ughF+XsVIA2InnZmPPLM2hOdpolOR3AOY1MexpYK3awFzEHBOXw3aCa62RyNmlW8yWYqi4Uls44Fo3TagHIXBT+hsDjogzYNwRkCIcd/5g4sWdAzygIEz3C5x9zZVATMrkYWtUYTPcll4V08XgOehCUHATb3K2+4VQS1bnJ3a9TP/jjzriKLrbJQFyXo5j2y6fv1uFXGulhW3rHoZuVpS5zjKWKQzFky18L/ymB2OFge6ZyCeCpin/XIWxVC3X2AJ95m4KFGQd+5nsjcmdg9S9uqHIOLvts8BnH1QCt+xF9AMnNcUpfyAVzaV/klZhXlGKVV7ErU+/D2M0l0muhktA9EYx9ZqEad3+YvqFl8ykoCAAA=
 Parameters:
   SsmParameterValueawsserviceamiamazonlinuxlatestal2023amikernel61x8664C96584B6F00A464EAD1953AFF4B05118Parameter:
     Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
