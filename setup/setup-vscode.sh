@@ -62,8 +62,6 @@ echo "export AWS_REGION=${AWS_REGION}" | tee -a ~/.bash_profile
 echo "export AWS_REGION=${AWS_REGION}" | tee -a ~/.bashrc
 echo "export AWS_DEFAULT_REGION=${AWS_REGION}" | tee -a ~/.bash_profile
 echo "export AWS_DEFAULT_REGION=${AWS_REGION}" | tee -a ~/.bashrc
-echo "export CDK_DEFAULT_REGION=${AWS_REGION}" | tee -a ~/.bash_profile
-echo "export CDK_DEFAULT_REGION=${AWS_REGION}" | tee -a ~/.bashrc
 aws configure set default.region ${AWS_REGION}
 aws configure get default.region
 test -n "$AWS_REGION" && echo AWS_REGION is "$AWS_REGION" || echo AWS_REGION is not set
