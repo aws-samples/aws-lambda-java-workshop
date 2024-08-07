@@ -38,7 +38,7 @@ sudo npm install -g aws-cdk --force
 cdk version
 sudo npm install -g artillery
 
-wget https://github.com/mikefarah/yq/releases/download/v4.43.1/yq_linux_amd64.tar.gz -O - |\
+wget https://github.com/mikefarah/yq/releases/download/v4.44.3/yq_linux_amd64.tar.gz -O - |\
   tar xz && sudo mv yq_linux_amd64 /usr/bin/yq
 yq --version
 
