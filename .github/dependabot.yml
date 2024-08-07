@@ -10,6 +10,16 @@ updates:
       - "**/*"
     schedule:
       interval: "weekly"
+    groups:
+      awssdk:
+        patterns:
+          - "software.amazon.awssdk:*"
+      spring:
+        patterns:
+          - "org.springframework:*"
+      lambda-events-lib:
+        patterns:
+          - "com.amazonaws:aws-lambda-java-events"
     open-pull-requests-limit: 20
   - package-ecosystem: docker
     directories:

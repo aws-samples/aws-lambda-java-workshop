@@ -8,7 +8,7 @@
     <name>AWS Lambda function to setup the Amazon RDS Instance</name>
 
     <properties>
-        <aws.java.sdk.version>2.26.15</aws.java.sdk.version>
+        <aws.java.sdk.version>2.26.29</aws.java.sdk.version>
     </properties>
 
     <dependencyManagement>
@@ -60,7 +60,7 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-lambda-java-events</artifactId>
-            <version>3.11.6</version>
+            <version>3.13.0</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
