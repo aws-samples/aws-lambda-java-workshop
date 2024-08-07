@@ -538,7 +538,7 @@ Resources:
                         sudo -H -u ec2-user bash -c "git clone https://github.com/aws-samples/aws-lambda-java-workshop.git /home/ec2-user/environment/aws-lambda-java-workshop/"
 
                         echo '=== Setup VSCode ==='
-                        sudo -H -i -u ec2-user bash -c "/home/ec2-user/environment/aws-lambda-java-workshop/setup-vscode.sh &>> /home/ec2-user/setup-vscode.log"
+                        sudo -H -i -u ec2-user bash -c "/home/ec2-user/environment/aws-lambda-java-workshop/setup/setup-vscode.sh &>> /home/ec2-user/setup-vscode.log"
                         
                         echo '=== Setup Infrastructure components ==='
                         sudo -H -i -u ec2-user bash -c "cd /home/ec2-user/environment/aws-lambda-java-workshop/labs/unicorn-store/ && ./setup-infrastructure.sh &>> /home/ec2-user/setup-infra.log"
