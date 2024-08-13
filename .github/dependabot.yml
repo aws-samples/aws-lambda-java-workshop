@@ -20,6 +20,9 @@ updates:
       lambda-events-lib:
         patterns:
           - "com.amazonaws:aws-lambda-java-events"
+      slf4j:
+        patterns:
+          - "org.slf4j:*"
     open-pull-requests-limit: 20
   - package-ecosystem: docker
     directories:
