@@ -48,7 +48,7 @@
         <dependency>
             <groupId>io.github.cdklabs</groupId>
             <artifactId>cdknag</artifactId>
-            <version>2.28.177</version>
+            <version>2.28.178</version>
         </dependency>
 
         <dependency>
