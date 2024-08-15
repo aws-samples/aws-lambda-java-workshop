@@ -8,7 +8,7 @@
     <name>AWS Lambda function to setup the Amazon RDS Instance</name>
 
     <properties>
-        <aws.java.sdk.version>2.26.29</aws.java.sdk.version>
+        <aws.java.sdk.version>2.27.3</aws.java.sdk.version>
     </properties>
 
     <dependencyManagement>
@@ -65,12 +65,12 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>2.0.13</version>
+            <version>2.0.16</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>2.0.13</version>
+            <version>2.0.16</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.jr</groupId>
