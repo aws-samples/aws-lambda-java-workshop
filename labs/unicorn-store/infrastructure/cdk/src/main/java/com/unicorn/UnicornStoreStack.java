@@ -65,7 +65,7 @@ public class UnicornStoreStack extends Stack {
                     "SPRING_DATASOURCE_PASSWORD", infrastructureStack.getDatabaseSecretString(),
                     "SPRING_DATASOURCE_URL", infrastructureStack.getDatabaseJDBCConnectionString(),
                     "SPRING_DATASOURCE_HIKARI_maximumPoolSize", "1",
-                    "AWS_SERVERLESS_JAVA_CONTAINER_INIT_GRACE_TIME", "250"
+                    "AWS_SERVERLESS_JAVA_CONTAINER_INIT_GRACE_TIME", "500"
                 ))
                 .build();
     }
