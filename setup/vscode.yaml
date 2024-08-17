@@ -498,15 +498,6 @@ Resources:
                       # Create default directory for workspace
                       sudo -u ec2-user bash -c 'mkdir -p ~/environment'
 
-                      if [ ! -f "/home/ec2-user/environment/readme.md" ]; then
-                        sudo -u ec2-user bash -c 'touch ~/environment/readme.md'
-                        tee /home/ec2-user/environment/readme.md <<EOF
-                      # Welcome!
-
-                      This is the IDE for your workshop.
-                      EOF
-                      fi
-
                       if [ ! -f "/home/ec2-user/.local/share/code-server/coder.json" ]; then
                         sudo -u ec2-user bash -c 'touch ~/.local/share/code-server/coder.json'
                         echo '{ "query": { "folder": "/home/ec2-user/environment" } }' > /home/ec2-user/.local/share/code-server/coder.json
@@ -528,7 +519,7 @@ Resources:
                         Fn::GetAtt:
                           - javaonawsworkshopVsCodeDistributionEF5FD854
                           - DomainName
-                      codeServerVersion: 4.19.0
+                      codeServerVersion: 4.91.1
                       waitConditionHandleUrl:
                         Ref: javaonawsworkshopBootstrapWaitConditionHandle62920104
                       customBootstrapScript: |
@@ -586,4 +577,3 @@ Outputs:
       Fn::GetAtt:
         - javaonawsworkshopPasswordResource45B4A7F3
         - RandomString
-
