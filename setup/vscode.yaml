@@ -1,0 +1,589 @@
+Description: VsCode For Java on AWS Lambda Workshop
+Resources:
+  javaonawsworkshopIdeVPC0F0320A4:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 192.168.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      InstanceTenancy: default
+      Tags:
+        - Key: Name
+          Value: CdkStack/java-on-aws-lambda-workshop/IdeVPC
+  javaonawsworkshopIdeVPCPublicSubnet1Subnet6E964131:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Select:
+          - 0
+          - Fn::GetAZs: ""
+      CidrBlock: 192.168.0.0/24
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: aws-cdk:subnet-name
+          Value: Public
+        - Key: aws-cdk:subnet-type
+          Value: Public
+        - Key: Name
+          Value: CdkStack/java-on-aws-lambda-workshop/IdeVPC/PublicSubnet1
+      VpcId:
+        Ref: javaonawsworkshopIdeVPC0F0320A4
+  javaonawsworkshopIdeVPCPublicSubnet1RouteTable28BB44D2:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      Tags:
+        - Key: Name
+          Value: CdkStack/java-on-aws-lambda-workshop/IdeVPC/PublicSubnet1
+      VpcId:
+        Ref: javaonawsworkshopIdeVPC0F0320A4
+  javaonawsworkshopIdeVPCPublicSubnet1RouteTableAssociationB29B5B27:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: javaonawsworkshopIdeVPCPublicSubnet1RouteTable28BB44D2
+      SubnetId:
+        Ref: javaonawsworkshopIdeVPCPublicSubnet1Subnet6E964131
+  javaonawsworkshopIdeVPCPublicSubnet1DefaultRoute19EC8307:
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: javaonawsworkshopIdeVPCIGWDC2A959B
+      RouteTableId:
+        Ref: javaonawsworkshopIdeVPCPublicSubnet1RouteTable28BB44D2
+    DependsOn:
+      - javaonawsworkshopIdeVPCVPCGWA205EE37
+  javaonawsworkshopIdeVPCIGWDC2A959B:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: CdkStack/java-on-aws-lambda-workshop/IdeVPC
+  javaonawsworkshopIdeVPCVPCGWA205EE37:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId:
+        Ref: javaonawsworkshopIdeVPCIGWDC2A959B
+      VpcId:
+        Ref: javaonawsworkshopIdeVPC0F0320A4
+  javaonawsworkshopIdeRoleB328D43C:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+        Version: "2012-10-17"
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :iam::aws:policy/AmazonSSMManagedInstanceCore
+        - Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :iam::aws:policy/AdministratorAccess
+  javaonawsworkshopIdeSecurityGroup34BA1277:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: IDE security group
+      SecurityGroupEgress:
+        - CidrIp: 0.0.0.0/0
+          Description: Allow all outbound traffic by default
+          IpProtocol: "-1"
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          Description: HTTP from anywhere
+          FromPort: 80
+          IpProtocol: tcp
+          ToPort: 80
+        - CidrIp: 0.0.0.0/0
+          Description: from 0.0.0.0/0:8080
+          FromPort: 8080
+          IpProtocol: tcp
+          ToPort: 8080
+      VpcId:
+        Ref: javaonawsworkshopIdeVPC0F0320A4
+  javaonawsworkshopInstanceProfile3D31AAC7:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - Ref: javaonawsworkshopIdeRoleB328D43C
+    DependsOn:
+      - javaonawsworkshopIdeVPCIGWDC2A959B
+      - javaonawsworkshopIdeVPCPublicSubnet1DefaultRoute19EC8307
+      - javaonawsworkshopIdeVPCPublicSubnet1RouteTable28BB44D2
+      - javaonawsworkshopIdeVPCPublicSubnet1RouteTableAssociationB29B5B27
+      - javaonawsworkshopIdeVPCPublicSubnet1Subnet6E964131
+      - javaonawsworkshopIdeVPC0F0320A4
+      - javaonawsworkshopIdeVPCVPCGWA205EE37
+  javaonawsworkshop508294B4:
+    Type: AWS::EC2::Instance
+    Properties:
+      AvailabilityZone:
+        Fn::Select:
+          - 0
+          - Fn::GetAZs: ""
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            DeleteOnTermination: true
+            VolumeSize: 50
+            VolumeType: gp3
+      IamInstanceProfile:
+        Ref: javaonawsworkshopInstanceProfile3D31AAC7
+      ImageId:
+        Ref: SsmParameterValueawsserviceamiamazonlinuxlatestal2023amikernel61x8664C96584B6F00A464EAD1953AFF4B05118Parameter
+      InstanceType: t3.large
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: true
+          DeviceIndex: "0"
+          GroupSet:
+            - Fn::GetAtt:
+                - javaonawsworkshopIdeSecurityGroup34BA1277
+                - GroupId
+          SubnetId:
+            Ref: javaonawsworkshopIdeVPCPublicSubnet1Subnet6E964131
+      Tags:
+        - Key: Name
+          Value: CdkStack/java-on-aws-lambda-workshop/VsCode
+      UserData:
+        Fn::Base64: "#!/bin/bash"
+    DependsOn:
+      - javaonawsworkshopIdeRoleB328D43C
+      - javaonawsworkshopIdeVPCIGWDC2A959B
+      - javaonawsworkshopIdeVPCPublicSubnet1DefaultRoute19EC8307
+      - javaonawsworkshopIdeVPCPublicSubnet1RouteTable28BB44D2
+      - javaonawsworkshopIdeVPCPublicSubnet1RouteTableAssociationB29B5B27
+      - javaonawsworkshopIdeVPCPublicSubnet1Subnet6E964131
+      - javaonawsworkshopIdeVPC0F0320A4
+      - javaonawsworkshopIdeVPCVPCGWA205EE37
+  javaonawsworkshopBootstrapRoleF67B9172:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: "2012-10-17"
+      Policies:
+        - PolicyDocument:
+            Statement:
+              - Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Effect: Allow
+                Resource: arn:aws:logs:*:*:*
+              - Action:
+                  - cloudformation:DescribeStackEvents
+                  - cloudformation:DescribeStackResource
+                  - cloudformation:DescribeStackResources
+                  - cloudformation:DescribeStacks
+                  - ec2:DescribeInstances
+                  - iam:ListInstanceProfiles
+                  - ssm:DescribeInstanceInformation
+                  - ssm:GetCommandInvocation
+                  - ssm:SendCommand
+                Effect: Allow
+                Resource: "*"
+              - Action:
+                  - iam:PassRole
+                Effect: Allow
+                Resource:
+                  Fn::GetAtt:
+                    - javaonawsworkshopIdeRoleB328D43C
+                    - Arn
+            Version: "2012-10-17"
+          PolicyName: bootstrapPolicy
+  javaonawsworkshopBootstrapFunction8997FD07:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        ZipFile: |-
+          from __future__ import print_function
+          import boto3
+          import json
+          import os
+          import time
+          import traceback
+          import cfnresponse
+          from botocore.exceptions import WaiterError
+
+          def lambda_handler(event, context):
+              print('Event: {}'.format(event))
+              print('context: {}'.format(context))
+              responseData = {}
+
+              status = cfnresponse.SUCCESS
+
+              if event['RequestType'] == 'Delete':
+                  responseData = {'Success': 'Custom Resource removed'}
+                  cfnresponse.send(event, context, status, responseData, 'CustomResourcePhysicalID')
+              else:
+                  try:
+                      # Open AWS clients
+                      ec2 = boto3.client('ec2')
+                      ssm = boto3.client('ssm')
+
+                      instance_id = event['ResourceProperties']['InstanceId']
+
+                      print('Waiting for the instance to be ready...')
+                      # Wait for Instance to become ready
+                      instance_state = 'unknown'
+                      print('Instance is currently in state'.format(instance_state))
+                      while instance_state != 'running':
+                          time.sleep(5)
+                          di = ec2.describe_instances(InstanceIds=[instance_id])
+                          instance_state = di['Reservations'][0]['Instances'][0]['State']['Name']
+                          print('Waiting for instance in state: {}'.format(instance_state))
+
+                      print('Instance is ready')
+
+                      print('Waiting for instance to come online in SSM...')
+                      for i in range(1, 60):
+                        response = ssm.describe_instance_information(Filters=[{'Key': 'InstanceIds', 'Values': [instance_id]}])
+                        if len(response["InstanceInformationList"]) == 0:
+                          print('No instances in SSM')
+                        elif len(response["InstanceInformationList"]) > 0 and \
+                              response["InstanceInformationList"][0]["PingStatus"] == "Online" and \
+                              response["InstanceInformationList"][0]["InstanceId"] == instance_id:
+                          print('Instance is online in SSM')
+                          break
+                        time.sleep(10)
+
+                      ssm_document = event['ResourceProperties']['SsmDocument']
+
+                      ssm.send_command(
+                          InstanceIds=[instance_id],
+                          DocumentName=ssm_document)
+
+                      responseData = {'Success': 'Started bootstrapping for instance: '+instance_id}
+                  except Exception as e:
+                      status = cfnresponse.FAILED
+                      tb_err = traceback.format_exc()
+                      print(tb_err)
+                      responseData = {'Error': tb_err}
+                  finally:
+                      cfnresponse.send(event, context, status, responseData, 'CustomResourcePhysicalID')
+      Environment:
+        Variables:
+          DiskSize: "50"
+      Handler: index.lambda_handler
+      Role:
+        Fn::GetAtt:
+          - javaonawsworkshopBootstrapRoleF67B9172
+          - Arn
+      Runtime: python3.9
+      Timeout: 900
+    DependsOn:
+      - javaonawsworkshopBootstrapRoleF67B9172
+  javaonawsworkshopPasswordFunction6F55B175:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        ZipFile: |-
+          import string
+          import random
+          import traceback
+          import cfnresponse
+
+          def lambda_handler(event, context):
+              print('Event: {}'.format(event))
+              print('context: {}'.format(context))
+              responseData = {}
+
+              status = cfnresponse.SUCCESS
+
+              if event['RequestType'] == 'Delete':
+                  cfnresponse.send(event, context, status, responseData, 'CustomResourcePhysicalID')
+              else:
+                  try:
+                      res = ''.join(random.choices(string.ascii_uppercase + string.digits, k=24))
+                      responseData = {'RandomString': str(res)}
+                  except Exception as e:
+                      status = cfnresponse.FAILED
+                      tb_err = traceback.format_exc()
+                      print(tb_err)
+                      responseData = {'Error': tb_err}
+                  finally:
+                      cfnresponse.send(event, context, status, responseData, 'CustomResourcePhysicalID')
+      Handler: index.lambda_handler
+      Role:
+        Fn::GetAtt:
+          - javaonawsworkshopBootstrapRoleF67B9172
+          - Arn
+      Runtime: python3.9
+      Timeout: 180
+    DependsOn:
+      - javaonawsworkshopBootstrapRoleF67B9172
+  javaonawsworkshopPasswordResource45B4A7F3:
+    Type: AWS::CloudFormation::CustomResource
+    Properties:
+      ServiceToken:
+        Fn::GetAtt:
+          - javaonawsworkshopPasswordFunction6F55B175
+          - Arn
+    UpdateReplacePolicy: Delete
+    DeletionPolicy: Delete
+  javaonawsworkshopOriginRequestPolicyB49A7D86:
+    Type: AWS::CloudFront::OriginRequestPolicy
+    Properties:
+      OriginRequestPolicyConfig:
+        CookiesConfig:
+          CookieBehavior: all
+        HeadersConfig:
+          HeaderBehavior: allViewer
+        Name: CdkStackjavaonawsworkshopOriginRequestPolicy0EEA1DF8
+        QueryStringsConfig:
+          QueryStringBehavior: all
+  javaonawsworkshopVsCodeCachePolicy6C0315BC:
+    Type: AWS::CloudFront::CachePolicy
+    Properties:
+      CachePolicyConfig:
+        DefaultTTL: 86400
+        MaxTTL: 2592000
+        MinTTL: 1
+        Name: CdkStackjavaonawsworkshopVsCodeCachePolicy4CC4DDF2-us-east-1
+        ParametersInCacheKeyAndForwardedToOrigin:
+          CookiesConfig:
+            CookieBehavior: all
+          EnableAcceptEncodingBrotli: false
+          EnableAcceptEncodingGzip: false
+          HeadersConfig:
+            HeaderBehavior: whitelist
+            Headers:
+              - Accept-Charset
+              - Authorization
+              - Origin
+              - Accept
+              - Referer
+              - Host
+              - Accept-Language
+              - Accept-Encoding
+              - Accept-Datetime
+          QueryStringsConfig:
+            QueryStringBehavior: all
+  javaonawsworkshopVsCodeDistributionEF5FD854:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+            - PUT
+            - PATCH
+            - POST
+            - DELETE
+          CachePolicyId:
+            Ref: javaonawsworkshopVsCodeCachePolicy6C0315BC
+          Compress: true
+          OriginRequestPolicyId:
+            Ref: javaonawsworkshopOriginRequestPolicyB49A7D86
+          TargetOriginId: CdkStackjavaonawsworkshopVsCodeDistributionOrigin1ACDD2164
+          ViewerProtocolPolicy: allow-all
+        Enabled: true
+        HttpVersion: http2
+        IPV6Enabled: true
+        Origins:
+          - CustomOriginConfig:
+              HTTPPort: 80
+              OriginProtocolPolicy: http-only
+              OriginSSLProtocols:
+                - TLSv1.2
+            DomainName:
+              Fn::GetAtt:
+                - javaonawsworkshop508294B4
+                - PublicDnsName
+            Id: CdkStackjavaonawsworkshopVsCodeDistributionOrigin1ACDD2164
+  javaonawsworkshopBootstrapWaitConditionHandle62920104:
+    Type: AWS::CloudFormation::WaitConditionHandle
+  javaonawsworkshopBootstrapWaitConditionFA6D9BBF:
+    Type: AWS::CloudFormation::WaitCondition
+    Properties:
+      Count: 1
+      Handle:
+        Ref: javaonawsworkshopBootstrapWaitConditionHandle62920104
+      Timeout: "3600"
+  javaonawsworkshopBootstrapWaiter0ED1571C:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Value: Done
+    DependsOn:
+      - javaonawsworkshopBootstrapWaitConditionFA6D9BBF
+  javaonawsworkshopBootstrapDocumentA39E080E:
+    Type: AWS::SSM::Document
+    Properties:
+      Content:
+        schemaVersion: "2.2"
+        description: Bootstrap IDE
+        parameters:
+          BootstrapScript:
+            type: String
+            description: (Optional) Custom bootstrap script to run.
+            default: ""
+        mainSteps:
+          - action: aws:runShellScript
+            name: IdeBootstrap
+            inputs:
+              runCommand:
+                - Fn::Sub:
+                    - |-
+                      bash << HEREDOC
+                      set -e
+                      set -o xtrace
+
+                      # Install AWS CLI
+                      curl -L -o /tmp/aws-cli.zip https://awscli.amazonaws.com/awscli-exe-linux-$(uname -m).zip
+                      unzip -d /tmp /tmp/aws-cli.zip
+                      /tmp/aws/install --update
+                      rm -rf /tmp/aws
+
+                      # Install docker and base package
+                      dnf install -y docker git
+                      service docker start
+                      usermod -aG docker ec2-user
+
+                      # Install code-server
+                      codeServer=$(dnf list installed code-server | wc -l)
+                      if [ "\$codeServer" -eq "0" ]; then
+                        sudo -u ec2-user "codeServerVersion=${codeServerVersion}" bash -c 'curl -fsSL https://code-server.dev/install.sh | sh -s -- --version ${codeServerVersion}'
+                        systemctl enable --now code-server@ec2-user
+                      fi
+
+                      sudo -u ec2-user bash -c 'mkdir -p ~/.config/code-server'
+                      sudo -u ec2-user bash -c 'touch ~/.config/code-server/config.yaml'
+                      tee /home/ec2-user/.config/code-server/config.yaml <<EOF
+                      cert: false
+                      auth: password
+                      password: "${password}"
+                      bind-addr: 127.0.0.1:8889
+                      EOF
+
+                      sudo -u ec2-user bash -c 'mkdir -p ~/.local/share/code-server/User'
+                      sudo -u ec2-user bash -c 'touch ~/.local/share/code-server/User/settings.json'
+                      tee /home/ec2-user/.local/share/code-server/User/settings.json <<EOF
+                      {
+                        "extensions.autoUpdate": false,
+                        "extensions.autoCheckUpdates": false,
+                        "security.workspace.trust.enabled": false,
+                        "workbench.startupEditor": "readme"
+                      }
+                      EOF
+
+                      systemctl restart code-server@ec2-user
+
+                      # Install caddy
+                      dnf copr enable -y @caddy/caddy epel-9-x86_64
+                      dnf install -y caddy
+                      systemctl enable --now caddy
+
+                      tee /etc/caddy/Caddyfile <<EOF
+                      http://${domain} {
+                        reverse_proxy 127.0.0.1:8889
+                      }
+                      EOF
+
+                      systemctl restart caddy
+
+                      # Create default directory for workspace
+                      sudo -u ec2-user bash -c 'mkdir -p ~/environment'
+
+                      if [ ! -f "/home/ec2-user/environment/readme.md" ]; then
+                        sudo -u ec2-user bash -c 'touch ~/environment/readme.md'
+                        tee /home/ec2-user/environment/readme.md <<EOF
+                      # Welcome!
+
+                      This is the IDE for your workshop.
+                      EOF
+                      fi
+
+                      if [ ! -f "/home/ec2-user/.local/share/code-server/coder.json" ]; then
+                        sudo -u ec2-user bash -c 'touch ~/.local/share/code-server/coder.json'
+                        echo '{ "query": { "folder": "/home/ec2-user/environment" } }' > /home/ec2-user/.local/share/code-server/coder.json
+                      fi
+
+                      ${customBootstrapScript}
+                      HEREDOC
+
+                      exit_code=$?
+
+                      /opt/aws/bin/cfn-signal -e $exit_code '${waitConditionHandleUrl}'
+
+                      exit $exit_code
+                    - password:
+                        Fn::GetAtt:
+                          - javaonawsworkshopPasswordResource45B4A7F3
+                          - RandomString
+                      domain:
+                        Fn::GetAtt:
+                          - javaonawsworkshopVsCodeDistributionEF5FD854
+                          - DomainName
+                      codeServerVersion: 4.19.0
+                      waitConditionHandleUrl:
+                        Ref: javaonawsworkshopBootstrapWaitConditionHandle62920104
+                      customBootstrapScript: |
+                        
+                        date
+                        
+                        echo '=== Install VSCode extensions ==='
+                        sudo -H -u ec2-user bash -c "code-server --install-extension amazonwebservices.aws-toolkit-vscode --force"
+                        sudo -H -u ec2-user bash -c "code-server --install-extension amazonwebservices.amazon-q-vscode --force"
+                        sudo -H -u ec2-user bash -c "code-server --install-extension vscjava.vscode-java-pack --force"
+                        
+                        echo '=== Clone Git repository ==='
+                        sudo -H -u ec2-user bash -c "git clone https://github.com/aws-samples/aws-lambda-java-workshop.git /home/ec2-user/environment/aws-lambda-java-workshop/"
+
+                        echo '=== Setup VSCode ==='
+                        sudo -H -i -u ec2-user bash -c "/home/ec2-user/environment/aws-lambda-java-workshop/setup/setup-vscode.sh &>> /home/ec2-user/setup-vscode.log"
+                        
+                        echo '=== Setup Infrastructure components ==='
+                        sudo -H -i -u ec2-user bash -c "cd /home/ec2-user/environment/aws-lambda-java-workshop/labs/unicorn-store/ && ./setup-infrastructure.sh &>> /home/ec2-user/setup-infra.log"
+                        
+                        echo '=== Change Instance profile to User ==='
+                        sudo -H -i -u ec2-user bash -c "cd /home/ec2-user/environment/aws-lambda-java-workshop/labs/unicorn-store/ && ./setup-change2user.sh &>> /home/ec2-user/setup-change2user.log"
+      DocumentFormat: YAML
+      DocumentType: Command
+  javaonawsworkshopBootstrapResource107C8B5F:
+    Type: AWS::CloudFormation::CustomResource
+    Properties:
+      ServiceToken:
+        Fn::GetAtt:
+          - javaonawsworkshopBootstrapFunction8997FD07
+          - Arn
+      InstanceId:
+        Ref: javaonawsworkshop508294B4
+      SsmDocument:
+        Ref: javaonawsworkshopBootstrapDocumentA39E080E
+    UpdateReplacePolicy: Delete
+    DeletionPolicy: Delete
+Parameters:
+  SsmParameterValueawsserviceamiamazonlinuxlatestal2023amikernel61x8664C96584B6F00A464EAD1953AFF4B05118Parameter:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64
+Outputs:
+  IdeUrl:
+    Description: Workshop IDE Url
+    Value:
+      Fn::Join:
+        - ""
+        - - https://
+          - Fn::GetAtt:
+              - javaonawsworkshopVsCodeDistributionEF5FD854
+              - DomainName
+  IdePassword:
+    Description: Workshop IDE Password
+    Value:
+      Fn::GetAtt:
+        - javaonawsworkshopPasswordResource45B4A7F3
+        - RandomString
+
