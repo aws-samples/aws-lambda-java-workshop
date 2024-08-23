@@ -16,7 +16,7 @@ updates:
           - "software.amazon.awssdk:*"
       spring:
         patterns:
-          - "org.springframework:*"
+          - "org.springframework.*:*"
       lambda-events-lib:
         patterns:
           - "com.amazonaws:aws-lambda-java-events"
