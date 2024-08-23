@@ -26,6 +26,9 @@ updates:
       junit:
         patterns:
           - "org.junit:*"
+      postgresql:
+        patterns:
+          - "org.postgresql:*"
     open-pull-requests-limit: 20
   - package-ecosystem: docker
     directories:
