@@ -7,7 +7,11 @@ import software.amazon.awscdk.services.ec2.InstanceType;
 import software.amazon.awscdk.services.events.EventBus;
 import software.amazon.awscdk.services.rds.*;
 import software.constructs.Construct;
+import software.amazon.awscdk.Aspects;
+import software.amazon.awscdk.IAspect;
+import software.constructs.IConstruct;
 
+import java.io.IOException;
 import java.util.List;
 
 public class InfrastructureStack extends Stack {
@@ -36,8 +40,9 @@ public class InfrastructureStack extends Stack {
         createEventBridgeVpcEndpoint();
         createDynamoDBVpcEndpoint();
         new DatabaseSetupConstruct(this, "UnicornDatabaseConstruct");
+        
+        Aspects.of(this).add(new PreDestroyHook());
     }
-
 
     private EventBus createEventBus() {
         return EventBus.Builder.create(this, "UnicornEventBus")
@@ -134,6 +139,27 @@ public class InfrastructureStack extends Stack {
                 .service(GatewayVpcEndpointAwsService.DYNAMODB)
                 .vpc(this.getVpc())
                 .build();
+    }
+
+    private void runCustomScript(String scriptPath) {
+        try {
+            Process process = Runtime.getRuntime().exec(scriptPath);
+            int exitCode = process.waitFor();
+            if (exitCode != 0) {
+                System.err.println("Error running custom script. Exit code: " + exitCode);
+            }
+        } catch (IOException | InterruptedException e) {
+            System.err.println("Error running custom script: " + e.getMessage());
+        }
+    }
+    
+    class PreDestroyHook implements IAspect {
+        @Override
+        public void visit(IConstruct node) {
+            if (node instanceof software.amazon.awscdk.Stack) {
+                runCustomScript("/home/ec2-user/environment/aws-lambda-java-workshop/labs/unicorn-store/delete-vpc-peering.sh");
+            }
+        }
     }
 
 }
