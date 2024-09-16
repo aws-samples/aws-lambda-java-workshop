@@ -476,7 +476,7 @@ Resources:
                         "extensions.autoUpdate": false,
                         "extensions.autoCheckUpdates": false,
                         "security.workspace.trust.enabled": false,
-                        "workbench.startupEditor": "readme"
+                        "workbench.startupEditor": "terminal"
                       }
                       EOF
 
