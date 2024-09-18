@@ -35,6 +35,7 @@ public class InfrastructureStack extends Stack {
                         .build());
         createEventBridgeVpcEndpoint();
         createDynamoDBVpcEndpoint();
+        createCodeGuruProfilerVpcEndpoint();
         new DatabaseSetupConstruct(this, "UnicornDatabaseConstruct");
     }
 
@@ -136,4 +137,10 @@ public class InfrastructureStack extends Stack {
                 .build();
     }
 
+    private IInterfaceVpcEndpoint createCodeGuruProfilerVpcEndpoint() {
+        return InterfaceVpcEndpoint.Builder.create(this, "CodeGuruProfilerVpcEndpoint")
+                .service(InterfaceVpcEndpointAwsService.CODEGURU_PROFILER)
+                .vpc(this.getVpc())
+                .build();
+    }
 }
