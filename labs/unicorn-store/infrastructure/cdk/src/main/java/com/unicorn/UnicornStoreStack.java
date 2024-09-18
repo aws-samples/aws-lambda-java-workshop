@@ -10,9 +10,11 @@ import software.amazon.awscdk.services.apigateway.LambdaRestApi;
 import software.amazon.awscdk.services.apigateway.RestApi;
 import software.amazon.awscdk.services.lambda.Code;
 import software.amazon.awscdk.services.lambda.Function;
+import software.amazon.awscdk.services.lambda.LayerVersion;
 import software.amazon.awscdk.services.lambda.Runtime;
 import software.constructs.Construct;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -64,12 +66,17 @@ public class UnicornStoreStack extends Stack {
                 .handler("com.amazonaws.serverless.proxy.spring.SpringDelegatingLambdaContainerHandler")
                 .vpc(infrastructureStack.getVpc())
                 .securityGroups(List.of(infrastructureStack.getApplicationSecurityGroup()))
+                .profiling(true)
+                .layers(Collections.singletonList(LayerVersion.fromLayerVersionArn(this, "codeguru-profiler", "arn:aws:lambda:us-west-2:157417159150:layer:AWSCodeGuruProfilerJavaAgentLayer:10")))
                 .environment(Map.of(
-                    "MAIN_CLASS", "com.unicorn.store.StoreApplication",
-                    "SPRING_DATASOURCE_PASSWORD", infrastructureStack.getDatabaseSecretString(),
-                    "SPRING_DATASOURCE_URL", infrastructureStack.getDatabaseJDBCConnectionString(),
-                    "SPRING_DATASOURCE_HIKARI_maximumPoolSize", "1",
-                    "AWS_SERVERLESS_JAVA_CONTAINER_INIT_GRACE_TIME", "500"
+                        "MAIN_CLASS", "com.unicorn.store.StoreApplication",
+                        "SPRING_DATASOURCE_PASSWORD", infrastructureStack.getDatabaseSecretString(),
+                        "SPRING_DATASOURCE_URL", infrastructureStack.getDatabaseJDBCConnectionString(),
+                        "SPRING_DATASOURCE_HIKARI_maximumPoolSize", "1",
+                        "AWS_SERVERLESS_JAVA_CONTAINER_INIT_GRACE_TIME", "500",
+                        "JAVA_TOOL_OPTIONS", "-javaagent:/opt/codeguru-profiler-java-agent-standalone.jar",
+                        "AWS_CODEGURU_PROFILER_HEAP_SUMMARY_ENABLED", "true"
+
                 ))
                 .build();
     }
