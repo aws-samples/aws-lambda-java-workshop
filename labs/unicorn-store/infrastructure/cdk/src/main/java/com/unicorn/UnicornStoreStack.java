@@ -74,7 +74,7 @@ public class UnicornStoreStack extends Stack {
                 ))
                 .build();
 
-        // Create an alias for the current version
+        // Create an alias for the latest version
         var alias = Alias.Builder.create(this, "UnicornStoreSpringFunctionAlias")
                 .aliasName("live")
                 .version(lambda.getLatestVersion())
