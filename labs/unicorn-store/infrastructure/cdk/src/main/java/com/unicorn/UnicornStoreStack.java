@@ -8,6 +8,7 @@ import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.StackProps;
 import software.amazon.awscdk.services.apigateway.LambdaRestApi;
 import software.amazon.awscdk.services.apigateway.RestApi;
+import software.amazon.awscdk.services.lambda.Alias;
 import software.amazon.awscdk.services.lambda.Code;
 import software.amazon.awscdk.services.lambda.Function;
 import software.amazon.awscdk.services.lambda.Runtime;
@@ -47,15 +48,15 @@ public class UnicornStoreStack extends Stack {
                 .build());
     }
 
-    private RestApi setupRestApi(Function unicornStoreSpringLambda) {
+    private RestApi setupRestApi(Alias unicornStoreSpringLambdaAlias) {
         return LambdaRestApi.Builder.create(this, "UnicornStoreSpringApi")
                 .restApiName("UnicornStoreSpringApi")
-                .handler(unicornStoreSpringLambda)
+                .handler(unicornStoreSpringLambdaAlias)
                 .build();
     }
 
-    private Function createUnicornLambdaFunction() {
-        return Function.Builder.create(this, "UnicornStoreSpringFunction")
+    private Alias createUnicornLambdaFunction() {
+        var lambda = Function.Builder.create(this, "UnicornStoreSpringFunction")
                 .runtime(Runtime.JAVA_21)
                 .functionName("unicorn-store-spring")
                 .memorySize(512)
@@ -72,6 +73,14 @@ public class UnicornStoreStack extends Stack {
                     "AWS_SERVERLESS_JAVA_CONTAINER_INIT_GRACE_TIME", "500"
                 ))
                 .build();
+
+        // Create an alias for the latest version
+        var alias = Alias.Builder.create(this, "UnicornStoreSpringFunctionAlias")
+                .aliasName("live")
+                .version(lambda.getLatestVersion())
+                .build();
+
+        return alias;
     }
 
 }
