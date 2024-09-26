@@ -24,9 +24,10 @@ lambda_result=$(aws lambda invoke --function-name $(cat target/output.json | jq 
 lambda_status_code=$(echo "$lambda_result" | jq -r '.statusCode')
 
 if [ "$lambda_status_code" == "200" ]; then
-    echo "Lambda function executed successfully."
+    echo "DB Setup function executed successfully."
 else
-    echo "Lambda function execution failed: $lambda_result"
+    failed_reason="DB Setup function execution failed: $lambda_result"
+    echo $failed_reason
     exit 1
 fi
 
