@@ -58,14 +58,14 @@ public class DBSetupHandler implements RequestHandler<APIGatewayProxyRequestEven
     public APIGatewayProxyResponseEvent handleRequest(final APIGatewayProxyRequestEvent input, final Context context) {
         try(var connection = DriverManager.getConnection(databaseConnection, databaseUser, databasePassword)) {
             try(var statement = connection.createStatement()) {
-                try(var sqlFile = getClass().getClassLoader().getResourceAsStream("setup.sql")) {
+                try(var sqlFile = getClass().getClassLoader().getResourceAsStream("setusp.sql")) {
                     statement.executeUpdate(IOUtils.toString(sqlFile));
                     return new APIGatewayProxyResponseEvent()
                             .withStatusCode(200)
                             .withBody("DB Setup successful");
                 }
             }
-        } catch (SQLException | IOException sqlException) {
+        } catch (Exception sqlException) {
             logger.error("Error connection to the database:" + sqlException.getMessage());
             return new APIGatewayProxyResponseEvent()
                     .withStatusCode(500)

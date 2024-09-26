@@ -19,7 +19,16 @@ cdk bootstrap
 cdk deploy UnicornStoreInfrastructure --require-approval never --outputs-file target/output.json
 
 # Execute the DB Setup function to create the table
-aws lambda invoke --function-name $(cat target/output.json | jq -r '.UnicornStoreInfrastructure.DbSetupArn') /dev/stdout | cat;
+lambda_result=$(aws lambda invoke --function-name $(cat target/output.json | jq -r '.UnicornStoreInfrastructure.DbSetupArn') /dev/stdout 2>&1)
+# Extract the status code from the response payload
+lambda_status_code=$(echo "$lambda_result" | jq -r '.statusCode')
+
+if [ "$lambda_status_code" == "200" ]; then
+    echo "Lambda function executed successfully."
+else
+    echo "Lambda function execution failed: $lambda_result"
+    exit 1
+fi
 
 cd ~/environment/aws-lambda-java-workshop/labs/unicorn-store
 ./setup-vpc-peering.sh
