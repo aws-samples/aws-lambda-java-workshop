@@ -25,7 +25,7 @@ updates:
           - "org.slf4j:*"
       junit:
         patterns:
-          - "org.junit:*"
+          - "org.junit*:*"
       postgresql:
         patterns:
           - "org.postgresql:*"
