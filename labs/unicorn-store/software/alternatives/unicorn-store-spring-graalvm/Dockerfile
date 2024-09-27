@@ -14,7 +14,7 @@ RUN curl -4 -L https://github.com/graalvm/graalvm-ce-builds/releases/download/jd
 RUN mv graalvm-community-openjdk-${GRAAL_VERSION}* /usr/lib/graalvm
 
 # Maven
-ENV MVN_VERSION 3.9.6
+ENV MVN_VERSION 3.9.9
 ENV MVN_FOLDERNAME apache-maven-${MVN_VERSION}
 ENV MVN_FILENAME apache-maven-${MVN_VERSION}-bin.tar.gz
 RUN curl -4 -L https://archive.apache.org/dist/maven/maven-3/${MVN_VERSION}/binaries/${MVN_FILENAME} | tar -xvz
@@ -37,6 +37,6 @@ WORKDIR target
 COPY bootstrap bootstrap
 RUN chmod +x unicorn-store-spring-graalvm
 RUN chmod +x bootstrap
-RUN zip lambda-spring-graalvm unicorn-store-spring-graalvm bootstrap
+RUN zip lambda-spring-graalvm unicorn-store-spring-graalvm bootstrap libaws-crt-jni.so
 
 

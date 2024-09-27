@@ -2,7 +2,7 @@
 
 #Copy sources from main project
 rm -rf src/main/java
-cp -r ../../unicorn-store-spring/src/main/ src/main/
+cp -r ../../unicorn-store-spring/src/main/ src/
 
 #Remove older versions
 rm lambda-spring-graalvm.zip

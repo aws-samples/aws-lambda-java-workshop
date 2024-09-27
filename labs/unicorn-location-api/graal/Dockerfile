@@ -14,7 +14,7 @@ RUN curl -4 -L https://github.com/graalvm/graalvm-ce-builds/releases/download/jd
 RUN mv graalvm-community-openjdk-${GRAAL_VERSION}* /usr/lib/graalvm
 
 # Maven
-ENV MVN_VERSION 3.9.6
+ENV MVN_VERSION 3.9.9
 ENV MVN_FOLDERNAME apache-maven-${MVN_VERSION}
 ENV MVN_FILENAME apache-maven-${MVN_VERSION}-bin.tar.gz
 RUN curl -4 -L https://archive.apache.org/dist/maven/maven-3/${MVN_VERSION}/binaries/${MVN_FILENAME} | tar -xvz
@@ -30,8 +30,9 @@ COPY graal/bootstrap bootstrap
 
 RUN mvn install -P native
 RUN cp target/native native
+RUN cp target/libaws-crt-jni.so libaws-crt-jni.so
 
 RUN chmod +x bootstrap
 RUN chmod +x native
 
-RUN zip unicorn-location-graal.zip bootstrap native
+RUN zip unicorn-location-graal.zip bootstrap native libaws-crt-jni.so
