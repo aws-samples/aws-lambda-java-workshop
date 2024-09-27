@@ -65,7 +65,7 @@ public class DBSetupHandler implements RequestHandler<APIGatewayProxyRequestEven
                             .withBody("DB Setup successful");
                 }
             }
-        } catch (SQLException | IOException sqlException) {
+        } catch (Exception sqlException) {
             logger.error("Error connection to the database:" + sqlException.getMessage());
             return new APIGatewayProxyResponseEvent()
                     .withStatusCode(500)
