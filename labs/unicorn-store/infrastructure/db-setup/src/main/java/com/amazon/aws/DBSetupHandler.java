@@ -10,14 +10,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.core.SdkSystemSetting;
+import software.amazon.awssdk.core.retry.RetryMode;
 import software.amazon.awssdk.http.crt.AwsCrtAsyncHttpClient;
 import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.retries.api.BackoffStrategy;
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerAsyncClient;
 import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest;
 
 import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.Duration;
 import java.util.concurrent.ExecutionException;
 
 public class DBSetupHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
@@ -28,6 +31,11 @@ public class DBSetupHandler implements RequestHandler<APIGatewayProxyRequestEven
 
     private static final SecretsManagerAsyncClient smClient = SecretsManagerAsyncClient
             .builder()
+            .overrideConfiguration(o -> o.retryStrategy(b -> { // fix for 4% of accounts facing "socket operation timed out" during provisioning
+                b.maxAttempts(10);
+                b.backoffStrategy(BackoffStrategy.exponentialDelay(Duration.ofMillis(150),
+                        Duration.ofSeconds(30)));
+            }))
             .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
             .region(Region.of(System.getenv(SdkSystemSetting.AWS_REGION.environmentVariable())))
             .httpClientBuilder(AwsCrtAsyncHttpClient.builder())
