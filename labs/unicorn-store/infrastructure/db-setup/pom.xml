@@ -8,7 +8,7 @@
     <name>AWS Lambda function to setup the Amazon RDS Instance</name>
 
     <properties>
-        <aws.java.sdk.version>2.28.16</aws.java.sdk.version>
+        <aws.java.sdk.version>2.28.17</aws.java.sdk.version>
     </properties>
 
     <dependencyManagement>
