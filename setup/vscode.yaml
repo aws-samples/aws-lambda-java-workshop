@@ -436,7 +436,11 @@ Resources:
                         "extensions.autoUpdate": false,
                         "extensions.autoCheckUpdates": false,
                         "security.workspace.trust.enabled": false,
-                        "workbench.startupEditor": "terminal"
+                        "workbench.startupEditor": "terminal",
+                        "task.allowAutomaticTasks": "on",
+                        "telemetry.telemetryLevel": "off",
+                        "update.mode": "none",
+                        "update.showReleaseNotes": false
                       }
                       EOF
 
