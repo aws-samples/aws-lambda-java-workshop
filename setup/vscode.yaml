@@ -483,7 +483,7 @@ Resources:
                         Fn::GetAtt:
                           - javaonawsworkshopVsCodeDistributionEF5FD854
                           - DomainName
-                      codeServerVersion: 4.93.1
+                      codeServerVersion: 4.95.1
                       waitConditionHandleUrl:
                         Ref: javaonawsworkshopBootstrapWaitConditionHandle62920104
                       customBootstrapScript: |
