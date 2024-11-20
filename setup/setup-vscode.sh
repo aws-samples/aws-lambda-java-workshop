@@ -3,22 +3,34 @@
 ## go to tmp directory
 cd /tmp
 
+# temporarily disable the libuv use of io_uring https://github.com/amazonlinux/amazon-linux-2023/issues/840
+export UV_USE_IO_URING=0
+
 sudo yum update
 sudo yum install -y npm
 
 ## Ensure AWS CLI v2 is installed
 sudo yum -y remove aws-cli
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip -o awscliv2.zip
+unzip -qo awscliv2.zip
 sudo ./aws/install
 rm awscliv2.zip
 aws --version
+
+## Set JDK 21 as default
+sudo yum -y install java-21-amazon-corretto-devel
+sudo update-alternatives --set java /usr/lib/jvm/java-21-amazon-corretto.x86_64/bin/java
+sudo update-alternatives --set javac /usr/lib/jvm/java-21-amazon-corretto.x86_64/bin/javac
+export JAVA_HOME=/usr/lib/jvm/java-21-amazon-corretto.x86_64
+echo "export JAVA_HOME=${JAVA_HOME}" | tee -a ~/.bash_profile
+echo "export JAVA_HOME=${JAVA_HOME}" | tee -a ~/.bashrc
+java -version
 
 ## Install Maven
 MVN_VERSION=3.9.9
 MVN_FOLDERNAME=apache-maven-${MVN_VERSION}
 MVN_FILENAME=apache-maven-${MVN_VERSION}-bin.tar.gz
-curl -4 -L https://archive.apache.org/dist/maven/maven-3/${MVN_VERSION}/binaries/${MVN_FILENAME} | tar -xvz
+curl -4 -L https://archive.apache.org/dist/maven/maven-3/${MVN_VERSION}/binaries/${MVN_FILENAME} | tar -xz
 sudo mv $MVN_FOLDERNAME /usr/lib/maven
 export M2_HOME=/usr/lib/maven
 export PATH=${PATH}:${M2_HOME}/bin
@@ -34,22 +46,13 @@ rm ./aws-sam-cli-linux-x86_64.zip
 /usr/local/bin/sam --version
 
 ## Install additional dependencies
-sudo npm install -g aws-cdk --force
+sudo -E npm install -g aws-cdk --force
 cdk version
-sudo npm install -g artillery
+sudo -E npm install -g artillery
 
 wget https://github.com/mikefarah/yq/releases/download/v4.44.3/yq_linux_amd64.tar.gz -O - |\
   tar xz && sudo mv yq_linux_amd64 /usr/bin/yq
 yq --version
-
-## Set JDK 21 as default
-sudo yum -y install java-21-amazon-corretto-devel
-sudo update-alternatives --set java /usr/lib/jvm/java-21-amazon-corretto.x86_64/bin/java
-sudo update-alternatives --set javac /usr/lib/jvm/java-21-amazon-corretto.x86_64/bin/javac
-export JAVA_HOME=/usr/lib/jvm/java-21-amazon-corretto.x86_64
-echo "export JAVA_HOME=${JAVA_HOME}" | tee -a ~/.bash_profile
-echo "export JAVA_HOME=${JAVA_HOME}" | tee -a ~/.bashrc
-java -version
 
 TOKEN=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
 export AWS_REGION=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region')
