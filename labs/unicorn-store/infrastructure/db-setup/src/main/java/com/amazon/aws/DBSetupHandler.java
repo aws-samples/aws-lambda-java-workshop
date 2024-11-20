@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.core.SdkSystemSetting;
-import software.amazon.awssdk.core.retry.RetryMode;
 import software.amazon.awssdk.http.crt.AwsCrtAsyncHttpClient;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.retries.api.BackoffStrategy;
@@ -19,7 +18,6 @@ import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueReques
 
 import java.io.IOException;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.time.Duration;
 import java.util.concurrent.ExecutionException;
 

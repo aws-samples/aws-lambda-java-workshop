@@ -11,7 +11,6 @@ import com.unicorn.core.InfrastructureStack;
 import io.github.cdklabs.cdknag.AwsSolutionsChecks;
 import io.github.cdklabs.cdknag.NagPackSuppression;
 import io.github.cdklabs.cdknag.NagSuppressions;
-import org.jetbrains.annotations.NotNull;
 import software.amazon.awscdk.App;
 import software.amazon.awscdk.Aspects;
 import software.amazon.awscdk.StackProps;

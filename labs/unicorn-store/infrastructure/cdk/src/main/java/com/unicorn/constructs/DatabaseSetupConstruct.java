@@ -13,7 +13,6 @@ import software.amazon.awscdk.services.lambda.Function;
 import software.amazon.awscdk.services.lambda.Runtime;
 import software.constructs.Construct;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class DatabaseSetupConstruct extends Construct{
