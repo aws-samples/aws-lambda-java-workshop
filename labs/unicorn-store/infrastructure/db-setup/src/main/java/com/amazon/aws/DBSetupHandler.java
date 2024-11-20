@@ -5,7 +5,6 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.fasterxml.jackson.jr.ob.JSON;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
@@ -17,6 +16,7 @@ import software.amazon.awssdk.services.secretsmanager.SecretsManagerAsyncClient;
 import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.sql.DriverManager;
 import java.time.Duration;
 import java.util.concurrent.ExecutionException;
@@ -65,7 +65,8 @@ public class DBSetupHandler implements RequestHandler<APIGatewayProxyRequestEven
         try(var connection = DriverManager.getConnection(databaseConnection, databaseUser, databasePassword)) {
             try(var statement = connection.createStatement()) {
                 try(var sqlFile = getClass().getClassLoader().getResourceAsStream("setup.sql")) {
-                    statement.executeUpdate(IOUtils.toString(sqlFile));
+                    String sqlContent = new String(sqlFile.readAllBytes(), StandardCharsets.UTF_8);
+                    statement.executeUpdate(sqlContent);
                     return new APIGatewayProxyResponseEvent()
                             .withStatusCode(200)
                             .withBody("DB Setup successful");
