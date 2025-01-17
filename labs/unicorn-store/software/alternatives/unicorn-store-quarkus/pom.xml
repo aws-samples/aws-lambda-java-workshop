@@ -13,7 +13,7 @@
     <maven.compiler.target>11</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <quarkus.platform.version>3.17.5</quarkus.platform.version>
+    <quarkus.platform.version>3.17.6</quarkus.platform.version>
   </properties>
 
   <dependencyManagement>
