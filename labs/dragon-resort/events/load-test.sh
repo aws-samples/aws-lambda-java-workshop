@@ -2,10 +2,9 @@
 
 # Get API endpoint from AWS CLI using API name for REST API (v1)
 API_NAME="Dragon Store API"
-REGION="eu-central-1"
 
 # Get API ID from name (REST API)
-API_ID=$(aws apigateway get-rest-apis --region $REGION | \
+API_ID=$(aws apigateway get-rest-apis --region $AWS_REGION | \
     jq -r --arg NAME "$API_NAME" '.items[] | select(.name==$NAME) | .id')
 
 if [ -z "$API_ID" ]; then
@@ -14,7 +13,7 @@ if [ -z "$API_ID" ]; then
 fi
 
 # Construct API endpoint for REST API
-API_ENDPOINT="https://${API_ID}.execute-api.${REGION}.amazonaws.com/prod"
+API_ENDPOINT="https://${API_ID}.execute-api.${AWS_REGION}.amazonaws.com/prod"
 
 # Print API information for verification
 echo "Found API ID: $API_ID"
