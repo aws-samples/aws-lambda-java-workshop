@@ -29,6 +29,9 @@ updates:
       postgresql:
         patterns:
           - "org.postgresql:*"
+      maven-compiler-plugin:
+        patterns:
+          - "org.apache.maven.plugins:maven-compiler-plugin"
     open-pull-requests-limit: 20
   - package-ecosystem: docker
     directories:
