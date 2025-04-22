@@ -32,6 +32,9 @@ updates:
       maven-compiler-plugin:
         patterns:
           - "org.apache.maven.plugins:maven-compiler-plugin"
+      jackson:
+        patterns:
+          - "com.fasterxml.jackson.*:*"
     open-pull-requests-limit: 20
   - package-ecosystem: docker
     directories:
