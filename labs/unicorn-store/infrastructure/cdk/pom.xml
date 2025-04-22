@@ -11,7 +11,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <cdk.version>2.180.0</cdk.version>
-        <junit.version>5.12.0</junit.version>
+        <junit.version>5.12.2</junit.version>
     </properties>
 
     <build>
