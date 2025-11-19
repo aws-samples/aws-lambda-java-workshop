@@ -9,6 +9,12 @@ export UV_USE_IO_URING=0
 sudo yum update
 sudo yum install -y npm
 
+## Install Node LTS
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+source ~/.bashrc
+nvm install --lts
+nvm use --lts
+
 ## Ensure AWS CLI v2 is installed
 sudo yum -y remove aws-cli
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
