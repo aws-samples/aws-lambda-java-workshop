@@ -3,9 +3,6 @@
 ## go to tmp directory
 cd /tmp
 
-# temporarily disable the libuv use of io_uring https://github.com/amazonlinux/amazon-linux-2023/issues/840
-export UV_USE_IO_URING=0
-
 sudo yum update
 sudo yum install -y npm
 
