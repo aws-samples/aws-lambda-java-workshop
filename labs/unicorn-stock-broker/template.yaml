@@ -7,7 +7,7 @@ Description: >
 
 Globals:
   Function:
-    Runtime: java21
+    Runtime: java25
     Architectures:
       - x86_64
     MemorySize: 2048

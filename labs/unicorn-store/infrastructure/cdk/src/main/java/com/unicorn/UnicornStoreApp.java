@@ -58,8 +58,7 @@ public class UnicornStoreApp {
                 new NagPackSuppression.Builder().id("AwsSolutions-RDS2").reason("Workshop non-sensitive test database does not need encryption at rest").build(),
                 new NagPackSuppression.Builder().id("AwsSolutions-APIG3").reason("Workshop API Gateways do not need AWS WAF assigned").build(),
                 new NagPackSuppression.Builder().id("AwsSolutions-EC23").reason("Not needed").build(),
-                new NagPackSuppression.Builder().id("AwsSolutions-RDS13").reason("Workshop Database does not need backups").build(),
-                new NagPackSuppression.Builder().id("CdkNagValidationFailure").reason("Suppress warnings see: https://github.com/cdklabs/cdk-nag/issues/817").build()
+                new NagPackSuppression.Builder().id("AwsSolutions-RDS13").reason("Workshop Database does not need backups").build()
         );
 
         NagSuppressions.addStackSuppressions(infrastructureStack, suppression);
