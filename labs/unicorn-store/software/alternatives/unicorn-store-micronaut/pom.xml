@@ -14,8 +14,8 @@
   </parent>
   <properties>
     <packaging>jar</packaging>
-    <jdk.version>17</jdk.version>
-    <release.version>17</release.version>
+    <jdk.version>21</jdk.version>
+    <release.version>21</release.version>
     <micronaut.aot.enabled>true</micronaut.aot.enabled>
     <micronaut.aot.packageName>com.unicorn.store.aot.generated</micronaut.aot.packageName>
     <micronaut.runtime>lambda</micronaut.runtime>
