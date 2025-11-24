@@ -40,7 +40,7 @@ if [ $app == "spring-graalvm" ]
 then
   if [[ $build == "--build" ]]
   then
-    ./mvnw clean package -f software/alternatives/unicorn-store-basic/pom.xml
+    ./mvnw clean package -f software/alternatives/unicorn-store-spring-graalvm/pom.xml
   fi
   cd infrastructure/cdk
   cdk deploy UnicornStoreSpringGraalVMApp --outputs-file target/output-spring-graalvm.json --require-approval never
