@@ -3,11 +3,14 @@
 ## go to tmp directory
 cd /tmp
 
-# temporarily disable the libuv use of io_uring https://github.com/amazonlinux/amazon-linux-2023/issues/840
-export UV_USE_IO_URING=0
-
 sudo yum update
 sudo yum install -y npm
+
+## Install Node LTS
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+source ~/.bashrc
+nvm install --lts
+nvm use --lts
 
 ## Ensure AWS CLI v2 is installed
 sudo yum -y remove aws-cli
@@ -17,17 +20,17 @@ sudo ./aws/install
 rm awscliv2.zip
 aws --version
 
-## Set JDK 21 as default
-sudo yum -y install java-21-amazon-corretto-devel
-sudo update-alternatives --set java /usr/lib/jvm/java-21-amazon-corretto.x86_64/bin/java
-sudo update-alternatives --set javac /usr/lib/jvm/java-21-amazon-corretto.x86_64/bin/javac
-export JAVA_HOME=/usr/lib/jvm/java-21-amazon-corretto.x86_64
+## Set JDK 25 as default
+sudo yum -y install java-25-amazon-corretto-devel
+sudo update-alternatives --set java /usr/lib/jvm/java-25-amazon-corretto.x86_64/bin/java
+sudo update-alternatives --set javac /usr/lib/jvm/java-25-amazon-corretto.x86_64/bin/javac
+export JAVA_HOME=/usr/lib/jvm/java-25-amazon-corretto.x86_64
 echo "export JAVA_HOME=${JAVA_HOME}" | tee -a ~/.bash_profile
 echo "export JAVA_HOME=${JAVA_HOME}" | tee -a ~/.bashrc
 java -version
 
 ## Install Maven
-MVN_VERSION=3.9.9
+MVN_VERSION=3.9.11
 MVN_FOLDERNAME=apache-maven-${MVN_VERSION}
 MVN_FILENAME=apache-maven-${MVN_VERSION}-bin.tar.gz
 curl -4 -L https://archive.apache.org/dist/maven/maven-3/${MVN_VERSION}/binaries/${MVN_FILENAME} | tar -xz
