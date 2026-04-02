@@ -5,7 +5,7 @@
   },
   {
     "name":"com.amazonaws.services.lambda.runtime.api.client.runtimeapi.dto.InvocationRequest",
-    "fields":[{"name":"id"}, {"name":"invokedFunctionArn"}, {"name":"deadlineTimeInMs"}, {"name":"xrayTraceId"}, {"name":"clientContext"}, {"name":"cognitoIdentity"}, {"name":"content"}],
+    "fields":[{"name":"id"}, {"name":"invokedFunctionArn"}, {"name":"deadlineTimeInMs"}, {"name":"xrayTraceId"}, {"name":"clientContext"}, {"name":"cognitoIdentity"}, {"name":"content"}, {"name":"tenantId"}],
     "allPublicMethods":true
   },
   {
