@@ -72,7 +72,7 @@
     <dependency>
       <groupId>org.crac</groupId>
       <artifactId>crac</artifactId>
-      <version>1.4.0</version>
+      <version>1.5.0</version>
     </dependency>
   
     <!-- use for REST API Gateway and for LB integration -->
