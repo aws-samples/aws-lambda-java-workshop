@@ -7,7 +7,7 @@ sudo yum update
 sudo yum install -y npm
 
 ## Install Node LTS
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
 source ~/.bashrc
 nvm install --lts
 nvm use --lts
@@ -30,7 +30,7 @@ echo "export JAVA_HOME=${JAVA_HOME}" | tee -a ~/.bashrc
 java -version
 
 ## Install Maven
-MVN_VERSION=3.9.11
+MVN_VERSION=3.9.16
 MVN_FOLDERNAME=apache-maven-${MVN_VERSION}
 MVN_FILENAME=apache-maven-${MVN_VERSION}-bin.tar.gz
 curl -4 -L https://archive.apache.org/dist/maven/maven-3/${MVN_VERSION}/binaries/${MVN_FILENAME} | tar -xz
@@ -53,7 +53,7 @@ sudo -E npm install -g aws-cdk --force
 cdk version
 sudo -E npm install -g artillery
 
-wget https://github.com/mikefarah/yq/releases/download/v4.44.3/yq_linux_amd64.tar.gz -O - |\
+wget https://github.com/mikefarah/yq/releases/download/v4.53.2/yq_linux_amd64.tar.gz -O - |\
   tar xz && sudo mv yq_linux_amd64 /usr/bin/yq
 yq --version
 
