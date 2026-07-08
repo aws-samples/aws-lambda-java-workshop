@@ -1,7 +1,6 @@
 package com.unicorn;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.HashMap;
 
 import com.unicorn.alternatives.UnicornAuditService;
 import com.unicorn.alternatives.UnicornStoreMicronaut;
@@ -10,6 +9,7 @@ import com.unicorn.alternatives.UnicornStoreSpringGraalVM;
 import com.unicorn.core.InfrastructureStack;
 
 import io.github.cdklabs.cdknag.AwsSolutionsChecks;
+import io.github.cdklabs.cdknag.NagPackProps;
 import software.amazon.awscdk.*;
 
 public class UnicornStoreApp {
@@ -20,31 +20,30 @@ public class UnicornStoreApp {
         var infrastructureStack = new InfrastructureStack(app, "UnicornStoreInfrastructure", StackProps.builder()
                 .build());
 
-        var unicornStoreSpring = new UnicornStoreStack(app, "UnicornStoreSpringApp", StackProps.builder()
+        new UnicornStoreStack(app, "UnicornStoreSpringApp", StackProps.builder()
                 .build(), infrastructureStack);
 
-        var unicornStoreMicronaut = new UnicornStoreMicronaut(app, "UnicornStoreMicronautApp", StackProps.builder()
+        new UnicornStoreMicronaut(app, "UnicornStoreMicronautApp", StackProps.builder()
                 .build(), infrastructureStack);
 
-        var unicornStoreSpringGraalVM = new UnicornStoreSpringGraalVM(app, "UnicornStoreSpringGraalVMApp", StackProps.builder()
+        new UnicornStoreSpringGraalVM(app, "UnicornStoreSpringGraalVMApp", StackProps.builder()
                 .build(), infrastructureStack);
 
-        var unicornStoreQuarkus = new UnicornStoreQuarkus(app, "UnicornStoreQuarkusApp", StackProps.builder()
+        new UnicornStoreQuarkus(app, "UnicornStoreQuarkusApp", StackProps.builder()
                 .build(), infrastructureStack);
 
-        var unicornAuditService = new UnicornAuditService(app, "UnicornAuditServiceApp", StackProps.builder()
+        new UnicornAuditService(app, "UnicornAuditServiceApp", StackProps.builder()
                 .build(), infrastructureStack);
-
 
         //Add CDK-NAG checks: https://github.com/cdklabs/cdk-nag
+        Validations.of(app).addPlugins(new AwsSolutionsChecks(app,
+                NagPackProps.builder().writeSuppressionsToCloudFormation(true).build()));
+
         //Add suppression to exclude certain findings that are not needed for Workshop environment
-        Validations.of(app).addPlugins(new AwsSolutionsChecks());
-        var suppression = List.of(
+        Validations.of(app).acknowledge(
                 new Acknowledgment.Builder().id("AwsSolutions-APIG4").reason("The workshop environment does not require API-Gateway authorization").build(),
                 new Acknowledgment.Builder().id("AwsSolutions-COG4").reason("The workshop environment does not require Cognito User Pool authorization").build(),
                 new Acknowledgment.Builder().id("AwsSolutions-RDS3").reason("Workshop environment does not need a Multi-AZ setup to reduce cost").build(),
-                new Acknowledgment.Builder().id("AwsSolutions-IAM4").reason("AWS Managed policies are acceptable for the workshop").build(),
-                new Acknowledgment.Builder().id("AwsSolutions-IAM5").reason("A wildcard is acceptable for this workshop to allow parallel creation of resources").build(),
                 new Acknowledgment.Builder().id("AwsSolutions-RDS10").reason("Workshop environment is ephemeral and the database should be deleted by the end of the workshop").build(),
                 new Acknowledgment.Builder().id("AwsSolutions-RDS11").reason("Database is in a private subnet and can use the default port").build(),
                 new Acknowledgment.Builder().id("AwsSolutions-APIG2").reason("API Gateway request validation is not needed for workshop").build(),
@@ -59,12 +58,16 @@ public class UnicornStoreApp {
                 new Acknowledgment.Builder().id("CdkNagValidationFailure").reason("Suppress warnings see: https://github.com/cdklabs/cdk-nag/issues/817").build()
         );
 
-        Validations.of(infrastructureStack).acknowledge(suppression.toArray(new Acknowledgment[0]));
-        Validations.of(unicornStoreSpring).acknowledge(suppression.toArray(new Acknowledgment[0]));
-        Validations.of(unicornStoreMicronaut).acknowledge(suppression.toArray(new Acknowledgment[0]));
-        Validations.of(unicornStoreSpringGraalVM).acknowledge(suppression.toArray(new Acknowledgment[0]));
-        Validations.of(unicornStoreQuarkus).acknowledge(suppression.toArray(new Acknowledgment[0]));
-        Validations.of(unicornAuditService).acknowledge(suppression.toArray(new Acknowledgment[0]));
+        // Suppress parameterized IAM findings directly via metadata
+        // (Validations.acknowledge() rejects IDs containing '::' due to CDK delimiter validation bug)
+        var iamSuppressions = new HashMap<String, String>();
+        iamSuppressions.put("AwsSolutions-IAM4", "AWS Managed policies are acceptable for the workshop");
+        iamSuppressions.put("AwsSolutions-IAM5", "A wildcard is acceptable for this workshop to allow parallel creation of resources");
+        iamSuppressions.put("AwsSolutions-IAM4[Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole]", "AWS Managed policies are acceptable for the workshop");
+        iamSuppressions.put("AwsSolutions-IAM4[Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole]", "AWS Managed policies are acceptable for the workshop");
+        iamSuppressions.put("AwsSolutions-IAM4[Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs]", "AWS Managed policies are acceptable for the workshop");
+        iamSuppressions.put("AwsSolutions-IAM5[Resource::arn:aws:secretsmanager:*:*:secret:unicornstore-db-secret-*]", "A wildcard is acceptable for this workshop");
+        app.getNode().addMetadata(Validations.ACKNOWLEDGED_RULES_METADATA_KEY, iamSuppressions);
 
         app.synth();
     }
