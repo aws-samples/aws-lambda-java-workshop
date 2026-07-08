@@ -10,7 +10,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <cdk.version>2.257.0</cdk.version>
+        <cdk.version>2.261.0</cdk.version>
         <junit.version>6.1.0</junit.version>
     </properties>
 
@@ -21,8 +21,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.15.0</version>
                 <configuration>
-                    <source>17</source>
-                    <target>17</target>
+                    <source>25</source>
+                    <target>25</target>
                 </configuration>
             </plugin>
 
@@ -48,7 +48,7 @@
         <dependency>
             <groupId>io.github.cdklabs</groupId>
             <artifactId>cdknag</artifactId>
-            <version>2.38.2</version>
+            <version>3.0.1</version>
         </dependency>
 
         <dependency>
